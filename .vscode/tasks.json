@@ -1,0 +1,39 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Build: Docker Image",
+            "type": "shell",
+            "command": "docker build -t node16 .",
+            "group": "build",
+            "dependsOn": [
+                "Build: tsc"
+            ],
+            "presentation": {
+                "reveal": "silent"
+            }
+        },
+        { // For build
+            "type": "typescript",
+            "tsconfig": "tsconfig.json",
+            "problemMatcher": [
+                "$tsc"
+            ],
+            "group": "build",
+            "label": "Build: tsc"
+        },
+        {
+            "label": "Build: all",
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "dependsOn": [
+                "Build: Docker Image"
+            ],
+            "presentation": {
+                "reveal": "silent"
+            }
+        }
+    ]
+}

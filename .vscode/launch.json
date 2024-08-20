@@ -1,0 +1,15 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Launch: Docker Container",
+            "command": "docker run -it --rm --name node -p 8888:8888 node16",
+            "request": "launch",
+            "preLaunchTask": "Build: all",
+            "type": "node-terminal"
+        }
+    ]
+}
