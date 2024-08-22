@@ -2,9 +2,9 @@
     "version": "2.0.0",
     "tasks": [
         {
-            "label": "Build: Docker Image",
+            "label": "Build: Docker Images",
             "type": "shell",
-            "command": "docker build -t psychic-waffle-svelte .",
+            "command": "docker-compose build",
             "group": "build",
             "dependsOn": [
                 "Build: tsc"
@@ -13,9 +13,13 @@
                 "reveal": "silent"
             }
         },
+        {
+            "label": "Build: Nginx Image",
+            "type": "shell"
+        },
         { // For build
             "type": "typescript",
-            "tsconfig": "tsconfig.json",
+            "tsconfig": "./client/tsconfig.json",
             "problemMatcher": [
                 "$tsc"
             ],
@@ -29,7 +33,7 @@
                 "isDefault": true
             },
             "dependsOn": [
-                "Build: Docker Image"
+                "Build: Docker Images"
             ],
             "presentation": {
                 "reveal": "silent"
