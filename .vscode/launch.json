@@ -6,7 +6,7 @@
     "configurations": [
         {
             "name": "Launch: Docker Container",
-            "command": "docker run -it --rm --name node -p 8888:8888 node16",
+            "command": "docker run -it --rm --name psychic-waffle -p 8888:8888 psychic-waffle-svelte",
             "request": "launch",
             "preLaunchTask": "Build: all",
             "type": "node-terminal"

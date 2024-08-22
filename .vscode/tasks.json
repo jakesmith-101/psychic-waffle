@@ -4,7 +4,7 @@
         {
             "label": "Build: Docker Image",
             "type": "shell",
-            "command": "docker build -t node16 .",
+            "command": "docker build -t psychic-waffle-svelte .",
             "group": "build",
             "dependsOn": [
                 "Build: tsc"
