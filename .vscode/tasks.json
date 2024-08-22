@@ -6,35 +6,6 @@
             "type": "shell",
             "command": "docker-compose build",
             "group": "build",
-            "dependsOn": [
-                "Build: tsc"
-            ],
-            "presentation": {
-                "reveal": "silent"
-            }
-        },
-        {
-            "label": "Build: Nginx Image",
-            "type": "shell"
-        },
-        { // For build
-            "type": "typescript",
-            "tsconfig": "./client/tsconfig.json",
-            "problemMatcher": [
-                "$tsc"
-            ],
-            "group": "build",
-            "label": "Build: tsc"
-        },
-        {
-            "label": "Build: all",
-            "group": {
-                "kind": "build",
-                "isDefault": true
-            },
-            "dependsOn": [
-                "Build: Docker Images"
-            ],
             "presentation": {
                 "reveal": "silent"
             }

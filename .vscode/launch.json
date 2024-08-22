@@ -8,7 +8,7 @@
             "name": "Launch: Docker Container",
             "command": "docker-compose up",
             "request": "launch",
-            "preLaunchTask": "Build: all",
+            "preLaunchTask": "Build: Docker Images",
             "type": "node-terminal"
         }
     ]
