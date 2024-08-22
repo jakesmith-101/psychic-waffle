@@ -12,20 +12,40 @@
             "type": "node-terminal"
         },
         {
-            "name": "Launch: Frontend Dev mode",
+            "name": "Client",
             "command": "npm run dev",
             "cwd": "${workspaceFolder}/client/",
             "request": "launch",
             "preLaunchTask": "Build: Frontend Dev",
-            "type": "node-terminal"
+            "type": "node-terminal",
+            "presentation": {
+                "hidden": true,
+                "group": "dev",
+                "order": 2
+            }
         },
         {
-            "name": "Launch: Api Dev mode",
+            "name": "Server",
             "command": "go run .",
             "cwd": "${workspaceFolder}/server/",
             "request": "launch",
             "preLaunchTask": "Build: Api Dev",
-            "type": "node-terminal"
+            "type": "node-terminal",
+            "presentation": {
+                "hidden": true,
+                "group": "dev",
+                "order": 1
+            }
+        }
+    ],
+    "compounds": [
+        {
+            "name": "Launch: Dev mode",
+            "configurations": [
+                "Server",
+                "Client"
+            ],
+            "stopAll": true
         }
     ]
 }
