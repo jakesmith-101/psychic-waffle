@@ -7,8 +7,6 @@ services:
       - "80:80"
     depends_on:
       - api
-    #volumes:
-    #  - client/build:/app/client/build
   api:
     build:
       context: ./server
