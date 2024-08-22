@@ -1,17 +1,20 @@
-# Use a Node.js image
-FROM node:22
+FROM node:22 as build
 
-# Set the working directory
+ENV NODE_ENV=production
+
 WORKDIR /app
 
-# Copy the package.json and package-lock.json files
-COPY package*.json ./
-
-# Install dependencies
+COPY package.json ./
+COPY package-lock.json ./
 RUN npm install
+COPY . ./
+RUN npm run build
 
-# Copy everything to the container
-COPY . .
+FROM node:22-alpine3.20
 
-# Expose port
-EXPOSE 3000
+WORKDIR /app
+COPY --from=build /app .
+
+ENV HOST=0.0.0.0
+EXPOSE 4173
+CMD ["npm","run","preview","--","--host","0.0.0.0"]
