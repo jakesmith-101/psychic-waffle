@@ -10,6 +10,22 @@
             "request": "launch",
             "preLaunchTask": "Build: Docker Images",
             "type": "node-terminal"
+        },
+        {
+            "name": "Launch: Frontend Dev mode",
+            "command": "npm run dev",
+            "cwd": "${workspaceFolder}/client/",
+            "request": "launch",
+            "preLaunchTask": "Build: Frontend Dev",
+            "type": "node-terminal"
+        },
+        {
+            "name": "Launch: Api Dev mode",
+            "command": "go run .",
+            "cwd": "${workspaceFolder}/server/",
+            "request": "launch",
+            "preLaunchTask": "Build: Api Dev",
+            "type": "node-terminal"
         }
     ]
 }

@@ -9,6 +9,48 @@
             "presentation": {
                 "reveal": "silent"
             }
+        },
+        {
+            "label": "Build: Frontend Dev",
+            "group": "build",
+            "dependsOn": [
+                "Build: tsc",
+                "Build: node_modules"
+            ]
+        },
+        {
+            "label": "Build: tsc",
+            "type": "typescript",
+            "tsconfig": "client/tsconfig.json",
+            "problemMatcher": [
+                "$tsc"
+            ],
+            "group": "build"
+        },
+        {
+            "label": "Build: node_modules",
+            "type": "shell",
+            "command": "npm i",
+            "group": "build",
+            "options": {
+                "cwd": "${workspaceFolder}/client/"
+            }
+        },
+        {
+            "label": "Build: Api Dev",
+            "group": "build",
+            "dependsOn": [
+                "Build: go"
+            ]
+        },
+        {
+            "label": "Build: go",
+            "type": "shell",
+            "command": "go mod tidy",
+            "group": "build",
+            "options": {
+                "cwd": "${workspaceFolder}/server/"
+            }
         }
     ]
 }
