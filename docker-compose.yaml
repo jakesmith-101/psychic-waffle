@@ -39,7 +39,7 @@ services:
     depends_on:
       - api
   db:
-    image: postgres:latest
+    image: postgres:16.4-alpine
     environment:
       - POSTGRES_USER=${DB_USER}
       - POSTGRES_PASSWORD=${DB_PASSWORD}
@@ -53,7 +53,7 @@ services:
       - postgres
 
   db_test:
-    image: postgres:latest
+    image: postgres:16.4-alpine
     container_name: db_test_container
     environment:
       - POSTGRES_USER=${TEST_DB_USER}

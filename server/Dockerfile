@@ -1,5 +1,5 @@
 # Official Golang image
-FROM golang:1.23
+FROM golang:1.23-alpine
 
 # Working directory
 WORKDIR /app
