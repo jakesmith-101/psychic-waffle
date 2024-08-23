@@ -135,8 +135,8 @@ package-lock.json
 # Output
 .output
 .vercel
-*/.svelte-kit
-*/build
+/client/.svelte-kit
+/client/build
 
 # OS
 .DS_Store
@@ -170,3 +170,7 @@ vendor/
 # Go workspace file
 go.work
 go.work.sum
+
+# Postgres
+/pg_data/*
+/pg_data_test/*

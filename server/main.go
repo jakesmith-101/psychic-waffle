@@ -23,9 +23,10 @@ var users []User
 // urlExample := "postgres://username:password@localhost:5432/database_name"
 func buildDBUrl(dbType string) string {
 	return fmt.Sprintf(
-		"postgres://%s:%s@localhost:%s/%s",
+		"postgres://%s:%s@%s:%s/%s",
 		os.Getenv(fmt.Sprintf("%sUSER", dbType)),
 		os.Getenv(fmt.Sprintf("%sPASSWORD", dbType)),
+		os.Getenv(fmt.Sprintf("%sHOST", dbType)),
 		os.Getenv(fmt.Sprintf("%sPORT", dbType)),
 		os.Getenv(fmt.Sprintf("%sDB", dbType)),
 	)
