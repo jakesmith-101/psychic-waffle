@@ -6,8 +6,13 @@ An example of my Full-Stack potential.
 - PostgreSQL
 - Docker ofc, maybe look into other areas, kubernetes???
 
+## Quickstart
 
-## env vars for postgres containers
+- build: `docker-compose build`
+- start: `docker-compose up`
+- stop:  `docker-compose down`
+
+### env vars for postgres containers
 
 ```
 # Postgres
