@@ -7,6 +7,16 @@ services:
       - "80:80"
     depends_on:
       - api
+
+  frontend:
+    build:
+      context: ./client
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    depends_on:
+      - api
+
   api:
     build:
       context: ./server
@@ -24,20 +34,11 @@ services:
       - TEST_POSTGRES_DB=${TEST_DB_NAME}
       - TEST_DATABASE_HOST=${TEST_DB_HOST}
       - TEST_DATABASE_PORT=${TEST_DB_PORT}
-    volumes:
-      - .:/app
     depends_on:
       - db
     networks:
       - postgres
-  frontend:
-    build:
-      context: ./client
-      dockerfile: Dockerfile
-    ports:
-      - "3000:3000"
-    depends_on:
-      - api
+
   db:
     image: postgres:16.4-alpine
     environment:
