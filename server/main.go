@@ -6,7 +6,6 @@ import (
 	"log"
 	"net/http"
 	"os"
-	"time"
 
 	"github.com/gorilla/mux"
 
@@ -14,7 +13,6 @@ import (
 )
 
 func main() {
-	time.Sleep(30 * time.Second)
 	db.Open()
 	defer db.Conn.Close(context.Background())
 
