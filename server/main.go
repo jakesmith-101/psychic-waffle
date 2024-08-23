@@ -20,9 +20,19 @@ type User struct {
 
 var users []User
 
+// urlExample := "postgres://username:password@localhost:5432/database_name"
+func buildDBUrl(dbType string) string {
+	return fmt.Sprintf(
+		"postgres://%s:%s@localhost:%s/%s",
+		os.Getenv(fmt.Sprintf("%sUSER", dbType)),
+		os.Getenv(fmt.Sprintf("%sPASSWORD", dbType)),
+		os.Getenv(fmt.Sprintf("%sPORT", dbType)),
+		os.Getenv(fmt.Sprintf("%sNAME", dbType)),
+	)
+}
+
 func main() {
-	// urlExample := "postgres://username:password@localhost:5432/database_name"
-	conn, err := pgx.Connect(context.Background(), os.Getenv("DATABASE_URL"))
+	conn, err := pgx.Connect(context.Background(), buildDBUrl("TEST_DB_")) // prod: "DB_", test: "TEST_DB_"
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Unable to connect to database: %v\n", err)
 		os.Exit(1)
