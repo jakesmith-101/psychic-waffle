@@ -33,10 +33,11 @@ func buildDBUrl(dbType string) string {
 }
 
 func Open() {
-	// prod: "POSTGRES_", test: "TEST_POSTGRES_"
-	Conn, err = pgx.Connect(context.Background(), buildDBUrl("TEST_POSTGRES_")) // prod: "POSTGRES_", test: "TEST_POSTGRES_"
+	dbUrl := buildDBUrl("TEST_POSTGRES_")                // prod: "POSTGRES_", test: "TEST_POSTGRES_"
+	Conn, err = pgx.Connect(context.Background(), dbUrl) // prod: "POSTGRES_", test: "TEST_POSTGRES_"
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Unable to connect to database: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Database URL: %s\n", dbUrl)
 		os.Exit(1)
 	}
 }
