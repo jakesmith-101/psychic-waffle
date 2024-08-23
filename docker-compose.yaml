@@ -34,13 +34,16 @@ services:
       - TEST_POSTGRES_DB=${TEST_DB_NAME}
       - TEST_POSTGRES_HOST=${TEST_DB_HOST}
       - TEST_POSTGRES_PORT=${TEST_DB_PORT}
+    volumes:
+      - ./server:/app
     depends_on:
       - db
+      - db_test
     networks:
       - postgres
 
   db:
-    image: postgres:16.4-alpine
+    image: postgres:16.4
     container_name: ${DB_HOST}
     environment:
       - POSTGRES_USER=${DB_USER}
@@ -55,7 +58,7 @@ services:
       - postgres
 
   db_test:
-    image: postgres:16.4-alpine
+    image: postgres:16.4
     container_name: ${TEST_DB_HOST}
     environment:
       - POSTGRES_USER=${TEST_DB_USER}

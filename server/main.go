@@ -2,58 +2,21 @@ package main
 
 import (
 	"context"
-	"encoding/json"
-	"fmt"
 	"log"
 	"net/http"
-	"os"
 
 	"github.com/gorilla/mux"
-	"github.com/jackc/pgx/v5"
+
+	"github.com/jakesmith-101/psychic-waffle/db"
 )
 
-type User struct {
-	ID       string `json:"id"`
-	Username string `json:"username"`
-	Email    string `json:"email"`
-}
-
-var users []User
-
-// urlExample := "postgres://username:password@localhost:5432/database_name"
-func buildDBUrl(dbType string) string {
-	return fmt.Sprintf(
-		"postgres://%s:%s@%s:%s/%s",
-		os.Getenv(fmt.Sprintf("%sUSER", dbType)),
-		os.Getenv(fmt.Sprintf("%sPASSWORD", dbType)),
-		os.Getenv(fmt.Sprintf("%sHOST", dbType)),
-		os.Getenv(fmt.Sprintf("%sPORT", dbType)),
-		os.Getenv(fmt.Sprintf("%sDB", dbType)),
-	)
-}
-
 func main() {
-	conn, err := pgx.Connect(context.Background(), buildDBUrl("TEST_POSTGRES_")) // prod: "POSTGRES_", test: "TEST_POSTGRES_"
-	if err != nil {
-		fmt.Fprintf(os.Stderr, "Unable to connect to database: %v\n", err)
-		os.Exit(1)
-	}
-	defer conn.Close(context.Background())
+	db.Open()
+	defer db.Conn.Close(context.Background())
 
 	router := mux.NewRouter()
-	router.HandleFunc("/users", getUsers).Methods("GET")
-	router.HandleFunc("/users", createUser).Methods("POST")
+	router.HandleFunc("/users", db.GetUsers).Methods("GET")
+	router.HandleFunc("/users", db.CreateUser).Methods("POST")
 
 	log.Fatal(http.ListenAndServe(":8080", router))
-}
-
-func getUsers(w http.ResponseWriter, r *http.Request) {
-	json.NewEncoder(w).Encode(users)
-}
-
-func createUser(w http.ResponseWriter, r *http.Request) {
-	var newUser User
-	_ = json.NewDecoder(r.Body).Decode(&newUser)
-	users = append(users, newUser)
-	json.NewEncoder(w).Encode(newUser)
 }
