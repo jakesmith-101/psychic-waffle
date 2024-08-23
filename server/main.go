@@ -27,12 +27,12 @@ func buildDBUrl(dbType string) string {
 		os.Getenv(fmt.Sprintf("%sUSER", dbType)),
 		os.Getenv(fmt.Sprintf("%sPASSWORD", dbType)),
 		os.Getenv(fmt.Sprintf("%sPORT", dbType)),
-		os.Getenv(fmt.Sprintf("%sNAME", dbType)),
+		os.Getenv(fmt.Sprintf("%sDB", dbType)),
 	)
 }
 
 func main() {
-	conn, err := pgx.Connect(context.Background(), buildDBUrl("TEST_DB_")) // prod: "DB_", test: "TEST_DB_"
+	conn, err := pgx.Connect(context.Background(), buildDBUrl("TEST_POSTGRES_")) // prod: "POSTGRES_", test: "TEST_POSTGRES_"
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Unable to connect to database: %v\n", err)
 		os.Exit(1)
