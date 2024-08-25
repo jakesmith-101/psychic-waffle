@@ -16,7 +16,7 @@ if not exist .env (
     echo "DB_PASSWORD=SPuser"
     echo "DB_NAME=psychic-waffle"
     echo "DB_PORT=5432"
-
+    echo ""
     echo "# Postgres Test"
     echo "TEST_DB_HOST=postgres_test"
     echo "TEST_DB_DRIVER=postgres"
