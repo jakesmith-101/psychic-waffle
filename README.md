@@ -13,7 +13,7 @@ An example of my Full-Stack potential.
 - stop:  `docker-compose down`
 
 ### env vars for postgres containers
-Generate a .env by running the test script.
+Generate a .env by running the test script. <br />
 Or create the .env in root with these vars:
 
 ```
