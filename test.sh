@@ -12,5 +12,5 @@ if [ -f ".env" ]; then
     exit 1
 fi
 
-# auto generate env vars
+# write basic env vars
 printf "# Postgres\nDB_HOST=postgresdb\nDB_DRIVER=postgres\nDB_USER=spuser\nDB_PASSWORD=SPuser\nDB_NAME=psychic-waffle\nDB_PORT=5432\n\n# Postgres Test\nTEST_DB_HOST=postgres_test\nTEST_DB_DRIVER=postgres\nTEST_DB_USER=spuser\nTEST_DB_PASSWORD=SPuser_test\nTEST_DB_NAME=psychic-waffle_test\nTEST_DB_PORT=5432" > .env
