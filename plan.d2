@@ -1,0 +1,20 @@
+Server: {
+  Docker Network: {
+    postgres: {
+      production
+      test
+    }
+    Go
+    Nginx
+    Svelte
+
+    Nginx -> Go: /api
+    Nginx -> Svelte: /
+    Go -> postgres: SQL
+  }
+  Docker Network.postgres -> Storage: persist
+}
+user: {
+  shape: person
+}
+user -> Server.Docker Network.Nginx: access
