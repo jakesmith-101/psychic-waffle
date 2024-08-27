@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/jackc/pgx/v5"
+	"github.com/jackc/pgx/v5" // keep or transition to gorm?
 )
 
 var Conn *pgx.Conn

@@ -6,7 +6,8 @@ import (
 	"net/http"
 	"os"
 
-	"github.com/gorilla/mux"
+	"github.com/gorilla/mux" // replace with go-chi
+	// add go-swagger for restful-ness
 
 	"github.com/jakesmith-101/psychic-waffle/db"
 )
