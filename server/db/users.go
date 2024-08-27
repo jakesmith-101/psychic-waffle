@@ -9,6 +9,9 @@ type User struct {
 	ID       string `json:"id"`
 	Username string `json:"username"`
 	Email    string `json:"email"`
+	Nickname string `json:"nickname"`
+	Password string `json:"password"`
+	Type     string `json:"type"`
 }
 
 var Users []User
