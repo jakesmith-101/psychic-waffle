@@ -1,7 +1,6 @@
 package main
 
 import (
-	"context"
 	"fmt"
 	"log"
 	"net/http"
@@ -14,7 +13,6 @@ import (
 
 func main() {
 	db.Open()
-	defer db.Conn.Close(context.Background())
 
 	router := mux.NewRouter()
 	router.HandleFunc("/users", db.GetUsers).Methods("GET")
