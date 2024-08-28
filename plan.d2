@@ -1,12 +1,20 @@
-Server: {
-  Docker Network: {
-    Nginx: {
+# Root
+client: {
+  user: {
+    shape: person
+  }
+  user -> web browser
+}
+
+server: {
+  docker network: {
+    nginx: {
       shape: diamond
     }
-    Frontend: {
+    frontend: {
       shape: page
     }
-    Go-API
+    go-api
 
     postgres: {
       production: {
@@ -17,20 +25,21 @@ Server: {
       }
     }
 
-    Nginx -> Go-API: /api
-    Nginx -> Frontend: /
-    Go-API -> postgres: SQL
+    nginx -> go-api: /api
+    nginx -> frontend: /
+    go-api -> postgres: sql
+
+    postgres -> go-api -> nginx: data
   }
-  Storage: {
+  storage: {
     pg_data: {
       shape: stored_data
     }
   }
-  Docker Network.postgres -> Storage.pg_data: persist
-  Storage -> Docker Network: docker-compose
+  docker network.postgres -> storage.pg_data: persist
+  storage -> docker network: docker-compose
 }
-user: {
-  shape: person
-}
-user -> Server.Docker Network.Nginx: access
+
+client.web browser -> server.docker network.nginx: request
+server.docker network.frontend -> server.docker network.nginx -> client.web browser: display
 direction: right
