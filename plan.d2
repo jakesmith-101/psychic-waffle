@@ -22,33 +22,28 @@ server: {
     go-api
 
     postgres: {
-      production: {
-        shape: cylinder
-      }
-      test: {
-        shape: cylinder
-      }
+      shape: cylinder
+      style.multiple: true
     }
 
-    nginx -> go-api: /api
-    nginx -> frontend: /
-    go-api -> postgres: sql
-
-    postgres -> go-api -> nginx: data
+    nginx -> go-api: request
+    nginx -> frontend: fetch
+    go-api -> postgres: data
   }
+
   storage: {
     pg_data: {
       shape: stored_data
-      style.multiple: true
     }
     nginx_config: {
       shape: stored_data
     }
   }
+
   docker network.postgres -> storage.pg_data: persist
   storage.nginx_config -> docker network.nginx: config
   storage -> docker network: docker-compose
 }
 
 users -> server.docker network.nginx: request
-server.docker network.frontend -> server.docker network.nginx -> users: display
+server.docker network.nginx -> users: response
