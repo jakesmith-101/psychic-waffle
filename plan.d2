@@ -32,12 +32,10 @@ server: {
   }
 
   storage: {
-    pg_data: {
-      shape: stored_data
-    }
+    shape: stored_data
   }
 
-  docker network.postgres -> storage.pg_data: persist
+  docker network.postgres -> storage: persist
 }
 
 users -> server.docker network.nginx: request
