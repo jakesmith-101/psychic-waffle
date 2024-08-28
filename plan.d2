@@ -1,15 +1,21 @@
 Server: {
   Docker Network: {
     postgres: {
-      production
-      test
+      production: {
+        shape: cylinder
+      }
+      test: {
+        shape: cylinder
+      }
     }
     Go
     Nginx
-    Svelte
+    Frontend: {
+      shape: page
+    }
 
     Nginx -> Go: /api
-    Nginx -> Svelte: /
+    Nginx -> Frontend: /
     Go -> postgres: SQL
   }
   Docker Network.postgres -> Storage: persist
@@ -17,4 +23,5 @@ Server: {
 user: {
   shape: person
 }
+direction: right
 user -> Server.Docker Network.Nginx: access
