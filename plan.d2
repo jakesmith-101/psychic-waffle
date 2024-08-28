@@ -1,5 +1,13 @@
 Server: {
   Docker Network: {
+    Nginx: {
+      shape: diamond
+    }
+    Frontend: {
+      shape: page
+    }
+    Go
+
     postgres: {
       production: {
         shape: cylinder
@@ -8,23 +16,21 @@ Server: {
         shape: cylinder
       }
     }
-    Go
-    Nginx
-    Frontend: {
-      shape: page
-    }
 
     Nginx -> Go: /api
     Nginx -> Frontend: /
     Go -> postgres: SQL
   }
   Storage: {
-    shape: stored_data
+    pg_data: {
+      shape: stored_data
+    }
   }
-  Docker Network.postgres -> Storage: persist
+  Docker Network.postgres -> Storage.pg_data: persist
+  Storage -> Docker Network: docker-compose
 }
 user: {
   shape: person
 }
-direction: right
 user -> Server.Docker Network.Nginx: access
+direction: right
