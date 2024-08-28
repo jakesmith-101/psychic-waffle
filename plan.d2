@@ -6,7 +6,7 @@ Server: {
     Frontend: {
       shape: page
     }
-    Go
+    Go-API
 
     postgres: {
       production: {
@@ -17,9 +17,9 @@ Server: {
       }
     }
 
-    Nginx -> Go: /api
+    Nginx -> Go-API: /api
     Nginx -> Frontend: /
-    Go -> postgres: SQL
+    Go-API -> postgres: SQL
   }
   Storage: {
     pg_data: {
