@@ -1,0 +1,11 @@
+API:
+- go chi, simple
+- go swagger?
+
+- JWT, possibly Oauth2?
+
+- signup, login
+- role based access control
+- Dashboard
+
+- Decide WHAT this site is for? books?
