@@ -41,9 +41,6 @@ server: {
   }
 
   docker network.postgres -> storage.pg_data: persist
-  storage.nginx_config -> docker network.nginx: config
-  storage -> docker network: docker-compose
 }
 
 users -> server.docker network.nginx: request
-server.docker network.nginx -> users: response
