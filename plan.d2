@@ -35,9 +35,6 @@ server: {
     pg_data: {
       shape: stored_data
     }
-    nginx_config: {
-      shape: stored_data
-    }
   }
 
   docker network.postgres -> storage.pg_data: persist
