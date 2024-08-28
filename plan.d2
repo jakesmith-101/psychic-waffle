@@ -19,16 +19,15 @@ server: {
     frontend: {
       shape: page
     }
-    go-api
 
     postgres: {
       shape: cylinder
       style.multiple: true
     }
 
-    nginx -> go-api: request
+    nginx -> api: request
     nginx -> frontend: fetch
-    go-api -> postgres: data
+    api -> postgres: data
   }
 
   storage: {
