@@ -18,6 +18,9 @@ Server: {
     Nginx -> Frontend: /
     Go -> postgres: SQL
   }
+  Storage: {
+    shape: stored_data
+  }
   Docker Network.postgres -> Storage: persist
 }
 user: {
