@@ -1,9 +1,7 @@
 # Root
-client: {
-  user: {
-    shape: person
-  }
-  user -> web browser
+users: {
+  shape: person
+  style.multiple: true
 }
 
 server: {
@@ -34,12 +32,16 @@ server: {
   storage: {
     pg_data: {
       shape: stored_data
+      style.multiple: true
+    }
+    nginx_config: {
+      shape: stored_data
     }
   }
   docker network.postgres -> storage.pg_data: persist
+  storage.nginx_config -> docker network.nginx: config
   storage -> docker network: docker-compose
 }
 
-client.web browser -> server.docker network.nginx: request
-server.docker network.frontend -> server.docker network.nginx -> client.web browser: display
-direction: right
+users -> server.docker network.nginx: request
+server.docker network.frontend -> server.docker network.nginx -> users: display
