@@ -1,6 +1,6 @@
 API:
-- go chi, simple
-- go swagger?
+- go-chi
+- go-swagger?
 
 - JWT, possibly Oauth2?
 
