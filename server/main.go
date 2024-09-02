@@ -26,6 +26,9 @@ type GreetingOutput struct {
 	}
 }
 
+var ApiVer = "v1"
+var RootPath = fmt.Sprintf("/api/%s", ApiVer)
+
 func main() {
 	// Create a CLI app which takes a port option.
 	cli := humacli.New(func(hooks humacli.Hooks, options *Options) {
@@ -36,8 +39,15 @@ func main() {
 		router := http.NewServeMux()
 		api := humago.New(router, huma.DefaultConfig("My API", "1.0.0"))
 
-		// Add the operation handler to the API.
-		huma.Get(api, "/api/greeting/{name}", func(ctx context.Context, input *struct {
+		// Register GET /greeting/{name}
+		huma.Register(api, huma.Operation{
+			OperationID: "get-greeting",
+			Method:      http.MethodGet,
+			Path:        fmt.Sprintf("%s/greeting/{name}", RootPath),
+			Summary:     "Get a greeting",
+			Description: "Get a greeting for a person by name.",
+			Tags:        []string{"Greetings"},
+		}, func(ctx context.Context, input *struct {
 			Name string `path:"name" maxLength:"30" example:"world" doc:"Name to greet"`
 		}) (*GreetingOutput, error) {
 			resp := &GreetingOutput{}
@@ -54,5 +64,3 @@ func main() {
 	// Run the CLI. When passed no commands, it starts the server.
 	cli.Run()
 }
-
-// TODO: think of versioning api
