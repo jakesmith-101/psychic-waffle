@@ -4,4 +4,4 @@
 	<a href="/signup">signup</a>
 </nav>
 
-<h1>Welcome to the Site</h1>
+<h1>Welcome to signup</h1>
