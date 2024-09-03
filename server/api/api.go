@@ -14,6 +14,11 @@ func BuildPath(route string) string {
 	return path.Join(rootPath, route)
 }
 
+func AllEndpoints(api huma.API) {
+	HealthCheck(api)
+	AuthEndpoints(api)
+}
+
 func AuthEndpoints(api huma.API) {
 	Signup(api)
 	Login(api)
