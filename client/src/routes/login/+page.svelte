@@ -7,11 +7,11 @@
 
 <form method="post">
 	<div>
-		<label for="username" class="sr-only">Username</label>
+		<label for="username">Username</label>
 		<input id="username" name="username" type="text" required placeholder="Username" />
 	</div>
 	<div>
-		<label for="password" class="sr-only">Password</label>
+		<label for="password">Password</label>
 		<input id="password" name="password" type={password} required placeholder="Password" />
 	</div>
 </form>
