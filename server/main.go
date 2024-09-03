@@ -29,8 +29,10 @@ func main() {
 		router := http.NewServeMux()
 		API := humago.New(router, huma.DefaultConfig("My API", "1.0.0"))
 
-		// Bind HelloWorld to api
+		// Bind HelloWorld to api (healthcheck)
 		api.HelloWorld(API)
+		// Bind all Auth endpoints to api (login, signup)
+		api.AuthEndpoints(API)
 
 		// Tell the CLI how to start your router.
 		hooks.OnStart(func() {
