@@ -2,7 +2,9 @@ package api
 
 import (
 	"context"
+	"fmt"
 	"net/http"
+	"os"
 
 	"github.com/danielgtaylor/huma/v2"
 )
@@ -19,13 +21,20 @@ func HealthCheck(api huma.API) {
 	huma.Register(api, huma.Operation{
 		OperationID: "get-greeting",
 		Method:      http.MethodGet,
-		Path:        BuildPath("/healthcheck"),
+		Path:        BuildPath("/healthcheck/{name}"),
 		Summary:     "Get a greeting",
 		Description: "Get a greeting.",
 		Tags:        []string{"Greetings"},
-	}, func(ctx context.Context, input *struct{}) (*GreetingOutput, error) {
+	}, func(ctx context.Context, input *struct {
+		Name string `path:"name" maxLength:"30" example:"John" doc:"Any name, defaults to 'world'"`
+	}) (*GreetingOutput, error) {
 		resp := &GreetingOutput{}
-		resp.Body.Message = "Hello, world!"
+		name := input.Name
+		if name == "" {
+			name = "world"
+		}
+		resp.Body.Message = fmt.Sprintf("Hello, %s!", name)
+		fmt.Fprintf(os.Stderr, "Healthy: %s", name)
 		return resp, nil
 	})
 }
