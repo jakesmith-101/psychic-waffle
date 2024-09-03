@@ -1,5 +1,5 @@
 <script>
-	export let user;
+	import { page } from '$app/stores';
 </script>
 
-<h1>Welcome {user.username}</h1>
+<h1>Welcome {$page.data.username}</h1>

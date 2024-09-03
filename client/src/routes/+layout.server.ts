@@ -1,4 +1,4 @@
-import { posts } from '../user.js';
+import { test } from './user.js';
 
 export function load() {
 	return {

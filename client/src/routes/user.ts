@@ -1,1 +1,1 @@
-export const posts = '';
+export const test = '';
