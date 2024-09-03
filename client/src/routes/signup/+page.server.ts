@@ -5,5 +5,6 @@ export const actions: Actions = {
         const data = await request.formData();
         data.get('username');
         data.get('password');
+        data.get('confirmPassword');
     }
 };

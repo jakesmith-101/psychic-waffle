@@ -15,8 +15,14 @@
 		<input id="password" name="password" type={password} required placeholder="Password" />
 	</div>
 	<div>
-		<label for="password">Confirm Password</label>
-		<input id="password" name="password" type={password} required placeholder="Password" />
+		<label for="confirmPassword">Confirm Password</label>
+		<input
+			id="confirmPassword"
+			name="confirmPassword"
+			type={password}
+			required
+			placeholder="Confirm Password"
+		/>
 	</div>
 	<div>
 		<input type="checkbox" bind:checked={showPassword} id="showPassword" />
