@@ -28,8 +28,8 @@ func Signup(api huma.API) {
 		Username        string `path:"username" maxLength:"30" example:"John" doc:"Name of account"`
 		Password        string `path:"password" maxLength:"30" example:"pass123" doc:"Password of account"`
 		ConfirmPassword string `path:"confirmpassword" maxLength:"30" example:"pass123" doc:"Confirm Password of account"`
-	}) (*GreetingOutput, error) {
-		resp := &GreetingOutput{}
+	}) (*SignupOutput, error) {
+		resp := &SignupOutput{}
 		resp.Body.Message = fmt.Sprintf("Hello, %s!", input.Username) // TODO: signup logic
 		return resp, nil
 	})
@@ -54,8 +54,8 @@ func Login(api huma.API) {
 	}, func(ctx context.Context, input *struct {
 		Username string `path:"username" maxLength:"30" example:"John" doc:"Name of account"`
 		Password string `path:"password" maxLength:"30" example:"pass123" doc:"Password of account"`
-	}) (*GreetingOutput, error) {
-		resp := &GreetingOutput{}
+	}) (*LoginOutput, error) {
+		resp := &LoginOutput{}
 		resp.Body.Message = fmt.Sprintf("Hello, %s!", input.Username) // TODO: login logic
 		return resp, nil
 	})
