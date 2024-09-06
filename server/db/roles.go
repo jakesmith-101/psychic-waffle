@@ -3,18 +3,19 @@ package db
 import (
 	"context"
 
+	"github.com/google/uuid"
 	"github.com/jackc/pgx/v5"
 )
 
 type Role struct {
-	ID          string `json:"id"`
-	Permissions int    `json:"permissions"`
-	Name        string `json:"name"`
+	RoleID      string `json:"id"`          // pk
+	Permissions int    `json:"permissions"` //
+	Name        string `json:"name"`        // unique
 }
 
 func GetRole(ID string) (*Role, error) {
 	var role Role
-	row, err := Conn.Query(context.Background(), "SELECT * FROM ROLES WHERE ID=$1;", ID)
+	row, err := Conn.Query(context.Background(), "SELECT * FROM ROLES WHERE RoleID=$1;", ID)
 	if err != nil {
 		return &role, err
 	}
@@ -22,13 +23,19 @@ func GetRole(ID string) (*Role, error) {
 	return &role, err
 }
 
-/*
-func CreateRole(name string, perms int) bool {
+func CreateRole(name string, perms int) (string, error) {
 	role := Role{
-		ID:          uuid.NewString(),
+		RoleID:      uuid.NewString(),
 		Permissions: perms,
 		Name:        name,
 	}
-	return true
+
+	query := `INSERT INTO USERS (RoleID, Permissions, Name) VALUES (@RoleID, @Permissions, @Name)`
+	args := pgx.NamedArgs{
+		"RoleID":      role.RoleID,
+		"Permissions": role.Permissions,
+		"Name":        role.Name,
+	}
+	_, err := Conn.Exec(context.Background(), query, args)
+	return role.RoleID, err
 }
-*/
