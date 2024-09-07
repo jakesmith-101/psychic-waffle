@@ -70,7 +70,7 @@ func CreateUser(username string, passwordHash string) (string, error) {
 	return user.UserID, err
 }
 
-// TODO:
+// TODO: setUser logic
 func SetUser(user User) bool {
 	return true
 }
