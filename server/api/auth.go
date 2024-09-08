@@ -42,7 +42,7 @@ func Signup(api huma.API) {
 		} else if err == nil {
 			err = err3
 		}
-		resp.Body.Message = fmt.Sprintf("Hello, %s!", user.Nickname) // TODO: authtoken shenanigans
+		resp.Body.Message = fmt.Sprintf("Hello, %s!", user.Nickname)
 		return resp, err
 	})
 }
