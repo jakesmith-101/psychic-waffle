@@ -1,23 +1,22 @@
 import { redirect } from '@sveltejs/kit';
 import { apiFetch } from './api';
 
-export async function login(username: string, password: string) {
+export async function login(username: string, passwordHash: string) {
     if (username === '') throw new Error('Missing Username');
-    if (password === '') throw new Error('Missing Password');
-    // TODO: hash password
-    const data = await apiFetch('/auth/login', 'POST', { username, password });
+    if (passwordHash === '') throw new Error('Missing Password');
+
+    const data = await apiFetch('/auth/login', 'POST', { username, passwordHash });
+    // FIXME: data holds user id and jwt token
 
     throw redirect(303, `/dashboard`);
 }
 
-export async function signup(username: string, password: string, confirmPassword: string) {
+export async function signup(username: string, passwordHash: string) {
     if (username === '') throw new Error('Missing Username');
-    if (password === '') throw new Error('Missing Password');
-    if (password !== confirmPassword) throw new Error('Password does not match');
+    if (passwordHash === '') throw new Error('Missing Password');
 
-    // TODO: password strength
-    // TODO: hash password
-    const data = await apiFetch('/auth/signup', 'POST', { username, password, confirmPassword });
+    const data = await apiFetch('/auth/signup', 'POST', { username, passwordHash });
+    // FIXME: data holds user id and jwt token
 
     throw redirect(303, `/dashboard`);
 }
