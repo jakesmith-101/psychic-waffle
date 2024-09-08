@@ -12,6 +12,7 @@ import (
 // SignupOutput represents the signup operation response.
 type SignupOutput struct {
 	Body struct {
+		Token   string `json:"token" example:"jwt" doc:"Jwt token string for auth"`
 		Message string `json:"message" example:"Hello, John!" doc:"Greeting message"`
 	}
 }
@@ -35,6 +36,12 @@ func Signup(api huma.API) {
 		if err == nil {
 			err = err2
 		}
+		tokenString, err3 := CreateToken(*user)
+		if err3 == nil {
+			resp.Body.Token = tokenString
+		} else if err == nil {
+			err = err3
+		}
 		resp.Body.Message = fmt.Sprintf("Hello, %s!", user.Nickname) // TODO: authtoken shenanigans
 		return resp, err
 	})
@@ -43,6 +50,7 @@ func Signup(api huma.API) {
 // LoginOutput represents the login operation response.
 type LoginOutput struct {
 	Body struct {
+		Token   string `json:"token" example:"jwt" doc:"Jwt token string for auth"`
 		Message string `json:"message" example:"Hello, John!" doc:"Greeting message"`
 		UserID  string `json:"userID" example:"uuid" doc:"ID of user's account"`
 	}
@@ -64,7 +72,13 @@ func Login(api huma.API) {
 		resp := &LoginOutput{}
 		user, err := db.GetUserByUsername(input.Username)
 		if user.PasswordHash == input.PasswordHash {
-			resp.Body.UserID = user.UserID // TODO: authtoken shenanigans
+			resp.Body.UserID = user.UserID
+			tokenString, err2 := CreateToken(*user)
+			if err2 == nil {
+				resp.Body.Token = tokenString
+			} else if err == nil {
+				err = err2
+			}
 		}
 		resp.Body.Message = fmt.Sprintf("Hello, %s!", user.Nickname)
 		return resp, err
