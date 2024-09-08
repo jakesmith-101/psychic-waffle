@@ -9,7 +9,7 @@ export async function signup(username: string, passwordHash: string) {
     return auth('signup', username, passwordHash);
 }
 
-async function auth(path: string, username: string, passwordHash: string) {
+async function auth(path: 'signup' | 'login', username: string, passwordHash: string) {
     if (username === '') throw new Error('Missing Username');
     if (passwordHash === '') throw new Error('Missing Password');
 
