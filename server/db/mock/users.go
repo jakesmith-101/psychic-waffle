@@ -16,8 +16,8 @@ func CreateUserTable() error {
 			Username VARCHAR(50),
 			Email VARCHAR(50),
 			Nickname VARCHAR(50),
-			PasswordHash VARCHAR(100),
-			RoleID,
+			PasswordHash VARCHAR(128),
+			RoleID UUID references roles(RoleID),
 			CreatedAt DATE,
 			UpdatedAt DATE,
 			UNIQUE (Username, Email)
