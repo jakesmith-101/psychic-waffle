@@ -1,5 +1,7 @@
-<script>
-    import { page } from '$app/stores';
+<script lang="ts">
+    import type { PageData } from './$types';
+
+    export let data: PageData;
 </script>
 
-<h1>Welcome {$page.data.username}</h1>
+<h1>Welcome {data.Username}!</h1>
