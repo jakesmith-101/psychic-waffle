@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"net/http"
+	"os"
 
 	"github.com/danielgtaylor/huma/v2"
 	"github.com/jakesmith-101/psychic-waffle/db"
@@ -29,24 +30,31 @@ func Signup(api huma.API) {
 		Description: "Create an account by username and password",
 		Tags:        []string{"Signup"},
 	}, func(ctx context.Context, input *struct {
-		Username string `json:"username" maxLength:"30" example:"John" doc:"Name of account"`
-		Password string `json:"password" maxLength:"30" example:"pass123" doc:"Password of account"`
+		Body struct {
+			Username string `json:"username" maxLength:"30" example:"John" doc:"Name of account"`
+			Password string `json:"password" maxLength:"30" example:"pass123" doc:"Password of account"`
+		}
 	}) (*SignupOutput, error) {
+		fmt.Fprintf(os.Stderr, "Requested account creation: %s %s\n", input.Body.Username, input.Body.Password)
 		resp := &SignupOutput{}
-		hash, err := password.GenerateFromPassword(input.Password)
+		hash, err := password.GenerateFromPassword(input.Body.Password)
 		if err != nil {
+			fmt.Fprintf(os.Stderr, "%e\n", err)
 			return resp, err
 		}
-		userID, err := db.CreateUser(input.Username, hash)
+		userID, err := db.CreateUser(input.Body.Username, hash)
 		if err != nil {
+			fmt.Fprintf(os.Stderr, "%e\n", err)
 			return resp, err
 		}
 		user, err := db.GetUser(userID)
 		if err != nil {
+			fmt.Fprintf(os.Stderr, "%e\n", err)
 			return resp, err
 		}
 		tokenString, err := CreateToken(*user)
 		if err != nil {
+			fmt.Fprintf(os.Stderr, "%e\n", err)
 			return resp, err
 		}
 		resp.Body.Token = tokenString
@@ -75,21 +83,27 @@ func Login(api huma.API) {
 		Description: "Log into account by username and password",
 		Tags:        []string{"Login"},
 	}, func(ctx context.Context, input *struct {
-		Username string `json:"username" maxLength:"30" example:"John" doc:"Name of account"`
-		Password string `json:"password" maxLength:"30" example:"pass123" doc:"Password of account"`
+		Body struct {
+			Username string `json:"username" maxLength:"30" example:"John" doc:"Name of account"`
+			Password string `json:"password" maxLength:"30" example:"pass123" doc:"Password of account"`
+		}
 	}) (*LoginOutput, error) {
+		fmt.Fprintf(os.Stderr, "Requested account creation: %s %s\n", input.Body.Username, input.Body.Password)
 		resp := &LoginOutput{}
-		user, err := db.GetUserByUsername(input.Username)
+		user, err := db.GetUserByUsername(input.Body.Username)
 		if err != nil {
+			fmt.Fprintf(os.Stderr, "%e\n", err)
 			return resp, err
 		}
-		match, err := password.ComparePasswordAndHash(input.Password, user.PasswordHash)
+		match, err := password.ComparePasswordAndHash(input.Body.Password, user.PasswordHash)
 		if err != nil {
+			fmt.Fprintf(os.Stderr, "%e\n", err)
 			return resp, err
 		}
 		if match {
 			tokenString, err := CreateToken(*user)
 			if err != nil {
+				fmt.Fprintf(os.Stderr, "%e\n", err)
 				return resp, err
 			}
 			resp.Body.Message = fmt.Sprintf("Hello, %s!", user.Nickname)

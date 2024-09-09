@@ -17,7 +17,8 @@ import (
 
 // Options for the CLI. Pass `--port` or set the `SERVICE_PORT` env var.
 type Options struct {
-	Port int `help:"Port to listen on" short:"p" default:"8080"`
+	Debug bool `help:"Enable debug logging" short:"d" default:"true"`
+	Port  int  `help:"Port to listen on" short:"p" default:"8080"`
 }
 
 func main() {
