@@ -15,7 +15,6 @@ type User struct {
 	Nickname     string    `json:"nickname"`  //
 	PasswordHash string    `json:"password"`  //
 	RoleID       string    `json:"roleid"`    // fk
-	AuthToken    string    `json:"authtoken"` // unique?
 	CreatedAt    time.Time `json:"createdat"` //
 	UpdatedAt    time.Time `json:"updatedat"` //
 }
@@ -42,14 +41,17 @@ func GetUserByUsername(username string) (*User, error) {
 }
 
 func CreateUser(username string, passwordHash string) (string, error) {
+	role, err := GetRoleByName("User")
+	if err != nil {
+		return "", err
+	}
 	user := User{
 		UserID:       uuid.NewString(),
 		Username:     username,
 		PasswordHash: passwordHash,
 		Nickname:     username,
 		Email:        "",
-		RoleID:       "",
-		AuthToken:    "",
+		RoleID:       role.RoleID,
 		CreatedAt:    time.Now(),
 		UpdatedAt:    time.Now(),
 	}
@@ -62,11 +64,10 @@ func CreateUser(username string, passwordHash string) (string, error) {
 		"Nickname":     user.Nickname,
 		"Email":        user.Email,
 		"RoleID":       user.RoleID,
-		"AuthToken":    user.AuthToken,
 		"CreatedAt":    user.CreatedAt,
 		"UpdatedAt":    user.UpdatedAt,
 	}
-	_, err := Conn.Exec(context.Background(), query, args)
+	_, err = Conn.Exec(context.Background(), query, args)
 	return user.UserID, err
 }
 

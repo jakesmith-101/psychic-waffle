@@ -39,3 +39,13 @@ func CreateRole(name string, perms int) (string, error) {
 	_, err := Conn.Exec(context.Background(), query, args)
 	return role.RoleID, err
 }
+
+func GetRoleByName(name string) (*Role, error) {
+	var role Role
+	row, err := Conn.Query(context.Background(), "SELECT * FROM ROLES WHERE Name=$1;", name)
+	if err != nil {
+		return &role, err
+	}
+	role, err = pgx.CollectExactlyOneRow(row, pgx.RowToStructByName[Role])
+	return &role, err
+}
