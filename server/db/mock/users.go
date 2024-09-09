@@ -8,6 +8,7 @@ import (
 	"github.com/jakesmith-101/psychic-waffle/password"
 )
 
+// Depends upon Roles table
 func CreateUserTable() error {
 	_, err := db.Conn.Exec(
 		context.Background(),
@@ -26,17 +27,7 @@ func CreateUserTable() error {
 	return err
 }
 
-/*
-/UserID       string    `json:"id"`        // pk
-/Username     string    `json:"username"`  // unique
-/Email        string    `json:"email"`     // unique
-/Nickname     string    `json:"nickname"`  //
-/PasswordHash string    `json:"password"`  //
-/RoleID       string    `json:"roleid"`    // fk
-/CreatedAt    time.Time `json:"createdat"` //
-/UpdatedAt    time.Time `json:"updatedat"` //
-*/
-
+// Depends upon mocked roles
 func MockAdmin() error {
 	pass, err := password.GenerateFromPassword("admin")
 	if err != nil {
