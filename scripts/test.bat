@@ -24,4 +24,7 @@ if not exist .env (
     echo "TEST_DB_PASSWORD=SPuser_test"
     echo "TEST_DB_NAME=psychic-waffle_test"
     echo "TEST_DB_PORT=5432"
+    echo ""
+    echo "# SvelteKit"
+    echo "ORIGIN_URL=http://localhost:80"
 ) > .env

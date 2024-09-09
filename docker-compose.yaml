@@ -15,7 +15,7 @@ services:
       context: ./client
       dockerfile: Dockerfile
     environment:
-      - ORIGIN=http://localhost:80
+      - ORIGIN=${ORIGIN_URL}
     depends_on:
       - api
     networks:
