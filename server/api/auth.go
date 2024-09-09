@@ -7,6 +7,7 @@ import (
 
 	"github.com/danielgtaylor/huma/v2"
 	"github.com/jakesmith-101/psychic-waffle/db"
+	"github.com/jakesmith-101/psychic-waffle/password"
 )
 
 // SignupOutput represents the signup operation response.
@@ -27,21 +28,27 @@ func Signup(api huma.API) {
 		Description: "Create an account by username and password",
 		Tags:        []string{"Signup"},
 	}, func(ctx context.Context, input *struct {
-		Username     string `path:"username" maxLength:"30" example:"John" doc:"Name of account"`
-		PasswordHash string `path:"passwordHash" maxLength:"30" example:"pass123" doc:"Hashed password of account"`
+		Username string `path:"username" maxLength:"30" example:"John" doc:"Name of account"`
+		Password string `path:"password" maxLength:"30" example:"pass123" doc:"Password of account"`
 	}) (*SignupOutput, error) {
 		resp := &SignupOutput{}
-		userID, err := db.CreateUser(input.Username, input.PasswordHash)
-		user, err2 := db.GetUser(userID)
-		if err == nil {
-			err = err2
+		hash, err := password.GenerateFromPassword(input.Password)
+		if err != nil {
+			return resp, err
 		}
-		tokenString, err3 := CreateToken(*user)
-		if err3 == nil {
-			resp.Body.Token = tokenString
-		} else if err == nil {
-			err = err3
+		userID, err := db.CreateUser(input.Username, hash)
+		if err != nil {
+			return resp, err
 		}
+		user, err := db.GetUser(userID)
+		if err != nil {
+			return resp, err
+		}
+		tokenString, err := CreateToken(*user)
+		if err != nil {
+			return resp, err
+		}
+		resp.Body.Token = tokenString
 		resp.Body.Message = fmt.Sprintf("Hello, %s!", user.Nickname)
 		return resp, err
 	})
@@ -66,21 +73,27 @@ func Login(api huma.API) {
 		Description: "Log into account by username and password",
 		Tags:        []string{"Login"},
 	}, func(ctx context.Context, input *struct {
-		Username     string `path:"username" maxLength:"30" example:"John" doc:"Name of account"`
-		PasswordHash string `path:"passwordHash" maxLength:"30" example:"pass123" doc:"Hashed password of account"`
+		Username string `path:"username" maxLength:"30" example:"John" doc:"Name of account"`
+		Password string `path:"password" maxLength:"30" example:"pass123" doc:"Password of account"`
 	}) (*LoginOutput, error) {
 		resp := &LoginOutput{}
 		user, err := db.GetUserByUsername(input.Username)
-		if user.PasswordHash == input.PasswordHash {
-			resp.Body.UserID = user.UserID
-			tokenString, err2 := CreateToken(*user)
-			if err2 == nil {
-				resp.Body.Token = tokenString
-			} else if err == nil {
-				err = err2
-			}
+		if err != nil {
+			return resp, err
 		}
-		resp.Body.Message = fmt.Sprintf("Hello, %s!", user.Nickname)
+		match, err := password.ComparePasswordAndHash(input.Password, user.PasswordHash)
+		if err != nil {
+			return resp, err
+		}
+		if match {
+			tokenString, err := CreateToken(*user)
+			if err != nil {
+				return resp, err
+			}
+			resp.Body.Message = fmt.Sprintf("Hello, %s!", user.Nickname)
+			resp.Body.UserID = user.UserID
+			resp.Body.Token = tokenString
+		}
 		return resp, err
 	})
 }

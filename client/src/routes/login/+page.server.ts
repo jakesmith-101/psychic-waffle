@@ -1,7 +1,6 @@
 import * as api from '$lib/server/auth.js';
 import { fail } from '@sveltejs/kit';
 import type { Actions } from './$types';
-import { hash } from "@node-rs/argon2";
 
 export const actions: Actions = {
     default: async ({ request }) => {
@@ -25,15 +24,6 @@ export const actions: Actions = {
             });
         }
 
-        const passwordHash = await hash(password, {
-            // recommended minimum parameters
-            memoryCost: 19456,
-            timeCost: 2,
-            outputLen: 32,
-            parallelism: 1
-        });
-
-
-        if (username !== undefined && password !== undefined) await api.login(username, passwordHash);
+        if (username !== undefined && password !== undefined) await api.login(username, password);
     }
 };

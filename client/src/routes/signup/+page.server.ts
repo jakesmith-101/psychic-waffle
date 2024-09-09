@@ -1,5 +1,4 @@
 import * as api from '$lib/server/auth.js';
-import { hash } from '@node-rs/argon2';
 import type { Actions } from './$types';
 import { fail } from '@sveltejs/kit';
 
@@ -26,15 +25,7 @@ export const actions: Actions = {
             });
         }
 
-        const passwordHash = await hash(password, {
-            // recommended minimum parameters
-            memoryCost: 19456,
-            timeCost: 2,
-            outputLen: 32,
-            parallelism: 1
-        });
-
         if (username !== undefined && password !== undefined && password === confirmPassword)
-            await api.signup(username, passwordHash);
+            await api.signup(username, password);
     }
 };
