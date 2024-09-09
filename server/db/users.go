@@ -54,7 +54,6 @@ func CreateUser(username string, passwordHash string) (string, error) {
 
 	query := `INSERT INTO users (Username, PasswordHash, Nickname, RoleID, AuthToken, CreatedAt, UpdatedAt) VALUES (@Username, @PasswordHash, @Nickname, @RoleID, @AuthToken, @CreatedAt, @UpdatedAt)`
 	args := pgx.NamedArgs{
-		"UserID":       user.UserID,
 		"Username":     user.Username,
 		"PasswordHash": user.PasswordHash,
 		"Nickname":     user.Nickname,
