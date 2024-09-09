@@ -4,7 +4,6 @@ import (
 	"context"
 	"time"
 
-	"github.com/google/uuid"
 	"github.com/jackc/pgx/v5"
 )
 
@@ -45,7 +44,6 @@ func CreateUser(username string, passwordHash string) (string, error) {
 		return "", err
 	}
 	user := User{
-		UserID:       uuid.NewString(),
 		Username:     username,
 		PasswordHash: passwordHash,
 		Nickname:     username,
@@ -54,7 +52,7 @@ func CreateUser(username string, passwordHash string) (string, error) {
 		UpdatedAt:    time.Now(),
 	}
 
-	query := `INSERT INTO users (UserID, Username, PasswordHash, Nickname, RoleID, AuthToken, CreatedAt, UpdatedAt) VALUES (@UserID, @Username, @PasswordHash, @Nickname, @RoleID, @AuthToken, @CreatedAt, @UpdatedAt)`
+	query := `INSERT INTO users (Username, PasswordHash, Nickname, RoleID, AuthToken, CreatedAt, UpdatedAt) VALUES (@Username, @PasswordHash, @Nickname, @RoleID, @AuthToken, @CreatedAt, @UpdatedAt)`
 	args := pgx.NamedArgs{
 		"UserID":       user.UserID,
 		"Username":     user.Username,
