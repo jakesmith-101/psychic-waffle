@@ -14,4 +14,7 @@
         <label for="password">Password</label>
         <input id="password" name="password" type={password} required placeholder="Password" />
     </div>
+    <div>
+        <input type="submit" />
+    </div>
 </form>

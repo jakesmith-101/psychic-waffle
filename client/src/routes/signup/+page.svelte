@@ -28,4 +28,7 @@
         <input type="checkbox" bind:checked={showPassword} id="showPassword" />
         <label for="showPassword"> Show Password </label>
     </div>
+    <div>
+        <input type="submit" />
+    </div>
 </form>
