@@ -15,7 +15,7 @@ type Role struct {
 
 func GetRole(ID string) (*Role, error) {
 	var role Role
-	row, err := Conn.Query(context.Background(), "SELECT * FROM ROLES WHERE RoleID=$1;", ID)
+	row, err := Conn.Query(context.Background(), "SELECT * FROM roles WHERE RoleID=$1;", ID)
 	if err != nil {
 		return &role, err
 	}
@@ -30,7 +30,7 @@ func CreateRole(name string, perms int) (string, error) {
 		Name:        name,
 	}
 
-	query := `INSERT INTO USERS (RoleID, Permissions, Name) VALUES (@RoleID, @Permissions, @Name)`
+	query := `INSERT INTO users (RoleID, Permissions, Name) VALUES (@RoleID, @Permissions, @Name)`
 	args := pgx.NamedArgs{
 		"RoleID":      role.RoleID,
 		"Permissions": role.Permissions,
@@ -42,7 +42,7 @@ func CreateRole(name string, perms int) (string, error) {
 
 func GetRoleByName(name string) (*Role, error) {
 	var role Role
-	row, err := Conn.Query(context.Background(), "SELECT * FROM ROLES WHERE Name=$1;", name)
+	row, err := Conn.Query(context.Background(), "SELECT * FROM roles WHERE Name=$1;", name)
 	if err != nil {
 		return &role, err
 	}

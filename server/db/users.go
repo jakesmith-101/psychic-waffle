@@ -21,7 +21,7 @@ type User struct {
 
 func GetUser(ID string) (*User, error) {
 	var user User
-	row, err := Conn.Query(context.Background(), "SELECT * FROM USERS WHERE UserID=$1;", ID)
+	row, err := Conn.Query(context.Background(), "SELECT * FROM users WHERE UserID=$1;", ID)
 	if err != nil {
 		return &user, err
 	}
@@ -31,7 +31,7 @@ func GetUser(ID string) (*User, error) {
 
 func GetUserByUsername(username string) (*User, error) {
 	var user User
-	row, err := Conn.Query(context.Background(), "SELECT * FROM USERS WHERE Username=$1;", username)
+	row, err := Conn.Query(context.Background(), "SELECT * FROM users WHERE Username=$1;", username)
 	if err != nil {
 		return &user, err
 	}
@@ -56,7 +56,7 @@ func CreateUser(username string, passwordHash string) (string, error) {
 		UpdatedAt:    time.Now(),
 	}
 
-	query := `INSERT INTO USERS (UserID, Username, PasswordHash, Nickname, Email, RoleID, AuthToken, CreatedAt, UpdatedAt) VALUES (@UserID, @Username, @PasswordHash, @Nickname, @Email, @RoleID, @AuthToken, @CreatedAt, @UpdatedAt)`
+	query := `INSERT INTO users (UserID, Username, PasswordHash, Nickname, Email, RoleID, AuthToken, CreatedAt, UpdatedAt) VALUES (@UserID, @Username, @PasswordHash, @Nickname, @Email, @RoleID, @AuthToken, @CreatedAt, @UpdatedAt)`
 	args := pgx.NamedArgs{
 		"UserID":       user.UserID,
 		"Username":     user.Username,

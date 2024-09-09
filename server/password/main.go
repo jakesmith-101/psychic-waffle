@@ -64,12 +64,8 @@ func ComparePasswordAndHash(password, encodedHash string) (match bool, err error
 		return false, err
 	}
 
-	// Derive the key from the other password using the same parameters.
 	otherHash := argon2.IDKey([]byte(password), salt, p.Iterations, p.Memory, p.Parallelism, p.KeyLength)
 
-	// Check that the contents of the hashed passwords are identical. Note
-	// that we are using the subtle.ConstantTimeCompare() function for this
-	// to help prevent timing attacks.
 	if subtle.ConstantTimeCompare(hash, otherHash) == 1 {
 		return true, nil
 	}
