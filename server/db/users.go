@@ -11,7 +11,6 @@ import (
 type User struct {
 	UserID       string    `json:"id"`        // pk
 	Username     string    `json:"username"`  // unique
-	Email        string    `json:"email"`     // unique
 	Nickname     string    `json:"nickname"`  //
 	PasswordHash string    `json:"password"`  //
 	RoleID       string    `json:"roleid"`    // fk
@@ -50,19 +49,17 @@ func CreateUser(username string, passwordHash string) (string, error) {
 		Username:     username,
 		PasswordHash: passwordHash,
 		Nickname:     username,
-		Email:        "",
 		RoleID:       role.RoleID,
 		CreatedAt:    time.Now(),
 		UpdatedAt:    time.Now(),
 	}
 
-	query := `INSERT INTO users (UserID, Username, PasswordHash, Nickname, Email, RoleID, AuthToken, CreatedAt, UpdatedAt) VALUES (@UserID, @Username, @PasswordHash, @Nickname, @Email, @RoleID, @AuthToken, @CreatedAt, @UpdatedAt)`
+	query := `INSERT INTO users (UserID, Username, PasswordHash, Nickname, RoleID, AuthToken, CreatedAt, UpdatedAt) VALUES (@UserID, @Username, @PasswordHash, @Nickname, @RoleID, @AuthToken, @CreatedAt, @UpdatedAt)`
 	args := pgx.NamedArgs{
 		"UserID":       user.UserID,
 		"Username":     user.Username,
 		"PasswordHash": user.PasswordHash,
 		"Nickname":     user.Nickname,
-		"Email":        user.Email,
 		"RoleID":       user.RoleID,
 		"CreatedAt":    user.CreatedAt,
 		"UpdatedAt":    user.UpdatedAt,
