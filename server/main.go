@@ -12,6 +12,7 @@ import (
 
 	"github.com/jakesmith-101/psychic-waffle/api"
 	"github.com/jakesmith-101/psychic-waffle/db"
+	"github.com/jakesmith-101/psychic-waffle/db/mock"
 )
 
 // Options for the CLI. Pass `--port` or set the `SERVICE_PORT` env var.
@@ -24,6 +25,8 @@ func main() {
 	cli := humacli.New(func(hooks humacli.Hooks, options *Options) {
 		// Open DB connection
 		db.Open()
+		// Ensure SQL tables and basic data exist
+		mock.MockAll()
 
 		// Create a new router & API
 		router := http.NewServeMux()
