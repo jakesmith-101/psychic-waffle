@@ -15,6 +15,7 @@ type SignupOutput struct {
 	Body struct {
 		Token   string `json:"token" example:"jwt" doc:"Jwt token string for auth"`
 		Message string `json:"message" example:"Hello, John!" doc:"Greeting message"`
+		UserID  string `json:"userID" example:"uuid" doc:"ID of user's account"`
 	}
 }
 
@@ -49,6 +50,7 @@ func Signup(api huma.API) {
 			return resp, err
 		}
 		resp.Body.Token = tokenString
+		resp.Body.UserID = userID
 		resp.Body.Message = fmt.Sprintf("Hello, %s!", user.Nickname)
 		return resp, err
 	})
