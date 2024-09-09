@@ -15,7 +15,6 @@ func CreateToken(user db.User) (string, error) {
 		jwt.MapClaims{
 			"UserID":   user.UserID,
 			"Username": user.Username,
-			"Email":    user.Email,
 			"exp":      time.Now().Add(time.Hour * 24).Unix(),
 		})
 
