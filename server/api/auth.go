@@ -29,8 +29,8 @@ func Signup(api huma.API) {
 		Description: "Create an account by username and password",
 		Tags:        []string{"Signup"},
 	}, func(ctx context.Context, input *struct {
-		Username string `path:"username" maxLength:"30" example:"John" doc:"Name of account"`
-		Password string `path:"password" maxLength:"30" example:"pass123" doc:"Password of account"`
+		Username string `json:"username" maxLength:"30" example:"John" doc:"Name of account"`
+		Password string `json:"password" maxLength:"30" example:"pass123" doc:"Password of account"`
 	}) (*SignupOutput, error) {
 		resp := &SignupOutput{}
 		hash, err := password.GenerateFromPassword(input.Password)
@@ -75,8 +75,8 @@ func Login(api huma.API) {
 		Description: "Log into account by username and password",
 		Tags:        []string{"Login"},
 	}, func(ctx context.Context, input *struct {
-		Username string `path:"username" maxLength:"30" example:"John" doc:"Name of account"`
-		Password string `path:"password" maxLength:"30" example:"pass123" doc:"Password of account"`
+		Username string `json:"username" maxLength:"30" example:"John" doc:"Name of account"`
+		Password string `json:"password" maxLength:"30" example:"pass123" doc:"Password of account"`
 	}) (*LoginOutput, error) {
 		resp := &LoginOutput{}
 		user, err := db.GetUserByUsername(input.Username)

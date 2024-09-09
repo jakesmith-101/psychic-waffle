@@ -14,11 +14,11 @@ interface tAuthReturn {
     Message: string,
 }
 
-async function auth(path: 'signup' | 'login', username: string, password: string): Promise<tAuthReturn> {
-    if (username === '') throw new Error('Missing Username');
-    if (password === '') throw new Error('Missing Password');
+async function auth(path: 'signup' | 'login', Username: string, Password: string): Promise<tAuthReturn> {
+    if (Username === '') throw new Error('Missing Username');
+    if (Password === '') throw new Error('Missing Password');
 
-    const data = await apiFetch(`/auth/${path}`, 'POST', { username, password });
+    const data = await apiFetch(`/auth/${path}`, 'POST', { Username, Password });
     if (typeof data === "object") {
         if (
             typeof data?.token === "string" &&
