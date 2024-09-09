@@ -15,6 +15,6 @@
         <input id="password" name="password" type={password} required placeholder="Password" />
     </div>
     <div>
-        <input type="submit" />
+        <input type="submit" aria-label="login" />
     </div>
 </form>
