@@ -40,7 +40,7 @@ func UpdateUser(api huma.API) {
 			fmt.Fprintf(os.Stderr, "%v\n", err)
 			return resp, err
 		}
-		claims, err := extractClaims(input.Body.Token)
+		claims, err := ExtractClaims(input.Body.Token)
 		if err != nil {
 			fmt.Fprintf(os.Stderr, "%v\n", err)
 			return resp, err

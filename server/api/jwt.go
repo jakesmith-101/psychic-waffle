@@ -42,7 +42,7 @@ func VerifyToken(tokenString string) error {
 	return nil
 }
 
-func extractClaims(tokenStr string) (jwt.MapClaims, error) {
+func ExtractClaims(tokenStr string) (jwt.MapClaims, error) {
 	token, err := jwt.Parse(tokenStr, func(token *jwt.Token) (interface{}, error) {
 		return secretKey, nil
 	})
