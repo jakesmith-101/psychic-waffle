@@ -7,6 +7,7 @@ import (
 	"os"
 
 	"github.com/danielgtaylor/huma/v2"
+	"github.com/jakesmith-101/psychic-waffle/db"
 )
 
 type UpdateUserOutput struct {
@@ -26,16 +27,34 @@ func UpdateUser(api huma.API) {
 		Tags:        []string{"UpdateUser"},
 	}, func(ctx context.Context, input *struct {
 		Body struct {
-			UserID       string `json:"userID"`   // pk
-			Nickname     string `json:"nickname"` //
-			PasswordHash string `json:"password"` //
-			RoleID       string `json:"roleID"`   // fk
-			Token        string `json:"token"`    // jwt token
+			UserID       string `json:"userID" required:"true"`    // pk
+			Nickname     string `json:"nickname" required:"false"` //
+			PasswordHash string `json:"password" required:"false"` //
+			RoleID       string `json:"roleID" required:"false"`   //
+			Token        string `json:"token" required:"true"`     // jwt token
 		}
 	}) (*UpdateUserOutput, error) {
 		fmt.Fprintf(os.Stderr, "Requested update user: %s\n", input.Body.UserID)
 		resp := &UpdateUserOutput{}
 
-		return resp, nil
+		// FIXME: permissions check using token!!
+		success, err := db.SetUser(db.UpdateUser{
+			UserID:       input.Body.UserID,
+			Nickname:     input.Body.Nickname,
+			PasswordHash: input.Body.PasswordHash,
+			RoleID:       input.Body.RoleID,
+		})
+
+		var name string
+		if input.Body.Nickname != "" {
+			name = input.Body.Nickname
+		} else {
+			name = input.Body.UserID
+		}
+		if success {
+			resp.Body.Message = fmt.Sprintf("Successfully updated user: %s", name)
+		}
+
+		return resp, err
 	})
 }
