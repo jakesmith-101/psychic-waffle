@@ -44,6 +44,9 @@ func UpdateUser(api huma.API) {
 			PasswordHash: input.Body.PasswordHash,
 			RoleID:       input.Body.RoleID,
 		})
+		if err != nil {
+			fmt.Fprintf(os.Stderr, "%v\n", err)
+		}
 
 		var name string
 		if input.Body.Nickname != "" {
