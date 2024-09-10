@@ -35,7 +35,7 @@ func main() {
 
 		// Create a new router & API
 		router := http.NewServeMux()
-		API := humago.New(router, huma.DefaultConfig("My API", "1.0.0"))
+		API := humago.New(router, huma.DefaultConfig("Psychic-Waffle API", "1.0.0"))
 
 		// Bind all endpoints to api (login, signup)
 		api.AllEndpoints(API)
