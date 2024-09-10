@@ -15,13 +15,13 @@ func CreateUserTable() error {
 		context.Background(),
 		`CREATE TABLE IF NOT EXISTS users (
 			UserID UUID DEFAULT gen_random_uuid() PRIMARY KEY,
-			Email VARCHAR(50),
+			Username VARCHAR(50),
 			Nickname VARCHAR(50),
 			PasswordHash VARCHAR(128),
 			RoleID UUID references roles(RoleID),
 			CreatedAt DATE,
 			UpdatedAt DATE,
-			UNIQUE (Email)
+			UNIQUE (Username)
 		);`,
 	)
 	if err != nil {
