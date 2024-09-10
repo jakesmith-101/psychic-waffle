@@ -2,6 +2,7 @@ package db
 
 import (
 	"context"
+	"fmt"
 	"time"
 
 	"github.com/google/uuid"
@@ -76,7 +77,27 @@ type UpdateUser struct {
 }
 
 func SetUser(user UpdateUser) (bool, error) {
-	query := `UPDATE users SET Nickname=@Nickname, PasswordHash=@PasswordHash, RoleID=@RoleID, UpdatedAt=@UpdatedAt WHERE UserID=@UserID;`
+	// check vars are set
+	nickname := ""
+	password := ""
+	roleid := ""
+	if user.Nickname != "" {
+		nickname = "Nickname=@Nickname,"
+	}
+	if user.PasswordHash != "" {
+		password = "PasswordHash=@PasswordHash,"
+	}
+	if user.RoleID != "" {
+		roleid = "RoleID=@RoleID,"
+	}
+
+	// only update set vars
+	query := fmt.Sprintf(
+		`UPDATE users SET %s %s %s UpdatedAt=@UpdatedAt WHERE UserID=@UserID;`,
+		nickname,
+		password,
+		roleid,
+	)
 	args := pgx.NamedArgs{
 		"UserID":       user.UserID,
 		"Nickname":     user.Nickname,
