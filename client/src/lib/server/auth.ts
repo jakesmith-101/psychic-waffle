@@ -9,9 +9,9 @@ export async function signup(username: string, password: string) {
 }
 
 interface tAuthReturn {
-    Token: string,
-    UserID: string,
-    Message: string,
+    token: string,
+    userID: string,
+    message: string,
 }
 
 async function auth(path: 'signup' | 'login', username: string, password: string): Promise<tAuthReturn> {
@@ -19,13 +19,11 @@ async function auth(path: 'signup' | 'login', username: string, password: string
     if (password === '') throw new Error('Missing Password');
 
     const data = await apiFetch(`/auth/${path}`, 'POST', { username, password });
-    if (typeof data === "object") {
-        if (
-            typeof data?.token === "string" &&
-            typeof data?.UserID === "string" &&
-            typeof data?.Message === "string"
-        )
-            return data as tAuthReturn
-    }
+    if (
+        typeof data?.token === "string" &&
+        typeof data?.userID === "string" &&
+        typeof data?.message === "string"
+    )
+        return data as tAuthReturn
     throw new Error(`Auth failed: ${data?.message}`);
 }
