@@ -2,14 +2,14 @@
     let showPassword = false;
     $: password = showPassword ? 'text' : 'password';
 
-    const button = document.getElementById('login');
+    const button = document.getElementById('signup');
     if (button)
         button.onclick = function () {
-            location.href = '/login';
+            location.href = '/user/signup';
         };
 </script>
 
-<h1>Welcome to signup</h1>
+<h1>Welcome to login</h1>
 
 <form method="post">
     <div>
@@ -21,24 +21,10 @@
         <input id="password" name="password" type={password} required placeholder="Password" />
     </div>
     <div>
-        <label for="confirmPassword">Confirm Password</label>
-        <input
-            id="confirmPassword"
-            name="confirmPassword"
-            type={password}
-            required
-            placeholder="Confirm Password"
-        />
+        <input type="submit" aria-label="login" />
     </div>
     <div>
-        <input type="checkbox" bind:checked={showPassword} id="showPassword" />
-        <label for="showPassword"> Show Password </label>
-    </div>
-    <div>
-        <input type="submit" />
-    </div>
-    <div>
-        <button id="login">Signup</button>
+        <button id="signup">Signup</button>
     </div>
 </form>
 

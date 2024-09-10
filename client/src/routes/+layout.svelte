@@ -8,16 +8,23 @@
 <nav>
     <ul>
         <li><a href="/" class={$page.url.pathname === '/' ? 'active' : 'inactive'}>Home</a></li>
+        <li>
+            <a
+                href="/user/dashboard"
+                class={$page.url.pathname === '/dashboard' ? 'active' : 'inactive'}>Dashboard</a
+            >
+        </li>
 
         <li style="float:right">
             {#if data.Token !== undefined}
                 <a
-                    href="/dashboard"
-                    class={$page.url.pathname === '/dashboard' ? 'active' : 'inactive'}>Dashboard</a
+                    href="/user/logout"
+                    class={$page.url.pathname === '/logout' ? 'active' : 'inactive'}>Logout</a
                 >
             {:else}
-                <a href="/login" class={$page.url.pathname === '/login' ? 'active' : 'inactive'}
-                    >Login</a
+                <a
+                    href="/user/login"
+                    class={$page.url.pathname === '/login' ? 'active' : 'inactive'}>Login</a
                 >
             {/if}
         </li>
