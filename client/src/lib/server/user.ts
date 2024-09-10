@@ -17,8 +17,8 @@ interface tGetReturn {
     username: string
     nickname: string
     roleID: string
-    updatedAt: Date
-    createdAt: Date
+    updatedAt: string
+    createdAt: string
 }
 
 export async function getUser(userID: string): Promise<tGetReturn> {
@@ -30,8 +30,8 @@ export async function getUser(userID: string): Promise<tGetReturn> {
         typeof data?.nickname === "string" &&
         typeof data?.roleID === "string" &&
         typeof data?.userID === "string" &&
-        data?.updatedAt instanceof Date &&
-        data?.createdAt instanceof Date
+        typeof data?.updatedAt === "string" &&
+        typeof data?.createdAt === "string"
     )
         return data as tGetReturn;
     throw new Error(`Get user failed: ${data?.message}`);
