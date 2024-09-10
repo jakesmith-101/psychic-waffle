@@ -1,12 +1,6 @@
 <script lang="ts">
     let showPassword = false;
     $: password = showPassword ? 'text' : 'password';
-
-    const button = document.getElementById('login');
-    if (button)
-        button.onclick = function () {
-            location.href = '/user/login';
-        };
 </script>
 
 <h1>Welcome to signup</h1>
@@ -38,6 +32,45 @@
         <input type="submit" />
     </div>
     <div>
-        <button id="login">Signup</button>
+        <a href="/user/login">Login</a>
     </div>
 </form>
+
+<style>
+    /* Bordered form */
+    form {
+        border: 3px solid #f1f1f1;
+    }
+
+    /* Full-width inputs */
+    input[type='text'],
+    input[type='password'] {
+        width: 100%;
+        padding: 12px 20px;
+        margin: 8px 0;
+        display: inline-block;
+        border: 1px solid #ccc;
+        box-sizing: border-box;
+    }
+
+    /* Set a style for all buttons */
+    input[type='submit'] {
+        background-color: #04aa6d;
+        color: white;
+        padding: 14px 20px;
+        margin: 8px 0;
+        border: none;
+        cursor: pointer;
+        width: 100%;
+    }
+
+    /* Add a hover effect for buttons */
+    input[type='submit']:hover {
+        opacity: 0.8;
+    }
+
+    /* Add padding to containers */
+    form > div {
+        padding: 16px;
+    }
+</style>
