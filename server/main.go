@@ -11,6 +11,7 @@ import (
 	_ "github.com/danielgtaylor/huma/v2/formats/cbor"
 
 	"github.com/jakesmith-101/psychic-waffle/api"
+	"github.com/jakesmith-101/psychic-waffle/db"
 	"github.com/jakesmith-101/psychic-waffle/db/mock"
 )
 
@@ -23,6 +24,8 @@ type Options struct {
 func main() {
 	// Create a CLI app which takes a port option.
 	cli := humacli.New(func(hooks humacli.Hooks, options *Options) {
+		// Initilize PgxPool pointer
+		db.Open()
 		// Ensure SQL tables and basic data exist
 		mock.MockAll()
 
