@@ -1,6 +1,12 @@
 <script lang="ts">
     let showPassword = false;
     $: password = showPassword ? 'text' : 'password';
+
+    const button = document.getElementById('login');
+    if (button)
+        button.onclick = function () {
+            location.href = '/login';
+        };
 </script>
 
 <h1>Welcome to signup</h1>
@@ -31,6 +37,9 @@
     <div>
         <input type="submit" />
     </div>
+    <div>
+        <button id="login">Signup</button>
+    </div>
 </form>
 
 <style>
@@ -51,7 +60,8 @@
     }
 
     /* Set a style for all buttons */
-    input[type='submit'] {
+    input[type='submit'],
+    button {
         background-color: #04aa6d;
         color: white;
         padding: 14px 20px;
@@ -62,7 +72,8 @@
     }
 
     /* Add a hover effect for buttons */
-    input[type='submit']:hover {
+    input[type='submit']:hover,
+    button:hover {
         opacity: 0.8;
     }
 

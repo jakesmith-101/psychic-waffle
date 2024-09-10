@@ -1,25 +1,26 @@
-<script>
+<script lang="ts">
     import { page } from '$app/stores';
+    import type { PageData } from './$types';
+
+    export let data: PageData;
 </script>
 
 <nav>
     <ul>
         <li><a href="/" class={$page.url.pathname === '/' ? 'active' : 'inactive'}>Home</a></li>
-        <li>
-            <a href="/login" class={$page.url.pathname === '/login' ? 'active' : 'inactive'}
-                >Login</a
-            >
-        </li>
-        <li>
-            <a href="/signup" class={$page.url.pathname === '/signup' ? 'active' : 'inactive'}
-                >Signup</a
-            >
-        </li>
 
         <li style="float:right">
-            <a href="/dashboard" class={$page.url.pathname === '/dashboard' ? 'active' : 'inactive'}
-                >Dashboard</a
-            >
+            {#if data.Token !== undefined}
+                <a
+                    href="/dashboard"
+                    class={$page.url.pathname === '/dashboard' ? 'active' : 'inactive'}>Dashboard</a
+                >
+            {/if}
+            {#if data.Token === undefined}
+                <a href="/login" class={$page.url.pathname === '/login' ? 'active' : 'inactive'}
+                    >Login</a
+                >
+            {/if}
         </li>
     </ul>
 </nav>

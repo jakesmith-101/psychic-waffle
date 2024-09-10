@@ -1,6 +1,12 @@
 <script lang="ts">
     let showPassword = false;
     $: password = showPassword ? 'text' : 'password';
+
+    const button = document.getElementById('signup');
+    if (button)
+        button.onclick = function () {
+            location.href = '/signup';
+        };
 </script>
 
 <h1>Welcome to login</h1>
@@ -16,6 +22,9 @@
     </div>
     <div>
         <input type="submit" aria-label="login" />
+    </div>
+    <div>
+        <button id="signup">Signup</button>
     </div>
 </form>
 
@@ -37,7 +46,8 @@
     }
 
     /* Set a style for all buttons */
-    input[type='submit'] {
+    input[type='submit'],
+    button {
         background-color: #04aa6d;
         color: white;
         padding: 14px 20px;
@@ -48,7 +58,8 @@
     }
 
     /* Add a hover effect for buttons */
-    input[type='submit']:hover {
+    input[type='submit']:hover,
+    button:hover {
         opacity: 0.8;
     }
 
