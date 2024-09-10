@@ -28,7 +28,7 @@ func CreateRole(name string, perms int) (string, error) {
 		Name:        name,
 	}
 
-	query := `INSERT INTO users (Permissions, Name) VALUES (@Permissions, @Name)`
+	query := `INSERT INTO roles (Permissions, Name) VALUES (@Permissions, @Name)`
 	args := pgx.NamedArgs{
 		"Permissions": role.Permissions,
 		"Name":        role.Name,
