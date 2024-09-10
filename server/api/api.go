@@ -17,9 +17,14 @@ func BuildPath(route string) string {
 func AllEndpoints(api huma.API) {
 	HealthCheck(api)
 	AuthEndpoints(api)
+	UserEndpoints(api)
 }
 
 func AuthEndpoints(api huma.API) {
 	Signup(api)
 	Login(api)
+}
+
+func UserEndpoints(api huma.API) {
+	UpdateUser(api)
 }

@@ -2,6 +2,7 @@ package api
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"net/http"
 	"os"
@@ -66,6 +67,8 @@ func UpdateUser(api huma.API) {
 		}
 		if success {
 			resp.Body.Message = fmt.Sprintf("Successfully updated user: %s", name)
+		} else {
+			return resp, errors.New("failed to update user")
 		}
 
 		return resp, err
