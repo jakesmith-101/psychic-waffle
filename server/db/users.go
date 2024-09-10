@@ -107,13 +107,18 @@ func SetUser(user UpdateUser) (bool, error) {
 		"UpdatedAt":    time.Now(),
 	}
 	cmd, err := PgxPool.Exec(context.Background(), query, args)
-	if cmd.RowsAffected() == 1 {
-		return true, err
-	} else {
+	rowsAff := cmd.RowsAffected()
+	if rowsAff == 0 {
 		if err != nil {
 			return false, err
 		} else {
-			return false, errors.New("multiple or no rows affected")
+			return false, errors.New("no rows affected")
+		}
+	} else {
+		if err != nil || rowsAff == 1 {
+			return true, err
+		} else {
+			return true, errors.New("multiple rows affected")
 		}
 	}
 }
