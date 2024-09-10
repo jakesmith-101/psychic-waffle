@@ -48,7 +48,6 @@ func UpdateUser(api huma.API) {
 		userID := fmt.Sprint(claims["UserID"])
 		fmt.Fprintf(os.Stderr, "Requested update user: %s\n", userID)
 
-		// FIXME: permissions check using token!!
 		success, err := db.SetUser(db.UpdateUser{
 			UserID:       userID,
 			Nickname:     input.Body.Nickname,
