@@ -27,4 +27,5 @@ if not exist .env (
     echo ""
     echo "# SvelteKit"
     echo "ORIGIN_URL=http://localhost:80"
+    echo "BUILD_TYPE=production"
 ) > .env

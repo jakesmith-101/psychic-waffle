@@ -35,4 +35,5 @@ TEST_DB_PORT=5432
 
 # SvelteKit
 ORIGIN_URL=
+BUILD_TYPE=production
 ```

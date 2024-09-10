@@ -32,7 +32,7 @@ func CreateUserTable() error {
 
 // Depends upon mocked roles
 func MockAdmin() error {
-	pass, err := password.GenerateFromPassword("admin")
+	pass, err := password.GenerateFromPassword("admin123")
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "%e\n", err)
 	}

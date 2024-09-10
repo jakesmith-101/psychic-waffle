@@ -4,11 +4,9 @@ export const rootPath = `${apiUrl}/api/${apiVer}`;
 
 export type tMethod = 'GET' | 'POST' | 'PUT' | 'DELETE';
 export async function apiFetch(path: `/${string}`, method: tMethod, body: any): Promise<any> {
+    console.log(`${rootPath}${path}`);
     const response = await fetch(`${rootPath}${path}`, {
         method,
-        headers: {
-            'content-type': 'application/json;charset=UTF-8'
-        },
         body: JSON.stringify(body)
     });
 
