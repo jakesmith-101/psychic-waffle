@@ -6,6 +6,9 @@
             "type": "shell",
             "command": "docker-compose build",
             "group": "build",
+            "dependsOn": [
+                "Build: Frontend Dev"
+            ],
             "presentation": {
                 "reveal": "silent"
             }
