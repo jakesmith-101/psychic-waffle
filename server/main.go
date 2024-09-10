@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"net/http"
+	"os"
 
 	"github.com/danielgtaylor/huma/v2"
 	"github.com/danielgtaylor/huma/v2/adapters/humago"
@@ -27,7 +28,10 @@ func main() {
 		// Initilize PgxPool pointer
 		db.Open()
 		// Ensure SQL tables and basic data exist
-		mock.MockAll()
+		err := mock.MockAll()
+		if err != nil {
+			fmt.Fprintf(os.Stderr, "%v\n", err)
+		}
 
 		// Create a new router & API
 		router := http.NewServeMux()
