@@ -4,5 +4,5 @@
     export let data: PageData;
 </script>
 
-<h1>Welcome {data.Username}!</h1>
+<h1>Welcome {data.username}!</h1>
 <slot></slot>

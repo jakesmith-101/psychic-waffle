@@ -1,9 +1,9 @@
 export function load({ cookies }) {
     const Token = cookies.get('psychic_waffle_authorisation');
-    const Username = cookies.get('psychic_waffle_username');
+    const UserID = cookies.get('psychic_waffle_userid');
 
     return {
         Token,
-        Username,
+        UserID,
     };
 }
