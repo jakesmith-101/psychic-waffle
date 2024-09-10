@@ -3,6 +3,7 @@ package db
 import (
 	"context"
 
+	"github.com/google/uuid"
 	"github.com/jackc/pgx/v5"
 )
 
@@ -24,12 +25,14 @@ func GetRole(ID string) (*Role, error) {
 
 func CreateRole(name string, perms int) (string, error) {
 	role := Role{
+		RoleID:      uuid.NewString(),
 		Permissions: perms,
 		Name:        name,
 	}
 
-	query := `INSERT INTO roles (Permissions, Name) VALUES (@Permissions, @Name)`
+	query := `INSERT INTO roles (RoleID, Permissions, Name) VALUES (@RoleID, @Permissions, @Name)`
 	args := pgx.NamedArgs{
+		"RoleID":      role.RoleID,
 		"Permissions": role.Permissions,
 		"Name":        role.Name,
 	}
