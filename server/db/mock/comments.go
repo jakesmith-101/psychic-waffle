@@ -13,6 +13,7 @@ func CreateCommentTable() error {
 		`CREATE TABLE IF NOT EXISTS comments (
 			CommentID UUID DEFAULT gen_random_uuid() PRIMARY KEY,
 			CommentText TEXT,
+			Votes INTEGER,
 			ParentID UUID references comments(CommentID),
 			PostID UUID references posts(PostID),
 			CreatedAt DATE,

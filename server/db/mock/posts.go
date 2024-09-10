@@ -14,6 +14,7 @@ func CreatePostTable() error {
 			PostID UUID DEFAULT gen_random_uuid() PRIMARY KEY,
 			PostTitle TEXT,
 			PostDescription TEXT,
+			Votes INTEGER,
 			AuthorID UUID references users(UserID),
 			CreatedAt DATE,
 			UpdatedAt DATE
