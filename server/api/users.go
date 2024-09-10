@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"net/http"
 	"os"
+	"time"
 
 	"github.com/danielgtaylor/huma/v2"
 	"github.com/jakesmith-101/psychic-waffle/db"
@@ -80,5 +81,45 @@ func UpdateUser(api huma.API) {
 		}
 
 		return resp, err
+	})
+}
+
+type GetUserOutput struct {
+	Body struct {
+		UserID    string    `json:"userID"`    // pk
+		Nickname  string    `json:"nickname"`  //
+		RoleID    string    `json:"roleID"`    // fk
+		Username  string    `json:"username"`  // unique
+		CreatedAt time.Time `json:"createdAt"` //
+		UpdatedAt time.Time `json:"updatedAt"` //
+	}
+}
+
+func GetUser(api huma.API) {
+	// Register POST /user/get
+	huma.Register(api, huma.Operation{
+		OperationID: "get-user",
+		Method:      http.MethodGet,
+		Path:        BuildPath("/user/get"),
+		Summary:     "Get a user account",
+		Description: "Get a user account by user ID",
+		Tags:        []string{"GetUser"},
+	}, func(ctx context.Context, input *struct {
+		Body struct {
+			UserID string `json:"userID" required:"true"`
+		}
+	}) (*GetUserOutput, error) {
+		resp := &GetUserOutput{}
+		user, err := db.GetUser(input.Body.UserID)
+		if err != nil {
+			return resp, err
+		}
+		resp.Body.UserID = user.UserID
+		resp.Body.Username = user.Username
+		resp.Body.Nickname = user.Nickname
+		resp.Body.RoleID = user.RoleID
+		resp.Body.CreatedAt = user.CreatedAt
+		resp.Body.UpdatedAt = user.UpdatedAt
+		return resp, nil
 	})
 }

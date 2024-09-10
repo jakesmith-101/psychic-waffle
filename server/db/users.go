@@ -11,13 +11,13 @@ import (
 )
 
 type User struct {
-	UserID       string    `json:"id"`        // pk
+	UserID       string    `json:"userID"`    // pk
 	Nickname     string    `json:"nickname"`  //
 	PasswordHash string    `json:"password"`  //
-	RoleID       string    `json:"roleid"`    // fk
+	RoleID       string    `json:"roleID"`    // fk
 	Username     string    `json:"username"`  // unique
-	CreatedAt    time.Time `json:"createdat"` //
-	UpdatedAt    time.Time `json:"updatedat"` //
+	CreatedAt    time.Time `json:"createdAt"` //
+	UpdatedAt    time.Time `json:"updatedAt"` //
 }
 
 func GetUser(ID string) (*User, error) {

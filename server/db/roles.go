@@ -8,7 +8,7 @@ import (
 )
 
 type Role struct {
-	RoleID      string `json:"id"`          // pk
+	RoleID      string `json:"roleID"`      // pk
 	Permissions int    `json:"permissions"` //
 	Name        string `json:"name"`        // unique
 }
