@@ -10,10 +10,10 @@ import (
 
 type User struct {
 	UserID       string    `json:"id"`        // pk
-	Username     string    `json:"username"`  // unique
 	Nickname     string    `json:"nickname"`  //
 	PasswordHash string    `json:"password"`  //
 	RoleID       string    `json:"roleid"`    // fk
+	Username     string    `json:"username"`  // unique
 	CreatedAt    time.Time `json:"createdat"` //
 	UpdatedAt    time.Time `json:"updatedat"` //
 }
@@ -68,7 +68,26 @@ func CreateUser(username string, passwordHash string) (string, error) {
 	return user.UserID, err
 }
 
-// TODO: setUser logic
-func SetUser(user User) bool {
-	return true
+type UpdateUser struct {
+	UserID       string `json:"id"`       // pk
+	Nickname     string `json:"nickname"` //
+	PasswordHash string `json:"password"` //
+	RoleID       string `json:"roleid"`   // fk
+}
+
+func SetUser(user UpdateUser) (bool, error) {
+	query := `UPDATE users SET Nickname=@Nickname, PasswordHash=@PasswordHash, RoleID=@RoleID, UpdatedAt=@UpdatedAt WHERE UserID=@UserID;`
+	args := pgx.NamedArgs{
+		"UserID":       user.UserID,
+		"Nickname":     user.Nickname,
+		"PasswordHash": user.PasswordHash,
+		"RoleID":       user.RoleID,
+		"UpdatedAt":    time.Now(),
+	}
+	cmd, err := PgxPool.Exec(context.Background(), query, args)
+	if cmd.RowsAffected() == 1 {
+		return true, err
+	} else {
+		return false, err
+	}
 }
