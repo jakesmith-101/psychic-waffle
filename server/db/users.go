@@ -19,7 +19,7 @@ type User struct {
 
 func GetUser(ID string) (*User, error) {
 	var user User
-	row, err := Conn.Query(context.Background(), "SELECT * FROM users WHERE UserID=$1;", ID)
+	row, err := PgxPool.Query(context.Background(), "SELECT * FROM users WHERE UserID=$1;", ID)
 	if err != nil {
 		return &user, err
 	}
@@ -29,7 +29,7 @@ func GetUser(ID string) (*User, error) {
 
 func GetUserByUsername(username string) (*User, error) {
 	var user User
-	row, err := Conn.Query(context.Background(), "SELECT * FROM users WHERE Username=$1;", username)
+	row, err := PgxPool.Query(context.Background(), "SELECT * FROM users WHERE Username=$1;", username)
 	if err != nil {
 		return &user, err
 	}
@@ -61,7 +61,7 @@ func CreateUser(username string, passwordHash string) (string, error) {
 		"CreatedAt":    user.CreatedAt,
 		"UpdatedAt":    user.UpdatedAt,
 	}
-	_, err = Conn.Exec(context.Background(), query, args)
+	_, err = PgxPool.Exec(context.Background(), query, args)
 	return user.UserID, err
 }
 

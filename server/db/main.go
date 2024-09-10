@@ -5,10 +5,10 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/jackc/pgx/v5"
+	"github.com/jackc/pgx/v5/pgxpool"
 )
 
-var Conn *pgx.Conn
+var PgxPool *pgxpool.Pool
 var err error
 
 // DBConfig represents db configuration
@@ -35,13 +35,13 @@ func buildDBUrl(dbType string) string {
 func Open() {
 	dbType := "TEST_POSTGRES"                       // prod: "POSTGRES", test: "TEST_POSTGRES"
 	dbUrl := buildDBUrl(fmt.Sprintf("%s_", dbType)) // apply connecting "_"
-	Conn, err = pgx.Connect(context.Background(), dbUrl)
+	PgxPool, err = pgxpool.New(context.Background(), dbUrl)
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Unable to connect to database: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Database URL: %s\n", dbUrl)
 		os.Exit(1)
 	} else {
 		fmt.Fprintf(os.Stderr, "Connected to database: %s\n", dbType)
-		defer Conn.Close(context.Background())
+		defer PgxPool.Close()
 	}
 }

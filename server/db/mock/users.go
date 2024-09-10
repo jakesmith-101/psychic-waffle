@@ -2,7 +2,8 @@ package mock
 
 import (
 	"context"
-	"log"
+	"fmt"
+	"os"
 
 	"github.com/jakesmith-101/psychic-waffle/db"
 	"github.com/jakesmith-101/psychic-waffle/password"
@@ -10,7 +11,7 @@ import (
 
 // Depends upon Roles table
 func CreateUserTable() error {
-	_, err := db.Conn.Exec(
+	_, err := db.PgxPool.Exec(
 		context.Background(),
 		`CREATE TABLE IF NOT EXISTS users (
 			UserID UUID DEFAULT gen_random_uuid() PRIMARY KEY,
@@ -23,6 +24,9 @@ func CreateUserTable() error {
 			UNIQUE (Email)
 		);`,
 	)
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "%e\n", err)
+	}
 	return err
 }
 
@@ -30,8 +34,11 @@ func CreateUserTable() error {
 func MockAdmin() error {
 	pass, err := password.GenerateFromPassword("admin")
 	if err != nil {
-		log.Fatal("admin: password error")
+		fmt.Fprintf(os.Stderr, "%e\n", err)
 	}
 	_, err = db.CreateUser("admin", pass)
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "%e\n", err)
+	}
 	return err
 }
