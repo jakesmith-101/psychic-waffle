@@ -1,7 +1,8 @@
 package mock
 
 func MockAll() error {
-	err := CreateRoleTable()
+	var err error
+	err = CreateRoleTable()
 	if err != nil {
 		return err
 	}
@@ -22,5 +23,8 @@ func MockAll() error {
 		return err
 	}
 	err = CreateCommentTable()
-	return err
+	if err != nil {
+		return err
+	}
+	return nil
 }

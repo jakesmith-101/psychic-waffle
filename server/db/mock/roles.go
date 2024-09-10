@@ -20,11 +20,17 @@ func CreateRoleTable() error {
 }
 
 func MockRoles() error {
-	_, err := db.CreateRole("User", 0)
+	_, err := db.GetRoleByName("User")
 	if err != nil {
-		return err
+		_, err = db.CreateRole("User", 0)
+		if err != nil {
+			return err
+		}
 	}
-	_, err = db.CreateRole("Admin", 0) // FIXME: no perms "invented" yet
+	_, err = db.GetRoleByName("Admin")
+	if err != nil {
+		_, err = db.CreateRole("Admin", 0) // FIXME: no perms "invented" yet
+	}
 
 	return err
 }
