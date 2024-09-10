@@ -34,6 +34,10 @@
 <slot></slot>
 
 <style>
+    body {
+        margin: 0;
+    }
+
     ul {
         list-style-type: none;
         margin: 0;
