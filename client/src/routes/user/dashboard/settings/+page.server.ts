@@ -16,8 +16,8 @@ export const actions: Actions = {
 
         if (
             typeof nickname !== "string" ||
-            nickname.length < 3 ||
-            nickname.length > 31 ||
+            ((nickname.length < 3 || nickname.length > 31) &&
+                nickname.length !== 0) ||
             !/^[A-Za-z0-9_-]+$/.test(nickname)
         ) {
             return fail(400, {
@@ -25,7 +25,11 @@ export const actions: Actions = {
             });
         }
 
-        if (typeof password !== "string" || password.length < 6 || password.length > 255) {
+        if (
+            typeof password !== "string" ||
+            ((password.length < 6 || password.length > 255) &&
+                password.length !== 0)
+        ) {
             return fail(400, {
                 message: "Invalid password"
             });
