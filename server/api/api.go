@@ -26,5 +26,6 @@ func AuthEndpoints(api huma.API) {
 }
 
 func UserEndpoints(api huma.API) {
+	GetUser(api)
 	UpdateUser(api)
 }
