@@ -14,5 +14,13 @@ func MockAll() error {
 		return err
 	}
 	err = MockAdmin()
+	if err != nil {
+		return err
+	}
+	err = CreatePostTable()
+	if err != nil {
+		return err
+	}
+	err = CreateCommentTable()
 	return err
 }
