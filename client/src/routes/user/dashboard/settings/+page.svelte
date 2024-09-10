@@ -7,11 +7,11 @@
 <form method="post">
     <div>
         <label for="nickname">Nickname</label>
-        <input id="nickname" name="nickname" type="text" required placeholder="Nickname" />
+        <input id="nickname" name="nickname" type="text" placeholder="Nickname" />
     </div>
     <div>
         <label for="password">Password</label>
-        <input id="password" name="password" type={password} required placeholder="Password" />
+        <input id="password" name="password" type={password} placeholder="Password" />
     </div>
     <div>
         <input type="checkbox" bind:checked={showPassword} id="showPassword" />

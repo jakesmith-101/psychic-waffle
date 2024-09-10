@@ -10,7 +10,6 @@ export async function apiFetch(path: `/${string}`, method: tMethod, rawBody?: an
     };
     if (rawBody !== undefined) {
         const body = JSON.stringify(rawBody);
-        console.log(body);
         rInit.body = body;
         rInit.headers = {
             'Content-Type': 'application/json;charset=utf-8'
