@@ -13,7 +13,7 @@ func CreatePostTable() error {
 		`CREATE TABLE IF NOT EXISTS posts (
 			PostID UUID DEFAULT gen_random_uuid() PRIMARY KEY,
 			PostTitle TEXT,
-			PostText TEXT,
+			PostDescription TEXT,
 			AuthorID UUID references users(UserID),
 			CreatedAt DATE,
 			UpdatedAt DATE
