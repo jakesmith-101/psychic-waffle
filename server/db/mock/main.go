@@ -5,7 +5,7 @@ import (
 	"os"
 )
 
-func MockAll() error {
+func MockAll() {
 	err := CreateRoleTable()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "%v\n", err)
