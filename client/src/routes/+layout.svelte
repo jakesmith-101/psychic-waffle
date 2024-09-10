@@ -8,12 +8,14 @@
 <nav>
     <ul>
         <li><a href="/" class={$page.url.pathname === '/' ? 'active' : 'inactive'}>Home</a></li>
-        <li>
-            <a
-                href="/user/dashboard"
-                class={$page.url.pathname === '/dashboard' ? 'active' : 'inactive'}>Dashboard</a
-            >
-        </li>
+        {#if data.Token !== undefined}
+            <li>
+                <a
+                    href="/user/dashboard"
+                    class={$page.url.pathname === '/dashboard' ? 'active' : 'inactive'}>Dashboard</a
+                >
+            </li>
+        {/if}
 
         <li style="float:right">
             {#if data.Token !== undefined}
