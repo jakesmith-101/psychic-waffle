@@ -28,10 +28,10 @@ func UpdateUser(api huma.API) {
 		Tags:        []string{"UpdateUser"},
 	}, func(ctx context.Context, input *struct {
 		Body struct {
-			Nickname     string `json:"nickname" required:"false"` //
-			PasswordHash string `json:"password" required:"false"` //
-			RoleID       string `json:"roleID" required:"false"`   //
-			Token        string `json:"token" required:"true"`     // jwt token
+			Nickname     string `json:"nickname" required:"false"`     //
+			PasswordHash string `json:"passwordHash" required:"false"` //
+			RoleID       string `json:"roleID" required:"false"`       //
+			Token        string `json:"token" required:"true"`         // jwt token
 		}
 	}) (*UpdateUserOutput, error) {
 		resp := &UpdateUserOutput{}
