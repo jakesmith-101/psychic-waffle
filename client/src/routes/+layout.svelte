@@ -4,11 +4,22 @@
 
 <nav>
     <ul>
-        <li><a href="/" aria-current={$page.url.pathname === '/'}>Home</a></li>
-        <li><a href="/login" aria-current={$page.url.pathname === '/login'}>Login</a></li>
-        <li><a href="/signup" aria-current={$page.url.pathname === '/signup'}>Signup</a></li>
+        <li><a href="/" class={$page.url.pathname === '/' ? 'active' : 'inactive'}>Home</a></li>
         <li>
-            <a href="/dashboard" aria-current={$page.url.pathname === '/dashboard'}>Dashboard</a>
+            <a href="/login" class={$page.url.pathname === '/login' ? 'active' : 'inactive'}
+                >Login</a
+            >
+        </li>
+        <li>
+            <a href="/signup" class={$page.url.pathname === '/signup' ? 'active' : 'inactive'}
+                >Signup</a
+            >
+        </li>
+
+        <li style="float:right">
+            <a href="/dashboard" class={$page.url.pathname === '/dashboard' ? 'active' : 'inactive'}
+                >Dashboard</a
+            >
         </li>
     </ul>
 </nav>
@@ -38,5 +49,9 @@
 
     li a:hover {
         background-color: #111;
+    }
+
+    .active {
+        background-color: #04aa6d;
     }
 </style>
