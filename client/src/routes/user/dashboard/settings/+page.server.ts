@@ -9,13 +9,11 @@ export const actions: Actions = {
         const password = formData.get('password');
 
         const token = cookies.get("psychic_waffle_authorisation");
-        console.log(token)
         if (token === undefined)
             return fail(400, {
                 message: "Not logged in"
             })
 
-        console.log(nickname)
         if (
             typeof nickname !== "string" ||
             nickname.length < 3 ||
@@ -26,7 +24,7 @@ export const actions: Actions = {
                 message: "Invalid nickname"
             });
         }
-        console.log(password)
+
         if (typeof password !== "string" || password.length < 6 || password.length > 255) {
             return fail(400, {
                 message: "Invalid password"
