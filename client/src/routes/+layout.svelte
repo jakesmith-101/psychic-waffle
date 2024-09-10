@@ -15,8 +15,7 @@
                     href="/dashboard"
                     class={$page.url.pathname === '/dashboard' ? 'active' : 'inactive'}>Dashboard</a
                 >
-            {/if}
-            {#if data.Token === undefined}
+            {:else}
                 <a href="/login" class={$page.url.pathname === '/login' ? 'active' : 'inactive'}
                     >Login</a
                 >
