@@ -24,7 +24,7 @@ interface tGetReturn {
 export async function getUser(userID: string): Promise<tGetReturn> {
     if (userID === '') throw new Error('Missing user ID');
 
-    const data = await apiFetch(`/user/get`, 'GET', { userID });
+    const data = await apiFetch(`/user/${userID}`, 'GET');
     if (
         typeof data?.username === "string" &&
         typeof data?.nickname === "string" &&

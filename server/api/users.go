@@ -100,17 +100,15 @@ func GetUser(api huma.API) {
 	huma.Register(api, huma.Operation{
 		OperationID: "get-user",
 		Method:      http.MethodGet,
-		Path:        BuildPath("/user/get"),
+		Path:        BuildPath("/user/{userID}"),
 		Summary:     "Get a user account",
 		Description: "Get a user account by user ID",
 		Tags:        []string{"GetUser"},
 	}, func(ctx context.Context, input *struct {
-		Body struct {
-			UserID string `json:"userID" required:"true"`
-		}
+		UserID string `path:"userID" required:"true"`
 	}) (*GetUserOutput, error) {
 		resp := &GetUserOutput{}
-		user, err := db.GetUser(input.Body.UserID)
+		user, err := db.GetUser(input.UserID)
 		if err != nil {
 			return resp, err
 		}
