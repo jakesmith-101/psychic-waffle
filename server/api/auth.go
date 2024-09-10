@@ -35,7 +35,7 @@ func Signup(api huma.API) {
 			Password string `json:"password" maxLength:"30" example:"pass123" doc:"Password of account"`
 		}
 	}) (*SignupOutput, error) {
-		fmt.Fprintf(os.Stderr, "Requested account creation: %s %s\n", input.Body.Username, input.Body.Password)
+		fmt.Fprintf(os.Stderr, "Requested account creation: %s\n", input.Body.Username)
 		resp := &SignupOutput{}
 		hash, err := password.GenerateFromPassword(input.Body.Password)
 		if err != nil {
