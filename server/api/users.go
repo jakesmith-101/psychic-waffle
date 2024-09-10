@@ -9,6 +9,7 @@ import (
 
 	"github.com/danielgtaylor/huma/v2"
 	"github.com/jakesmith-101/psychic-waffle/db"
+	"github.com/jakesmith-101/psychic-waffle/password"
 )
 
 type UpdateUserOutput struct {
@@ -28,10 +29,10 @@ func UpdateUser(api huma.API) {
 		Tags:        []string{"UpdateUser"},
 	}, func(ctx context.Context, input *struct {
 		Body struct {
-			Nickname     string `json:"nickname" required:"false"`     //
-			PasswordHash string `json:"passwordHash" required:"false"` //
-			RoleID       string `json:"roleID" required:"false"`       //
-			Token        string `json:"token" required:"true"`         // jwt token
+			Nickname string `json:"nickname" required:"false"` //
+			Password string `json:"password" required:"false"` //
+			RoleID   string `json:"roleID" required:"false"`   //
+			Token    string `json:"token" required:"true"`     // jwt token
 		}
 	}) (*UpdateUserOutput, error) {
 		resp := &UpdateUserOutput{}
@@ -49,10 +50,17 @@ func UpdateUser(api huma.API) {
 		userID := fmt.Sprint(claims["UserID"])
 		fmt.Fprintf(os.Stderr, "Requested update user: %s\n", userID)
 
+		var newPass string
+		if input.Body.Password != "" {
+			newPass, err = password.GenerateFromPassword(input.Body.Password)
+			if err != nil {
+				return resp, err
+			}
+		}
 		success, err := db.SetUser(db.UpdateUser{
 			UserID:       userID,
 			Nickname:     input.Body.Nickname,
-			PasswordHash: input.Body.PasswordHash,
+			PasswordHash: newPass,
 			RoleID:       input.Body.RoleID,
 		})
 		if err != nil {
