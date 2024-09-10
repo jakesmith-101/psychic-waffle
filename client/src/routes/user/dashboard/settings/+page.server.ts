@@ -9,14 +9,9 @@ export const actions: Actions = {
         const password = formData.get('password');
 
         const token = cookies.get("psychic_waffle_authorisation");
-        const userID = cookies.get("psychic_waffle_userid");
         if (token === undefined)
             return fail(400, {
                 message: "Not logged in"
-            })
-        if (userID === undefined)
-            return fail(400, {
-                message: "Missing User ID"
             })
 
         if (
@@ -35,7 +30,7 @@ export const actions: Actions = {
             });
         }
 
-        const body = await api.updateUser(userID, token, nickname, password);
+        const body = await api.updateUser(token, nickname, password);
         console.log(body.message);
     }
 };
