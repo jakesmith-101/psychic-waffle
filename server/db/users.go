@@ -52,7 +52,7 @@ func CreateUser(username string, passwordHash string) (string, error) {
 		UpdatedAt:    time.Now(),
 	}
 
-	query := `INSERT INTO users (Username, PasswordHash, Nickname, RoleID, AuthToken, CreatedAt, UpdatedAt) VALUES (@Username, @PasswordHash, @Nickname, @RoleID, @AuthToken, @CreatedAt, @UpdatedAt)`
+	query := `INSERT INTO users (Username, PasswordHash, Nickname, RoleID, CreatedAt, UpdatedAt) VALUES (@Username, @PasswordHash, @Nickname, @RoleID, @CreatedAt, @UpdatedAt)`
 	args := pgx.NamedArgs{
 		"Username":     user.Username,
 		"PasswordHash": user.PasswordHash,
