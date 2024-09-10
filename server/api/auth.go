@@ -39,22 +39,22 @@ func Signup(api huma.API) {
 		resp := &SignupOutput{}
 		hash, err := password.GenerateFromPassword(input.Body.Password)
 		if err != nil {
-			fmt.Fprintf(os.Stderr, "%e\n", err)
+			fmt.Fprintf(os.Stderr, "%v\n", err)
 			return resp, err
 		}
 		userID, err := db.CreateUser(input.Body.Username, hash)
 		if err != nil {
-			fmt.Fprintf(os.Stderr, "%e\n", err)
+			fmt.Fprintf(os.Stderr, "%v\n", err)
 			return resp, err
 		}
 		user, err := db.GetUser(userID)
 		if err != nil {
-			fmt.Fprintf(os.Stderr, "%e\n", err)
+			fmt.Fprintf(os.Stderr, "%v\n", err)
 			return resp, err
 		}
 		tokenString, err := CreateToken(*user)
 		if err != nil {
-			fmt.Fprintf(os.Stderr, "%e\n", err)
+			fmt.Fprintf(os.Stderr, "%v\n", err)
 			return resp, err
 		}
 		resp.Body.Token = tokenString
@@ -92,18 +92,18 @@ func Login(api huma.API) {
 		resp := &LoginOutput{}
 		user, err := db.GetUserByUsername(input.Body.Username)
 		if err != nil {
-			fmt.Fprintf(os.Stderr, "%e\n", err)
+			fmt.Fprintf(os.Stderr, "%v\n", err)
 			return resp, err
 		}
 		match, err := password.ComparePasswordAndHash(input.Body.Password, user.PasswordHash)
 		if err != nil {
-			fmt.Fprintf(os.Stderr, "%e\n", err)
+			fmt.Fprintf(os.Stderr, "%v\n", err)
 			return resp, err
 		}
 		if match {
 			tokenString, err := CreateToken(*user)
 			if err != nil {
-				fmt.Fprintf(os.Stderr, "%e\n", err)
+				fmt.Fprintf(os.Stderr, "%v\n", err)
 				return resp, err
 			}
 			resp.Body.Message = fmt.Sprintf("Hello, %s!", user.Nickname)

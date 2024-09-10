@@ -2,8 +2,6 @@ package mock
 
 import (
 	"context"
-	"fmt"
-	"os"
 
 	"github.com/jakesmith-101/psychic-waffle/db"
 	"github.com/jakesmith-101/psychic-waffle/password"
@@ -24,9 +22,6 @@ func CreateUserTable() error {
 			UNIQUE (Username)
 		);`,
 	)
-	if err != nil {
-		fmt.Fprintf(os.Stderr, "%e\n", err)
-	}
 	return err
 }
 
@@ -34,11 +29,8 @@ func CreateUserTable() error {
 func MockAdmin() error {
 	pass, err := password.GenerateFromPassword("admin123")
 	if err != nil {
-		fmt.Fprintf(os.Stderr, "%e\n", err)
+		return err
 	}
 	_, err = db.CreateUser("admin", pass)
-	if err != nil {
-		fmt.Fprintf(os.Stderr, "%e\n", err)
-	}
 	return err
 }

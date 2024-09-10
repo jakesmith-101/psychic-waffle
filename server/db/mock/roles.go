@@ -2,8 +2,6 @@ package mock
 
 import (
 	"context"
-	"fmt"
-	"os"
 
 	"github.com/jakesmith-101/psychic-waffle/db"
 )
@@ -18,20 +16,15 @@ func CreateRoleTable() error {
 			UNIQUE (Name)
 		);`,
 	)
-	if err != nil {
-		fmt.Fprintf(os.Stderr, "%e\n", err)
-	}
 	return err
 }
 
 func MockRoles() error {
 	_, err := db.CreateRole("User", 0)
 	if err != nil {
-		fmt.Fprintf(os.Stderr, "%e\n", err)
+		return err
 	}
 	_, err = db.CreateRole("Admin", 0) // FIXME: no perms "invented" yet
-	if err != nil {
-		fmt.Fprintf(os.Stderr, "%e\n", err)
-	}
+
 	return err
 }
