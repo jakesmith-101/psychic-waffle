@@ -42,6 +42,5 @@ func Open() {
 		os.Exit(1)
 	} else {
 		fmt.Fprintf(os.Stderr, "Connected to database: %s\n", dbType)
-		defer PgxPool.Close()
 	}
 }

@@ -40,6 +40,9 @@ func main() {
 		hooks.OnStart(func() {
 			http.ListenAndServe(fmt.Sprintf(":%d", options.Port), router)
 		})
+		hooks.OnStop(func() {
+			db.PgxPool.Close()
+		})
 	})
 
 	// Run the CLI. When passed no commands, it starts the server.
