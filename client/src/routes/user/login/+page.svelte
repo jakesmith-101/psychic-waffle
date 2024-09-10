@@ -1,8 +1,3 @@
-<script lang="ts">
-    let showPassword = false;
-    $: password = showPassword ? 'text' : 'password';
-</script>
-
 <h1>Welcome to login</h1>
 
 <form method="post">
@@ -12,7 +7,7 @@
     </div>
     <div>
         <label for="password">Password</label>
-        <input id="password" name="password" type={password} required placeholder="Password" />
+        <input id="password" name="password" type="password" required placeholder="Password" />
     </div>
     <div>
         <input type="submit" aria-label="login" />
