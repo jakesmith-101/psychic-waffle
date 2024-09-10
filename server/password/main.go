@@ -33,6 +33,9 @@ var (
 )
 
 func GenerateFromPassword(password string) (encodedHash string, err error) {
+	if len(password) < 6 {
+		return "", errors.New("password too small")
+	}
 	salt, err := generateRandomBytes(generalParams.SaltLength)
 	if err != nil {
 		return "", err
