@@ -2,6 +2,7 @@ package db
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"time"
 
@@ -109,6 +110,10 @@ func SetUser(user UpdateUser) (bool, error) {
 	if cmd.RowsAffected() == 1 {
 		return true, err
 	} else {
-		return false, err
+		if err != nil {
+			return false, err
+		} else {
+			return false, errors.New("multiple or no rows affected")
+		}
 	}
 }
