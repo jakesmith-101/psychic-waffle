@@ -26,8 +26,8 @@ export const actions: Actions = {
 
         if (username !== undefined && password !== undefined) {
             const loginInfo = await api.login(username, password);
-            //cookies.set("psychic_waffle_authorisation", loginInfo.Token, { path: '/' });
-            //throw redirect(303, `/dashboard`);
+            cookies.set("psychic_waffle_authorisation", loginInfo.Token, { path: '/' });
+            throw redirect(303, `/dashboard`);
         }
     }
 };
