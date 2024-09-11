@@ -31,44 +31,44 @@ services:
     ports:
       - "8080:8080"
     environment:
-      - POSTGRES_USER=${DB_USER}
-      - POSTGRES_PASSWORD=${DB_PASSWORD}
-      - POSTGRES_DB=${DB_NAME}
-      - POSTGRES_HOST=${DB_HOST}
-      - POSTGRES_PORT=${DB_PORT}
+      # - POSTGRES_USER=${DB_USER}
+      # - POSTGRES_PASSWORD=${DB_PASSWORD}
+      # - POSTGRES_DB=${DB_NAME}
+      # - POSTGRES_HOST=${DB_HOST}
+      # - POSTGRES_PORT=${DB_PORT}
       - TEST_POSTGRES_USER=${TEST_DB_USER}
       - TEST_POSTGRES_PASSWORD=${TEST_DB_PASSWORD}
       - TEST_POSTGRES_DB=${TEST_DB_NAME}
       - TEST_POSTGRES_HOST=${TEST_DB_HOST}
       - TEST_POSTGRES_PORT=${TEST_DB_PORT}
     depends_on:
-      db:
-        condition: service_healthy
+      # db:
+      #   condition: service_healthy
       db_test:
         condition: service_healthy
     networks:
       - psychic-waffle
 
-  db:
-    image: postgres:16.4
-    container_name: ${DB_HOST}
-    environment:
-      - PGUSER=${DB_USER}
-      - POSTGRES_USER=${DB_USER}
-      - POSTGRES_PASSWORD=${DB_PASSWORD}
-      - POSTGRES_DB=${DB_NAME}
-      - POSTGRES_HOST=${DB_HOST}
-    ports:
-      - '1234:5432'
-    volumes:
-      - ./pg_data:/var/lib/postgresql/data
-    networks:
-      - psychic-waffle
-    healthcheck:
-      test: "pg_isready -h db"
-      interval: 5s
-      timeout: 5s
-      retries: 5
+  # db:
+  #   image: postgres:16.4
+  #   container_name: ${DB_HOST}
+  #   environment:
+  #     - PGUSER=${DB_USER}
+  #     - POSTGRES_USER=${DB_USER}
+  #     - POSTGRES_PASSWORD=${DB_PASSWORD}
+  #     - POSTGRES_DB=${DB_NAME}
+  #     - POSTGRES_HOST=${DB_HOST}
+  #   ports:
+  #     - '1234:5432'
+  #   volumes:
+  #     - ./pg_data:/var/lib/postgresql/data
+  #   networks:
+  #     - psychic-waffle
+  #   healthcheck:
+  #     test: "pg_isready -h db"
+  #     interval: 5s
+  #     timeout: 5s
+  #     retries: 5
 
   db_test:
     image: postgres:16.4
@@ -92,7 +92,7 @@ services:
       retries: 5
 
 volumes:
-  pg_data:
+  # pg_data:
   pg_data_test:
 
     # Networks to be created to facilitate communication between containers
