@@ -4,6 +4,6 @@ export function load({ cookies }) {
 
     return {
         Token,
-        UserID,
+        UserID
     };
 }

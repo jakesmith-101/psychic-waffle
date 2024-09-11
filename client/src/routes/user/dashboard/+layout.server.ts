@@ -9,7 +9,7 @@ export async function load({ cookies }) {
     if (UserID !== undefined && UserID !== '') {
         const data = await getUser(UserID);
 
-        return data
+        return data;
     }
     throw redirect(303, '/');
 }

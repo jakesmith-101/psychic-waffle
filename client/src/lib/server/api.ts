@@ -13,7 +13,7 @@ export async function apiFetch(path: `/${string}`, method: tMethod, rawBody?: an
         rInit.body = body;
         rInit.headers = {
             'Content-Type': 'application/json;charset=utf-8'
-        }
+        };
     }
     const response = await fetch(`${rootPath}${path}`, rInit);
 

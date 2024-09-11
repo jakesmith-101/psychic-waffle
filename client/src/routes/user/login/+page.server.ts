@@ -9,25 +9,25 @@ export const actions: Actions = {
         const password = formData.get('password');
 
         if (
-            typeof username !== "string" ||
+            typeof username !== 'string' ||
             username.length < 3 ||
             username.length > 31 ||
             !/^[A-Za-z0-9_-]+$/.test(username)
         ) {
             return fail(400, {
-                message: "Invalid username"
+                message: 'Invalid username'
             });
         }
-        if (typeof password !== "string" || password.length < 6 || password.length > 255) {
+        if (typeof password !== 'string' || password.length < 6 || password.length > 255) {
             return fail(400, {
-                message: "Invalid password"
+                message: 'Invalid password'
             });
         }
 
         if (username !== undefined && password !== undefined) {
             const loginInfo = await api.login(username, password);
-            cookies.set("psychic_waffle_authorisation", loginInfo.token, { path: '/' });
-            cookies.set("psychic_waffle_userid", loginInfo.userID, { path: '/' });
+            cookies.set('psychic_waffle_authorisation', loginInfo.token, { path: '/' });
+            cookies.set('psychic_waffle_userid', loginInfo.userID, { path: '/' });
             throw redirect(303, `/user/dashboard`);
         }
     }

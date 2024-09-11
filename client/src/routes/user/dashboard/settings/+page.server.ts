@@ -8,30 +8,28 @@ export const actions: Actions = {
         const nickname = formData.get('nickname');
         const password = formData.get('password');
 
-        const token = cookies.get("psychic_waffle_authorisation");
+        const token = cookies.get('psychic_waffle_authorisation');
         if (token === undefined)
             return fail(400, {
-                message: "Not logged in"
-            })
+                message: 'Not logged in'
+            });
 
         if (
-            typeof nickname !== "string" ||
-            ((nickname.length < 3 || nickname.length > 31) &&
-                nickname.length !== 0) ||
+            typeof nickname !== 'string' ||
+            ((nickname.length < 3 || nickname.length > 31) && nickname.length !== 0) ||
             !/^[A-Za-z0-9_-]+$/.test(nickname)
         ) {
             return fail(400, {
-                message: "Invalid nickname"
+                message: 'Invalid nickname'
             });
         }
 
         if (
-            typeof password !== "string" ||
-            ((password.length < 6 || password.length > 255) &&
-                password.length !== 0)
+            typeof password !== 'string' ||
+            ((password.length < 6 || password.length > 255) && password.length !== 0)
         ) {
             return fail(400, {
-                message: "Invalid password"
+                message: 'Invalid password'
             });
         }
 
