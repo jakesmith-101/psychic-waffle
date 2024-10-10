@@ -15,7 +15,7 @@ type GetPostsOutput struct {
 }
 
 func GetPosts(api huma.API) {
-	// Register POST /user/get
+	// Register GET /posts
 	huma.Register(api, huma.Operation{
 		OperationID: "get-posts",
 		Method:      http.MethodGet,
@@ -26,6 +26,32 @@ func GetPosts(api huma.API) {
 	}, func(ctx context.Context, input *struct{}) (*GetPostsOutput, error) {
 		resp := &GetPostsOutput{}
 		posts, err := db.GetLatestPosts()
+		if err != nil {
+			return resp, err
+		}
+		resp.Body.Posts = *posts
+		return resp, nil
+	})
+}
+
+type GetPopularPostsOutput struct {
+	Body struct {
+		Posts []db.Post `json:"posts"`
+	}
+}
+
+func GetPopularPosts(api huma.API) {
+	// Register GET /posts/popular
+	huma.Register(api, huma.Operation{
+		OperationID: "get-popular-posts",
+		Method:      http.MethodGet,
+		Path:        BuildPath("/posts/popular"),
+		Summary:     "Get 20 posts",
+		Description: "Get 20 latest posts",
+		Tags:        []string{"GetPopularPosts"},
+	}, func(ctx context.Context, input *struct{}) (*GetPopularPostsOutput, error) {
+		resp := &GetPopularPostsOutput{}
+		posts, err := db.GetPopularPosts()
 		if err != nil {
 			return resp, err
 		}

@@ -27,7 +27,7 @@ func GetLatestPosts() (*[]Post, error) {
 	return &posts, err
 }
 
-func GetBestPosts() (*[]Post, error) {
+func GetPopularPosts() (*[]Post, error) {
 	var posts []Post
 	rows, err := PgxPool.Query(context.Background(), "SELECT * FROM posts ORDER BY Votes DESC LIMIT=20")
 	if err != nil {
