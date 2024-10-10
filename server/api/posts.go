@@ -47,7 +47,7 @@ func GetPopularPosts(api huma.API) {
 		Method:      http.MethodGet,
 		Path:        BuildPath("/posts/popular"),
 		Summary:     "Get 20 posts",
-		Description: "Get 20 latest posts",
+		Description: "Get 20 popular posts",
 		Tags:        []string{"GetPopularPosts"},
 	}, func(ctx context.Context, input *struct{}) (*GetPopularPostsOutput, error) {
 		resp := &GetPopularPostsOutput{}
