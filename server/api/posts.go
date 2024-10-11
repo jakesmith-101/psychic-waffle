@@ -42,13 +42,11 @@ type GetPopularPostsOutput struct {
 
 func GetPopularPosts(api huma.API) {
 	// Register GET /posts/popular
-	huma.Register(api, huma.Operation{
-		OperationID: "get-popular-posts",
-		Method:      http.MethodGet,
-		Path:        BuildPath("/posts/popular"),
-		Summary:     "Get 20 posts",
-		Description: "Get 20 popular posts",
-		Tags:        []string{"GetPopularPosts"},
+	CreateEndpoint(api, EndpointArgs{
+		Name:    "GetPopularPosts",
+		Method:  http.MethodGet,
+		Path:    "/posts/popular",
+		Summary: "Get 20 popular posts",
 	}, func(ctx context.Context, input *struct{}) (*GetPopularPostsOutput, error) {
 		resp := &GetPopularPostsOutput{}
 		posts, err := db.GetPopularPosts()
