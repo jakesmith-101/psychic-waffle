@@ -17,7 +17,6 @@ type GetPostsOutput struct {
 func GetPosts(api huma.API) {
 	// Register GET /posts
 	CreateEndpoint(api, EndpointArgs{
-		Name:    "GetPosts",
 		Method:  http.MethodGet,
 		Path:    "/posts",
 		Summary: "Get 20 latest posts",
@@ -41,7 +40,6 @@ type GetPopularPostsOutput struct {
 func GetPopularPosts(api huma.API) {
 	// Register GET /posts/popular
 	CreateEndpoint(api, EndpointArgs{
-		Name:    "GetPopularPosts",
 		Method:  http.MethodGet,
 		Path:    "/posts/popular",
 		Summary: "Get 20 popular posts",

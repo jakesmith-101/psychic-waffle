@@ -18,13 +18,10 @@ type GreetingOutput struct {
 
 func HealthCheck(api huma.API) {
 	// Register GET /greeting/{name}
-	huma.Register(api, huma.Operation{
-		OperationID: "get-greeting",
-		Method:      http.MethodGet,
-		Path:        BuildPath("/healthcheck/{name}"),
-		Summary:     "Get a greeting",
-		Description: "Get a greeting.",
-		Tags:        []string{"Greetings"},
+	CreateEndpoint(api, EndpointArgs{
+		Method:  http.MethodGet,
+		Path:    "/healthcheck/{name}",
+		Summary: "Get a greeting.",
 	}, func(ctx context.Context, input *struct {
 		Name string `path:"name" maxLength:"30" example:"John" doc:"Any name, defaults to 'world'"`
 	}) (*GreetingOutput, error) {

@@ -17,7 +17,6 @@ type GetCommentsOutput struct {
 func GetComments(api huma.API) {
 	// Register GET /comments
 	CreateEndpoint(api, EndpointArgs{
-		Name:    "GetComments",
 		Method:  http.MethodGet,
 		Path:    "/comments",
 		Summary: "Get 20 latest comments",
@@ -45,7 +44,6 @@ type GetPopularCommentsOutput struct {
 func GetPopularComments(api huma.API) {
 	// Register GET /comments/popular
 	CreateEndpoint(api, EndpointArgs{
-		Name:    "GetPopularComments",
 		Method:  http.MethodGet,
 		Path:    "/comments/popular",
 		Summary: "Get 20 popular comments",

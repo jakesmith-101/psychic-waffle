@@ -3,8 +3,10 @@ package api
 import (
 	"context"
 	"fmt"
+	"os"
 	"path"
 	"regexp"
+	"runtime"
 	"strings"
 
 	"github.com/danielgtaylor/huma/v2"
@@ -50,16 +52,23 @@ func CommentEndpoints(api huma.API) {
 }
 
 type EndpointArgs struct {
-	Name    string
 	Method  string
 	Summary string
-	Path    string
+	Path    string `required:"true"`
 }
 
 var reg = regexp.MustCompile("[A-Z]")
 
 func CreateEndpoint[I, O any](api huma.API, op EndpointArgs, handler func(context.Context, *I) (*O, error)) {
-	words := reg.Split(op.Name, -1)
+	counter, _, _, success := runtime.Caller(1)
+
+	if !success {
+		fmt.Fprintf(os.Stderr, "functionName: runtime.Caller: failed")
+		os.Exit(1)
+	}
+
+	name := runtime.FuncForPC(counter).Name()
+	words := reg.Split(name, -1)
 	opID := strings.ToLower(strings.Join(words, "-"))
 
 	huma.Register(api, huma.Operation{
@@ -68,6 +77,6 @@ func CreateEndpoint[I, O any](api huma.API, op EndpointArgs, handler func(contex
 		Path:        BuildPath(op.Path),
 		Summary:     op.Summary,
 		Description: op.Summary,
-		Tags:        []string{op.Name},
+		Tags:        []string{name},
 	}, handler)
 }

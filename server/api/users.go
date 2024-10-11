@@ -21,13 +21,10 @@ type UpdateUserOutput struct {
 
 func UpdateUser(api huma.API) {
 	// Register POST /user/update
-	huma.Register(api, huma.Operation{
-		OperationID: "update-user",
-		Method:      http.MethodPost,
-		Path:        BuildPath("/user/update"),
-		Summary:     "Update a user account",
-		Description: "Update a user account by user ID",
-		Tags:        []string{"UpdateUser"},
+	CreateEndpoint(api, EndpointArgs{
+		Method:  http.MethodPost,
+		Path:    "/user/update",
+		Summary: "Update a user account by user ID",
 	}, func(ctx context.Context, input *struct {
 		Body struct {
 			Nickname string `json:"nickname" required:"false"` //
@@ -97,13 +94,10 @@ type GetUserOutput struct {
 
 func GetUser(api huma.API) {
 	// Register POST /user/get
-	huma.Register(api, huma.Operation{
-		OperationID: "get-user",
-		Method:      http.MethodGet,
-		Path:        BuildPath("/user/{userID}"),
-		Summary:     "Get a user account",
-		Description: "Get a user account by user ID",
-		Tags:        []string{"GetUser"},
+	CreateEndpoint(api, EndpointArgs{
+		Method:  http.MethodGet,
+		Path:    "/user/{userID}",
+		Summary: "Get a user account by user ID",
 	}, func(ctx context.Context, input *struct {
 		UserID string `path:"userID" required:"true"`
 	}) (*GetUserOutput, error) {

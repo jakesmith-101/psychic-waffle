@@ -22,13 +22,10 @@ type SignupOutput struct {
 
 func Signup(api huma.API) {
 	// Register POST /auth/signup
-	huma.Register(api, huma.Operation{
-		OperationID: "post-account",
-		Method:      http.MethodPost,
-		Path:        BuildPath("/auth/signup"),
-		Summary:     "Create an account",
-		Description: "Create an account by username and password",
-		Tags:        []string{"Signup"},
+	CreateEndpoint(api, EndpointArgs{
+		Method:  http.MethodPost,
+		Path:    "/auth/signup",
+		Summary: "Create an account by username and password",
 	}, func(ctx context.Context, input *struct {
 		Body struct {
 			Username string `json:"username" maxLength:"30" example:"John" doc:"Name of account"`
@@ -75,13 +72,10 @@ type LoginOutput struct {
 
 func Login(api huma.API) {
 	// Register POST /auth/login
-	huma.Register(api, huma.Operation{
-		OperationID: "get-account",
-		Method:      http.MethodPost,
-		Path:        BuildPath("/auth/login"),
-		Summary:     "Log into account",
-		Description: "Log into account by username and password",
-		Tags:        []string{"Login"},
+	CreateEndpoint(api, EndpointArgs{
+		Method:  http.MethodPost,
+		Path:    "/auth/login",
+		Summary: "Log into account by username and password",
 	}, func(ctx context.Context, input *struct {
 		Body struct {
 			Username string `json:"username" maxLength:"30" example:"John" doc:"Name of account"`
