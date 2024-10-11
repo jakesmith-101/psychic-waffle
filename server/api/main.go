@@ -41,8 +41,9 @@ type EndpointArgs struct {
 	Path    string
 }
 
+var reg = regexp.MustCompile("[A-Z]")
+
 func CreateEndpoint[I, O any](api huma.API, op EndpointArgs, handler func(context.Context, *I) (*O, error)) {
-	reg := regexp.MustCompile("[A-Z]")
 	words := reg.Split(op.Name, -1)
 	opID := strings.ToLower(strings.Join(words, "-"))
 
