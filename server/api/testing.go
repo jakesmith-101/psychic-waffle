@@ -17,7 +17,7 @@ type GreetingOutput struct {
 }
 
 func HealthCheck(api huma.API) {
-	// Register GET /greeting/{name}
+	// Register GET /healthcheck/{name}
 	CreateEndpoint(api, EndpointArgs{
 		Method:  http.MethodGet,
 		Path:    "/healthcheck/{name}",

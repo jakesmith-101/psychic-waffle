@@ -68,8 +68,9 @@ func CreateEndpoint[I, O any](api huma.API, op EndpointArgs, handler func(contex
 	}
 
 	name := runtime.FuncForPC(counter).Name()
-	words := reg.Split(name, -1)
-	opID := strings.ToLower(strings.Join(words, "-"))
+	opID := strings.Trim(reg.ReplaceAllStringFunc(name, func(m string) string {
+		return fmt.Sprint("-", strings.ToLower(m))
+	}), "-")
 
 	huma.Register(api, huma.Operation{
 		OperationID: opID,
@@ -79,4 +80,5 @@ func CreateEndpoint[I, O any](api huma.API, op EndpointArgs, handler func(contex
 		Description: op.Summary,
 		Tags:        []string{name},
 	}, handler)
+	fmt.Fprintf(os.Stderr, "init: %s", opID)
 }
