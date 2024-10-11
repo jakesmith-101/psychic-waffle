@@ -16,13 +16,11 @@ type GetPostsOutput struct {
 
 func GetPosts(api huma.API) {
 	// Register GET /posts
-	huma.Register(api, huma.Operation{
-		OperationID: "get-posts",
-		Method:      http.MethodGet,
-		Path:        BuildPath("/posts"),
-		Summary:     "Get 20 posts",
-		Description: "Get 20 latest posts",
-		Tags:        []string{"GetPosts"},
+	CreateEndpoint(api, EndpointArgs{
+		Name:    "GetPosts",
+		Method:  http.MethodGet,
+		Path:    "/posts",
+		Summary: "Get 20 latest posts",
 	}, func(ctx context.Context, input *struct{}) (*GetPostsOutput, error) {
 		resp := &GetPostsOutput{}
 		posts, err := db.GetLatestPosts()

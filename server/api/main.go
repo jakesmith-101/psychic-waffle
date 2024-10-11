@@ -12,9 +12,12 @@ import (
 
 var apiVer = "v1"
 var rootPath = fmt.Sprintf("/api/%s", apiVer)
+var rootPathLength = len(rootPath)
 
 func BuildPath(route string) string {
-	// TODO: test route does not already contain rootPath
+	if len(route) >= rootPathLength && route[:rootPathLength] == rootPath {
+		return route
+	}
 	return path.Join(rootPath, route)
 }
 
@@ -22,6 +25,8 @@ func AllEndpoints(api huma.API) {
 	HealthCheck(api)
 	AuthEndpoints(api)
 	UserEndpoints(api)
+	PostEndpoints(api)
+	CommentEndpoints(api)
 }
 
 func AuthEndpoints(api huma.API) {
@@ -32,6 +37,15 @@ func AuthEndpoints(api huma.API) {
 func UserEndpoints(api huma.API) {
 	GetUser(api)
 	UpdateUser(api)
+}
+
+func PostEndpoints(api huma.API) {
+	GetPosts(api)
+	GetPopularPosts(api)
+}
+
+func CommentEndpoints(api huma.API) {
+
 }
 
 type EndpointArgs struct {
