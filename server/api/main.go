@@ -45,7 +45,8 @@ func PostEndpoints(api huma.API) {
 }
 
 func CommentEndpoints(api huma.API) {
-
+	GetComments(api)
+	GetPopularComments(api)
 }
 
 type EndpointArgs struct {

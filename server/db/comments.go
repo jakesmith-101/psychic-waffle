@@ -27,7 +27,7 @@ func GetLatestComments(postID string) (*[]Comment, error) {
 	return &comments, err
 }
 
-func GetBestComments(postID string) (*[]Comment, error) {
+func GetPopularComments(postID string) (*[]Comment, error) {
 	var comments []Comment
 	rows, err := PgxPool.Query(context.Background(), "SELECT * FROM comments WHERE PostID=$1 ORDER BY Votes DESC LIMIT=20", postID)
 	if err != nil {
