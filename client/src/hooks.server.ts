@@ -1,5 +1,4 @@
-/** @type {import('@sveltejs/kit').HandleServerError} */
-export function handleError({ status, message }) {
+export function handleError({ status, message }: Parameters<import("@sveltejs/kit").HandleServerError>[0]) {
     console.error(status, message);
 
     return {
