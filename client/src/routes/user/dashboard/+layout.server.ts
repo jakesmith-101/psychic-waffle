@@ -1,7 +1,8 @@
 import { getUser } from '$lib/server/user.js';
 import { redirect } from '@sveltejs/kit';
+import { type LayoutServerLoadEvent } from './$types';
 
-export async function load({ cookies }: import("./$types.js").LayoutServerLoadEvent) {
+export async function load({ cookies }: LayoutServerLoadEvent) {
     const Token = cookies.get('psychic_waffle_authorisation');
     if (Token === undefined) throw redirect(303, '/');
 
