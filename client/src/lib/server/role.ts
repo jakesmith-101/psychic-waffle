@@ -9,7 +9,7 @@ export interface tGetRole {
 export async function getRole(roleID: string): Promise<tGetRole> {
     if (roleID === '') throw new Error('Missing role ID');
 
-    const data = await apiFetch<tGetRole>(`/role/${roleID}`, 'GET'); // possible API error response message
+    const data = await apiFetch<tGetRole>(`/roles/${roleID}`, 'GET'); // possible API error response message
     if (
         typeof data?.roleID === 'string' &&
         typeof data?.name === 'string' &&

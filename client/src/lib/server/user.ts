@@ -12,7 +12,7 @@ export async function updateUser(
 ): Promise<tUpdateUser> {
     if (token === '') throw new Error('Missing Token');
 
-    const data = await apiFetch<tUpdateUser>(`/user/update`, 'POST', { token, nickname, password, roleID });
+    const data = await apiFetch<tUpdateUser>(`/users/update`, 'POST', { token, nickname, password, roleID });
     if (typeof data?.message === 'string') return data as tUpdateUser;
     throw new Error(`Update user failed: ${data?.message}`);
 }
@@ -29,7 +29,7 @@ export interface tGetUser {
 export async function getUser(userID: string): Promise<tGetUser> {
     if (userID === '') throw new Error('Missing user ID');
 
-    const data = await apiFetch<tGetUser>(`/user/${userID}`, 'GET'); // possible API error response message
+    const data = await apiFetch<tGetUser>(`/users/${userID}`, 'GET'); // possible API error response message
     if (
         typeof data?.username === 'string' &&
         typeof data?.nickname === 'string' &&
