@@ -2,8 +2,8 @@ export const apiVer = `v1`;
 export const apiUrl = `http://api:8080`;
 export const rootPath = `${apiUrl}/api/${apiVer}`;
 
-export type tMethod = 'GET' | 'POST' | 'PUT' | 'DELETE';
-export async function apiFetch(path: `/${string}`, method: tMethod, rawBody?: any): Promise<any> {
+export type tMethod = 'GET' | 'HEAD' | 'POST' | 'PUT' | 'DELETE' | 'CONNECT' | 'OPTIONS' | 'TRACE' | 'PATCH';
+export async function apiFetch<T = any>(path: `/${string}`, method: tMethod, rawBody?: any): Promise<(T & { message?: string }) | undefined> {
     console.log(`${rootPath}${path}`);
     const rInit: RequestInit = {
         method

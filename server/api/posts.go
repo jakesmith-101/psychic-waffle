@@ -2,6 +2,7 @@ package api
 
 import (
 	"context"
+	"errors"
 	"net/http"
 
 	"github.com/danielgtaylor/huma/v2"
@@ -20,32 +21,21 @@ func GetPosts(api huma.API) {
 		Method:  http.MethodGet,
 		Path:    "/posts",
 		Summary: "Get 20 latest posts",
-	}, func(ctx context.Context, input *struct{}) (*GetPostsOutput, error) {
-		resp := &GetPostsOutput{}
-		posts, err := db.GetLatestPosts()
-		if err != nil {
-			return resp, err
+	}, func(ctx context.Context, input *struct {
+		Body struct {
+			Type string `json:"type" required:"true"` //
 		}
-		resp.Body.Posts = *posts
-		return resp, nil
-	})
-}
-
-type GetPopularPostsOutput struct {
-	Body struct {
-		Posts []db.Post `json:"posts"`
-	}
-}
-
-func GetPopularPosts(api huma.API) {
-	// Register GET /posts/popular
-	CreateEndpoint(api, EndpointArgs{
-		Method:  http.MethodGet,
-		Path:    "/posts/popular",
-		Summary: "Get 20 popular posts",
-	}, func(ctx context.Context, input *struct{}) (*GetPopularPostsOutput, error) {
-		resp := &GetPopularPostsOutput{}
-		posts, err := db.GetPopularPosts()
+	}) (*GetPostsOutput, error) {
+		resp := &GetPostsOutput{}
+		var posts *[]db.Post
+		var err error
+		if input.Body.Type == "latest" {
+			posts, err = db.GetLatestPosts()
+		} else if input.Body.Type == "popular" {
+			posts, err = db.GetPopularPosts()
+		} else {
+			err = errors.New("type of 'type' is incorrect")
+		}
 		if err != nil {
 			return resp, err
 		}

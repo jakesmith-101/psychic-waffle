@@ -2,6 +2,7 @@ package api
 
 import (
 	"context"
+	"errors"
 	"net/http"
 
 	"github.com/danielgtaylor/huma/v2"
@@ -23,37 +24,19 @@ func GetComments(api huma.API) {
 	}, func(ctx context.Context, input *struct {
 		Body struct {
 			PostID string `json:"postID" required:"true"` //
+			Type   string `json:"type" required:"true"`   //
 		}
 	}) (*GetCommentsOutput, error) {
 		resp := &GetCommentsOutput{}
-		comments, err := db.GetLatestComments(input.Body.PostID)
-		if err != nil {
-			return resp, err
+		var comments *[]db.Comment
+		var err error
+		if input.Body.Type == "latest" {
+			comments, err = db.GetLatestComments(input.Body.PostID)
+		} else if input.Body.Type == "popular" {
+			comments, err = db.GetPopularComments(input.Body.PostID)
+		} else {
+			err = errors.New("type of 'type' is incorrect")
 		}
-		resp.Body.Comments = *comments
-		return resp, nil
-	})
-}
-
-type GetPopularCommentsOutput struct {
-	Body struct {
-		Comments []db.Comment `json:"comments"`
-	}
-}
-
-func GetPopularComments(api huma.API) {
-	// Register GET /comments/popular
-	CreateEndpoint(api, EndpointArgs{
-		Method:  http.MethodGet,
-		Path:    "/comments/popular",
-		Summary: "Get 20 popular comments",
-	}, func(ctx context.Context, input *struct {
-		Body struct {
-			PostID string `json:"postID" required:"true"` //
-		}
-	}) (*GetPopularCommentsOutput, error) {
-		resp := &GetPopularCommentsOutput{}
-		comments, err := db.GetPopularComments(input.Body.PostID)
 		if err != nil {
 			return resp, err
 		}

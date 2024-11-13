@@ -1,4 +1,4 @@
-import * as api from '$lib/server/user.js';
+import * as api from '$lib/server/user';
 import { fail } from '@sveltejs/kit';
 import type { Actions } from './$types';
 

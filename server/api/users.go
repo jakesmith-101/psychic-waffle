@@ -93,7 +93,7 @@ type GetUserOutput struct {
 }
 
 func GetUser(api huma.API) {
-	// Register POST /user/get
+	// Register GET /user
 	CreateEndpoint(api, EndpointArgs{
 		Method:  http.MethodGet,
 		Path:    "/user/{userID}",

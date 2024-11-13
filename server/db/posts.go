@@ -19,7 +19,7 @@ type Post struct {
 
 func GetLatestPosts() (*[]Post, error) {
 	var posts []Post
-	rows, err := PgxPool.Query(context.Background(), "SELECT * FROM posts ORDER BY CreatedAt DESC LIMIT=20")
+	rows, err := PgxPool.Query(context.Background(), "SELECT * FROM posts ORDER BY CreatedAt DESC LIMIT 20")
 	if err != nil {
 		return &posts, err
 	}
@@ -29,7 +29,7 @@ func GetLatestPosts() (*[]Post, error) {
 
 func GetPopularPosts() (*[]Post, error) {
 	var posts []Post
-	rows, err := PgxPool.Query(context.Background(), "SELECT * FROM posts ORDER BY Votes DESC LIMIT=20")
+	rows, err := PgxPool.Query(context.Background(), "SELECT * FROM posts ORDER BY Votes DESC LIMIT 20")
 	if err != nil {
 		return &posts, err
 	}

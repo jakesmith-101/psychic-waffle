@@ -38,7 +38,7 @@ func main() {
 		API := humago.New(router, huma.DefaultConfig("Psychic-Waffle API", "1.0.0"))
 
 		// Bind all endpoints to api (login, signup)
-		api.AllEndpoints(API)
+		api.Endpoints(API)
 
 		// Tell the CLI how to start your router.
 		hooks.OnStart(func() {

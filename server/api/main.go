@@ -23,32 +23,25 @@ func BuildPath(route string) string {
 	return path.Join(rootPath, route)
 }
 
-func AllEndpoints(api huma.API) {
+func Endpoints(api huma.API) {
 	HealthCheck(api)
-	AuthEndpoints(api)
-	UserEndpoints(api)
-	PostEndpoints(api)
-	CommentEndpoints(api)
-}
 
-func AuthEndpoints(api huma.API) {
+	// Auth
 	Signup(api)
 	Login(api)
-}
 
-func UserEndpoints(api huma.API) {
+	// User
 	GetUser(api)
 	UpdateUser(api)
-}
 
-func PostEndpoints(api huma.API) {
+	// Role
+	GetRole(api)
+
+	// Post
 	GetPosts(api)
-	GetPopularPosts(api)
-}
 
-func CommentEndpoints(api huma.API) {
+	// Comment
 	GetComments(api)
-	GetPopularComments(api)
 }
 
 type EndpointArgs struct {

@@ -1,4 +1,4 @@
-import { getUser } from '$lib/server/user.js';
+import { getUser } from '$lib/server/user';
 import { redirect } from '@sveltejs/kit';
 
 export async function load({ cookies }: import('./$types.js').LayoutServerLoadEvent) {
