@@ -31,7 +31,7 @@ func HealthCheck(api huma.API) {
 			name = "world"
 		}
 		resp.Body.Message = fmt.Sprintf("Hello, %s!", name)
-		fmt.Fprintf(os.Stderr, "Healthy: %s", name)
+		fmt.Fprintf(os.Stderr, "Healthy: %s\n", name)
 		return resp, nil
 	})
 }

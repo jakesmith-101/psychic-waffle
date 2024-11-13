@@ -56,7 +56,7 @@ func CreateEndpoint[I, O any](api huma.API, op EndpointArgs, handler func(contex
 	counter, _, _, success := runtime.Caller(1)
 
 	if !success {
-		fmt.Fprintf(os.Stderr, "functionName: runtime.Caller: failed")
+		fmt.Fprintf(os.Stderr, "functionName: runtime.Caller: failed\n")
 		os.Exit(1)
 	}
 
@@ -73,5 +73,5 @@ func CreateEndpoint[I, O any](api huma.API, op EndpointArgs, handler func(contex
 		Description: op.Summary,
 		Tags:        []string{name},
 	}, handler)
-	fmt.Fprintf(os.Stderr, "init: %s", opID)
+	fmt.Fprintf(os.Stderr, "init: %s\n", opID)
 }

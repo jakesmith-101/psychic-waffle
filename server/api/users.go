@@ -23,7 +23,7 @@ func UpdateUser(api huma.API) {
 	// Register POST /user/update
 	CreateEndpoint(api, EndpointArgs{
 		Method:  http.MethodPost,
-		Path:    "/user/update",
+		Path:    "/users/update",
 		Summary: "Update a user account by user ID",
 	}, func(ctx context.Context, input *struct {
 		Body struct {
@@ -96,7 +96,7 @@ func GetUser(api huma.API) {
 	// Register GET /user
 	CreateEndpoint(api, EndpointArgs{
 		Method:  http.MethodGet,
-		Path:    "/user/{userID}",
+		Path:    "/users/{userID}",
 		Summary: "Get a user account by user ID",
 	}, func(ctx context.Context, input *struct {
 		UserID string `path:"userID" required:"true"`

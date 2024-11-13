@@ -20,7 +20,7 @@ func GetRole(api huma.API) {
 	// Register GET /role
 	CreateEndpoint(api, EndpointArgs{
 		Method:  http.MethodGet,
-		Path:    "/role/{roleID}",
+		Path:    "/roles/{roleID}",
 		Summary: "Get a role by role ID",
 	}, func(ctx context.Context, input *struct {
 		RoleID string `path:"roleID" required:"true"`
