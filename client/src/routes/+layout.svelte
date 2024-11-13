@@ -7,12 +7,12 @@
 
 <nav>
     <ul>
-        <li><a href="/" class={$page.url.pathname === '/' ? 'active' : 'inactive'}>Home</a></li>
+        <li><a href="/" class={$page.url.pathname === '/' ? 'active' : undefined}>Home</a></li>
         {#if data.Token !== undefined}
             <li>
                 <a
                     href="/user/dashboard"
-                    class={$page.url.pathname === '/dashboard' ? 'active' : 'inactive'}>Dashboard</a
+                    class={$page.url.pathname === '/dashboard' ? 'active' : undefined}>Dashboard</a
                 >
             </li>
         {/if}
@@ -21,12 +21,11 @@
             {#if data.Token !== undefined}
                 <a
                     href="/user/logout"
-                    class={$page.url.pathname === '/logout' ? 'active' : 'inactive'}>Logout</a
+                    class={$page.url.pathname === '/logout' ? 'active' : undefined}>Logout</a
                 >
             {:else}
-                <a
-                    href="/user/login"
-                    class={$page.url.pathname === '/login' ? 'active' : 'inactive'}>Login</a
+                <a href="/user/login" class={$page.url.pathname === '/login' ? 'active' : undefined}
+                    >Login</a
                 >
             {/if}
         </li>
