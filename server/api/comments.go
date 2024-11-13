@@ -19,7 +19,7 @@ func GetComments(api huma.API) {
 	// Register GET /comments
 	CreateEndpoint(api, EndpointArgs{
 		Method:  http.MethodGet,
-		Path:    "/comments",
+		Path:    "/comments/{postID}/{type}",
 		Summary: "Get 20 latest comments",
 	}, func(ctx context.Context, input *struct {
 		Body struct {

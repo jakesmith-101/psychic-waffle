@@ -19,7 +19,7 @@ func GetPosts(api huma.API) {
 	// Register GET /posts
 	CreateEndpoint(api, EndpointArgs{
 		Method:  http.MethodGet,
-		Path:    "/posts",
+		Path:    "/posts/{type}",
 		Summary: "Get 20 latest posts",
 	}, func(ctx context.Context, input *struct {
 		Body struct {
