@@ -51,6 +51,7 @@ type EndpointArgs struct {
 }
 
 var reg = regexp.MustCompile("[A-Z]")
+var prefixReg = regexp.MustCompile(`.*api\.`) // selects package part of func name (for removal)
 
 func CreateEndpoint[I, O any](api huma.API, op EndpointArgs, handler func(context.Context, *I) (*O, error)) {
 	counter, _, _, success := runtime.Caller(1)
@@ -60,7 +61,7 @@ func CreateEndpoint[I, O any](api huma.API, op EndpointArgs, handler func(contex
 		os.Exit(1)
 	}
 
-	name := runtime.FuncForPC(counter).Name()
+	name := prefixReg.ReplaceAllString(runtime.FuncForPC(counter).Name(), "")
 	opID := strings.Trim(reg.ReplaceAllStringFunc(name, func(m string) string {
 		return fmt.Sprint("-", strings.ToLower(m))
 	}), "-")
