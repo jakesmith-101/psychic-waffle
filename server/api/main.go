@@ -51,7 +51,7 @@ type EndpointArgs struct {
 }
 
 var reg = regexp.MustCompile("[A-Z]")
-var prefixReg = regexp.MustCompile(`.*api\.`) // selects package part of func name (for removal)
+var prefixReg = regexp.MustCompile(`.*/api\.`) // selects package part of func name (for removal)
 
 func CreateEndpoint[I, O any](api huma.API, op EndpointArgs, handler func(context.Context, *I) (*O, error)) {
 	counter, _, _, success := runtime.Caller(1)
