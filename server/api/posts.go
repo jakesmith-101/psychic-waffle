@@ -32,7 +32,7 @@ func GetPosts(api huma.API) {
 		} else if input.SortID == "popular" {
 			posts, err = db.GetPopularPosts()
 		} else {
-			err = errors.New("type of 'type' is incorrect")
+			err = errors.New("type of 'sortID' is incorrect")
 		}
 		if err != nil {
 			return resp, err

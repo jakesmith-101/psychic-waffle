@@ -33,7 +33,7 @@ func GetComments(api huma.API) {
 		} else if input.SortID == "popular" {
 			comments, err = db.GetPopularComments(input.PostID)
 		} else {
-			err = errors.New("type of 'type' is incorrect")
+			err = errors.New("type of 'sortID' is incorrect")
 		}
 		if err != nil {
 			return resp, err
