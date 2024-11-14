@@ -2,6 +2,7 @@ package db
 
 import (
 	"context"
+	"fmt"
 	"time"
 
 	"github.com/jackc/pgx/v5"
@@ -17,19 +18,13 @@ type Comment struct {
 	UpdatedAt   time.Time `json:"updatedAt"`   //
 }
 
-func GetLatestComments(postID string) (*[]Comment, error) {
+func GetComments(postID string, sortID bool) (*[]Comment, error) {
 	var comments []Comment
-	rows, err := PgxPool.Query(context.Background(), "SELECT * FROM comments WHERE PostID=$1 ORDER BY CreatedAt DESC LIMIT=20", postID)
-	if err != nil {
-		return &comments, err
+	var sortType = "CreatedAt"
+	if sortID {
+		sortType = "Votes"
 	}
-	comments, err = pgx.CollectRows(rows, pgx.RowToStructByName[Comment])
-	return &comments, err
-}
-
-func GetPopularComments(postID string) (*[]Comment, error) {
-	var comments []Comment
-	rows, err := PgxPool.Query(context.Background(), "SELECT * FROM comments WHERE PostID=$1 ORDER BY Votes DESC LIMIT=20", postID)
+	rows, err := PgxPool.Query(context.Background(), fmt.Sprintf("SELECT * FROM comments WHERE PostID=$1 ORDER BY %s DESC LIMIT=20", sortType), postID)
 	if err != nil {
 		return &comments, err
 	}

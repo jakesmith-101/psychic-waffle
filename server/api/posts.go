@@ -2,7 +2,6 @@ package api
 
 import (
 	"context"
-	"errors"
 	"net/http"
 
 	"github.com/danielgtaylor/huma/v2"
@@ -22,18 +21,12 @@ func GetPosts(api huma.API) {
 		Path:    "/posts/{sortID}",
 		Summary: "Get 20 latest posts",
 	}, func(ctx context.Context, input *struct {
-		SortID string `path:"sortID" required:"true"` //
+		SortID bool `path:"sortID" required:"true"` //
 	}) (*GetPostsOutput, error) {
 		resp := &GetPostsOutput{}
 		var posts *[]db.Post
 		var err error
-		if input.SortID == "latest" {
-			posts, err = db.GetLatestPosts()
-		} else if input.SortID == "popular" {
-			posts, err = db.GetPopularPosts()
-		} else {
-			err = errors.New("type of 'sortID' is incorrect")
-		}
+		posts, err = db.GetPosts(input.SortID)
 		if err != nil {
 			return resp, err
 		}
