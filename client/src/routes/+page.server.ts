@@ -8,7 +8,7 @@ type tPost = Omit<tGetPosts["posts"][0], "authorID"> & {
     }
 }
 
-export async function load({ parent }: import('./$types.js').LayoutServerLoadEvent): Promise<{ posts: tPost[] }> {
+export async function load(): Promise<{ posts: tPost[] }> {
     const data = await getPosts("popular");
     const posts = await Promise.all(data.posts.map(async post => {
         const user = await getUser(post.authorID);
@@ -25,10 +25,7 @@ export async function load({ parent }: import('./$types.js').LayoutServerLoadEve
         };
     }));
 
-    const parentData = await parent();
-
     return {
-        ...parentData,
         posts
     };
 }
