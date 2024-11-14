@@ -12,13 +12,19 @@ func CreatePostTable() error {
 		context.Background(),
 		`CREATE TABLE IF NOT EXISTS posts (
 			PostID UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+			Slug TEXT,
 			PostTitle TEXT,
 			PostDescription TEXT,
 			Votes INTEGER,
 			AuthorID UUID references users(UserID),
 			CreatedAt DATE,
-			UpdatedAt DATE
+			UpdatedAt DATE,
+			UNIQUE (Slug)
 		);`,
 	)
 	return err
+}
+
+func MockPosts() error {
+	return nil
 }
