@@ -31,3 +31,7 @@ func GetComments(postID string, sortID bool) (*[]Comment, error) {
 	comments, err = pgx.CollectRows(rows, pgx.RowToStructByName[Comment])
 	return &comments, err
 }
+
+func GetComment(commentID string) (*Comment, error) {
+	return nil, nil
+}

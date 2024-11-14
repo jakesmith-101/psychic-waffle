@@ -31,3 +31,11 @@ func GetPosts(sortID bool) (*[]Post, error) {
 	posts, err = pgx.CollectRows(rows, pgx.RowToStructByName[Post])
 	return &posts, err
 }
+
+func GetPostBySlug(slug string) (*Post, error) {
+	return nil, nil
+}
+
+func GetPost(postID string) (*Post, error) {
+	return nil, nil
+}
