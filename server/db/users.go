@@ -36,7 +36,6 @@ func GetUserByUsername(username string) (*User, error) {
 	if err != nil {
 		return &user, err
 	}
-
 	user, err = pgx.CollectExactlyOneRow(row, pgx.RowToStructByName[User])
 	return &user, err
 }

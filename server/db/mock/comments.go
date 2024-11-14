@@ -16,6 +16,7 @@ func CreateCommentTable() error {
 			Votes INTEGER,
 			ParentID UUID references comments(CommentID),
 			PostID UUID references posts(PostID),
+			AuthorID UUID references users(UserID),
 			CreatedAt DATE,
 			UpdatedAt DATE
 		);`,
