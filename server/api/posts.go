@@ -19,19 +19,19 @@ func GetPosts(api huma.API) {
 	// Register GET /posts
 	CreateEndpoint(api, EndpointArgs{
 		Method:  http.MethodGet,
-		Path:    "/posts/{type}",
+		Path:    "/posts/{sortID}",
 		Summary: "Get 20 latest posts",
 	}, func(ctx context.Context, input *struct {
 		Body struct {
-			Type string `path:"type" required:"true"` //
+			SortID string `path:"sortID" required:"true"` //
 		}
 	}) (*GetPostsOutput, error) {
 		resp := &GetPostsOutput{}
 		var posts *[]db.Post
 		var err error
-		if input.Body.Type == "latest" {
+		if input.Body.SortID == "latest" {
 			posts, err = db.GetLatestPosts()
-		} else if input.Body.Type == "popular" {
+		} else if input.Body.SortID == "popular" {
 			posts, err = db.GetPopularPosts()
 		} else {
 			err = errors.New("type of 'type' is incorrect")

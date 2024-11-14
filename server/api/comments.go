@@ -24,15 +24,15 @@ func GetComments(api huma.API) {
 	}, func(ctx context.Context, input *struct {
 		Body struct {
 			PostID string `path:"postID" required:"true"` //
-			Type   string `path:"type" required:"true"`   //
+			SortID string `path:"sortID" required:"true"` //
 		}
 	}) (*GetCommentsOutput, error) {
 		resp := &GetCommentsOutput{}
 		var comments *[]db.Comment
 		var err error
-		if input.Body.Type == "latest" {
+		if input.Body.SortID == "latest" {
 			comments, err = db.GetLatestComments(input.Body.PostID)
-		} else if input.Body.Type == "popular" {
+		} else if input.Body.SortID == "popular" {
 			comments, err = db.GetPopularComments(input.Body.PostID)
 		} else {
 			err = errors.New("type of 'type' is incorrect")
