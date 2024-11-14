@@ -23,8 +23,8 @@ func GetComments(api huma.API) {
 		Summary: "Get 20 latest comments",
 	}, func(ctx context.Context, input *struct {
 		Body struct {
-			PostID string `json:"postID" required:"true"` //
-			Type   string `json:"type" required:"true"`   //
+			PostID string `path:"postID" required:"true"` //
+			Type   string `path:"type" required:"true"`   //
 		}
 	}) (*GetCommentsOutput, error) {
 		resp := &GetCommentsOutput{}

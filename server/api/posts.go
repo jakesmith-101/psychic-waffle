@@ -23,7 +23,7 @@ func GetPosts(api huma.API) {
 		Summary: "Get 20 latest posts",
 	}, func(ctx context.Context, input *struct {
 		Body struct {
-			Type string `json:"type" required:"true"` //
+			Type string `path:"type" required:"true"` //
 		}
 	}) (*GetPostsOutput, error) {
 		resp := &GetPostsOutput{}
