@@ -10,7 +10,7 @@ export const actions: Actions = {
 
         const token = cookies.get('psychic_waffle_authorisation');
         if (token === undefined)
-            return fail(400, {
+            return fail(401, {
                 message: 'Not logged in'
             });
 

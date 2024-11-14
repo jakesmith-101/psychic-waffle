@@ -5,6 +5,6 @@ export const actions: Actions = {
     default: async ({ cookies }) => {
         cookies.delete('psychic_waffle_authorisation', { path: '/' });
         cookies.delete('psychic_waffle_username', { path: '/' });
-        throw redirect(303, `/`);
+        redirect(302, `/`);
     }
 };

@@ -1,9 +1,11 @@
 import { getUser } from '$lib/server/user';
-import { redirect } from '@sveltejs/kit';
+import { redirect, fail } from '@sveltejs/kit';
 
 export async function load({ cookies }: import('./$types.js').LayoutServerLoadEvent) {
     const Token = cookies.get('psychic_waffle_authorisation');
-    if (Token === undefined) throw redirect(303, '/');
+    if (Token === undefined) fail(401, {
+        message: 'Not logged in'
+    });
 
     const UserID = cookies.get('psychic_waffle_userid');
     if (UserID !== undefined && UserID !== '') {
@@ -11,5 +13,5 @@ export async function load({ cookies }: import('./$types.js').LayoutServerLoadEv
 
         return data;
     }
-    throw redirect(303, '/');
+    redirect(302, '/');
 }
