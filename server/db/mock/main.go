@@ -18,13 +18,13 @@ func MockAll() error {
 	if err != nil {
 		return err
 	}
-	/*err = CreatePostTable()
+	err = CreatePostTable()
 	if err != nil {
 		return err
 	}
 	err = CreateCommentTable()
 	if err != nil {
 		return err
-	}*/
+	}
 	return nil
 }

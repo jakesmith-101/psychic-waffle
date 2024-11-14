@@ -22,16 +22,14 @@ func GetPosts(api huma.API) {
 		Path:    "/posts/{sortID}",
 		Summary: "Get 20 latest posts",
 	}, func(ctx context.Context, input *struct {
-		Body struct {
-			SortID string `path:"sortID" required:"true"` //
-		}
+		SortID string `path:"sortID" required:"true"` //
 	}) (*GetPostsOutput, error) {
 		resp := &GetPostsOutput{}
 		var posts *[]db.Post
 		var err error
-		if input.Body.SortID == "latest" {
+		if input.SortID == "latest" {
 			posts, err = db.GetLatestPosts()
-		} else if input.Body.SortID == "popular" {
+		} else if input.SortID == "popular" {
 			posts, err = db.GetPopularPosts()
 		} else {
 			err = errors.New("type of 'type' is incorrect")
