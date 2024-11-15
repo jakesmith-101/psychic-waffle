@@ -55,11 +55,14 @@ func GetPost(postID string) (*Post, error) {
 	return &post, err
 }
 
-var reg = regexp.MustCompile(`^[A-Za-z0-9]+`) // FIXME: assumes only usable characters are english alphanumeric
-// TODO: add regexp to select words to be removed for slug
+var whitespace = regexp.MustCompile(`^[A-Za-z0-9]+`) // FIXME: assumes only usable characters are english alphanumeric
+var duplicate = regexp.MustCompile(`--+`)            //
+var reduce = regexp.MustCompile(``)                  // TODO: add regexp to select words to be removed for slug
 
 func CreatePost(title string, description string, author string) (string, error) {
-	slug := reg.ReplaceAllString(title, "-") // replaces "whitespace" with "-"
+	title2 := whitespace.ReplaceAllString(title, "-") // replaces "whitespace" with "-"
+	title3 := duplicate.ReplaceAllString(title2, "-")
+	slug := reduce.ReplaceAllString(title3, "")
 	post := Post{
 		PostID:          uuid.NewString(),
 		PostTitle:       title,
