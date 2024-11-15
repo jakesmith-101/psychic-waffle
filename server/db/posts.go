@@ -4,10 +4,15 @@ import (
 	"context"
 	"fmt"
 	"regexp"
+	"strings"
 	"time"
+	"unicode"
 
 	"github.com/google/uuid"
 	"github.com/jackc/pgx/v5"
+	"golang.org/x/text/runes"
+	"golang.org/x/text/transform"
+	"golang.org/x/text/unicode/norm"
 )
 
 type Post struct {
@@ -55,14 +60,22 @@ func GetPost(postID string) (*Post, error) {
 	return &post, err
 }
 
-var whitespace = regexp.MustCompile(`^[A-Za-z0-9]+`) // FIXME: assumes only usable characters are english alphanumeric
-var duplicate = regexp.MustCompile(`--+`)            //
+var whitespace = regexp.MustCompile(`[^a-z0-9\-_]+`) // FIXME: assumes only usable characters are english alphanumeric
+var duplicate = regexp.MustCompile(`^-+|-+$|--+`)    // matches leading or trailing hyphens, or multiple consecutive hyphens
 var reduce = regexp.MustCompile(``)                  // TODO: add regexp to select words to be removed for slug
 
 func CreatePost(title string, description string, author string) (string, error) {
-	title2 := whitespace.ReplaceAllString(title, "-") // replaces "whitespace" with "-"
-	title3 := duplicate.ReplaceAllString(title2, "-")
+	// unaccent title
+	t := transform.Chain(norm.NFD, runes.Remove(runes.In(unicode.Mn)), norm.NFC)
+	result, _, _ := transform.String(t, title)
+
+	// hyphenate on every non-alphanumeric
+	title2 := whitespace.ReplaceAllString(strings.ToLower(result), "-")
+	// remove unnecessary hyphens
+	title3 := duplicate.ReplaceAllString(title2, "")
+	// remove unnecessary words
 	slug := reduce.ReplaceAllString(title3, "")
+
 	post := Post{
 		PostID:          uuid.NewString(),
 		PostTitle:       title,
