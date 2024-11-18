@@ -70,7 +70,7 @@ func CreateUser(username string, passwordHash string) (string, error) {
 }
 
 type UpdateUser struct {
-	UserID       string `json:"id"`       // pk
+	UserID       string `json:"userID"`   // pk
 	Nickname     string `json:"nickname"` //
 	PasswordHash string `json:"password"` //
 	RoleID       string `json:"roleid"`   // fk
