@@ -43,26 +43,3 @@ func MockRoles() error {
 
 	return err
 }
-
-// TODO: Permissions list
-/*
-	get post - Guest
-	create post - User
-	update post - Admin
-	delete post - Admin
-
-	get comment - Guest
-	create comment - User
-	update comment - Admin
-	delete comment - Admin
-
-	get user - Guest
-	create user - Admin
-	update user - Admin
-	delete user - Admin
-
-	get role - Admin
-	create role - Admin
-	update role - Admin
-	delete role - Admin
-*/
