@@ -9,7 +9,7 @@ import (
 
 type Role struct {
 	RoleID      string `json:"roleID"`      // pk
-	Permissions int    `json:"permissions"` //
+	Permissions int64  `json:"permissions"` //
 	Name        string `json:"name"`        // unique
 }
 
@@ -23,7 +23,7 @@ func GetRole(ID string) (*Role, error) {
 	return &role, err
 }
 
-func CreateRole(name string, perms int) (string, error) {
+func CreateRole(name string, perms int64) (string, error) {
 	role := Role{
 		RoleID:      uuid.NewString(),
 		Permissions: perms,

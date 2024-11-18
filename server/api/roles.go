@@ -22,7 +22,7 @@ func RoleEndpoints(api huma.API) error {
 type GetRoleOutput struct {
 	Body struct {
 		RoleID      string `json:"roleID"`      // pk
-		Permissions int    `json:"permissions"` //
+		Permissions int64  `json:"permissions"` //
 		Name        string `json:"name"`        // unique
 	}
 }

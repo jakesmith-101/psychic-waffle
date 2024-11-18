@@ -4,6 +4,7 @@ import (
 	"context"
 
 	"github.com/jakesmith-101/psychic-waffle/db"
+	"github.com/jakesmith-101/psychic-waffle/permissions"
 )
 
 func CreateRoleTable() error {
@@ -22,7 +23,7 @@ func CreateRoleTable() error {
 func MockRoles() error {
 	_, err := db.GetRoleByName("User")
 	if err != nil {
-		_, err = db.CreateRole("User", 0)
+		_, err = db.CreateRole("User", permissions.User)
 		if err != nil {
 			return err
 		}
