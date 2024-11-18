@@ -1,3 +1,5 @@
+github.com/bbalet/stopwords v1.0.0 h1:0TnGycCtY0zZi4ltKoOGRFIlZHv0WqpoIGUsObjztfo=
+github.com/bbalet/stopwords v1.0.0/go.mod h1:sAWrQoDMfqARGIn4s6dp7OW7ISrshUD8IP2q3KoqPjc=
 github.com/cpuguy83/go-md2man/v2 v2.0.3/go.mod h1:tgQtvFlXSQOSOSIRvRPT7W67SCa46tRHOmNcaadrF8o=
 github.com/danielgtaylor/huma/v2 v2.22.1 h1:fXhyjGSj5u5VeI+laa+e+7OxiQsP9RC55/tWZZvI4YA=
 github.com/danielgtaylor/huma/v2 v2.22.1/go.mod h1:2NZmGf/A+SstJYQlq0Xp4nsTDCmPvKS2w9vI8c9sf1A=

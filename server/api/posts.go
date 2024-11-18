@@ -7,6 +7,7 @@ import (
 	"strings"
 	"unicode"
 
+	"github.com/bbalet/stopwords"
 	"github.com/danielgtaylor/huma/v2"
 	"github.com/jakesmith-101/psychic-waffle/db"
 	"golang.org/x/text/runes"
@@ -66,18 +67,13 @@ type CreatePostOutput struct {
 func CreatePost(api huma.API) error {
 	var whitespace *regexp.Regexp
 	var duplicate *regexp.Regexp
-	var reduce *regexp.Regexp
 	var err error
 
-	whitespace, err = regexp.Compile(`[^a-z0-9\-_]+`) // matches all non-alphanumeric
+	whitespace, err = regexp.Compile(`[^a-z0-9-_]+`) // matches all non-alphanumeric
 	if err != nil {
 		return err
 	}
-	duplicate, err = regexp.Compile(`--+`) // matches multiple consecutive hyphens
-	if err != nil {
-		return err
-	}
-	reduce, err = regexp.Compile(``) // TODO: add regexp to select words to be removed for slug
+	duplicate, err = regexp.Compile(`--+`) // matches multiple consecutive hyphens (often created by removing stop words)
 	if err != nil {
 		return err
 	}
@@ -98,13 +94,14 @@ func CreatePost(api huma.API) error {
 		t := transform.Chain(norm.NFD, runes.Remove(runes.In(unicode.Mn)), norm.NFC)
 		result, _, _ := transform.String(t, input.Body.Title)
 
-		// hyphenate on every non-alphanumeric
-		hyphenatedTitle := whitespace.ReplaceAllString(strings.ToLower(result), "-")
-		// remove unnecessary hyphens
-		reducedTitle := duplicate.ReplaceAllString(strings.Trim(hyphenatedTitle, "-"), "-")
 		// remove unnecessary words
-		slug := reduce.ReplaceAllString(reducedTitle, "")
-		db.CreatePost(slug, input.Body.Title, input.Body.Description, "")
+		reducedTitle := stopwords.CleanString(result, "en", true) // cleans html too but kinda irrelevant here?
+		// hyphenate on every non-alphanumeric
+		hyphenatedTitle := whitespace.ReplaceAllString(strings.ToLower(reducedTitle), "-")
+		// remove unnecessary hyphens
+		dedupedTitle := duplicate.ReplaceAllString(strings.Trim(hyphenatedTitle, "-"), "-")
+
+		db.CreatePost(dedupedTitle, input.Body.Title, input.Body.Description, "")
 		return resp, nil
 	})
 }
