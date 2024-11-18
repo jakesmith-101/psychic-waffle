@@ -60,8 +60,8 @@ func GetPost(postID string) (*Post, error) {
 	return &post, err
 }
 
-var whitespace = regexp.MustCompile(`[^a-z0-9\-_]+`) // FIXME: assumes only usable characters are english alphanumeric
-var duplicate = regexp.MustCompile(`^-+|-+$|--+`)    // matches leading or trailing hyphens, or multiple consecutive hyphens
+var whitespace = regexp.MustCompile(`[^a-z0-9\-_]+`) // matches all non-alphanumeric
+var duplicate = regexp.MustCompile(`--+`)            // matches multiple consecutive hyphens
 var reduce = regexp.MustCompile(``)                  // TODO: add regexp to select words to be removed for slug
 
 func CreatePost(title string, description string, author string) (string, error) {
@@ -70,11 +70,11 @@ func CreatePost(title string, description string, author string) (string, error)
 	result, _, _ := transform.String(t, title)
 
 	// hyphenate on every non-alphanumeric
-	title2 := whitespace.ReplaceAllString(strings.ToLower(result), "-")
+	hyphenatedTitle := whitespace.ReplaceAllString(strings.ToLower(result), "-")
 	// remove unnecessary hyphens
-	title3 := duplicate.ReplaceAllString(title2, "")
+	reducedTitle := duplicate.ReplaceAllString(strings.Trim(hyphenatedTitle, "-"), "-")
 	// remove unnecessary words
-	slug := reduce.ReplaceAllString(title3, "")
+	slug := reduce.ReplaceAllString(reducedTitle, "")
 
 	post := Post{
 		PostID:          uuid.NewString(),
