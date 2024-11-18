@@ -101,6 +101,7 @@ func CreatePost(api huma.API) error {
 		// remove unnecessary hyphens
 		dedupedTitle := duplicate.ReplaceAllString(strings.Trim(hyphenatedTitle, "-"), "-")
 
+		// db trigger checks slug for uniqueness and appends a numeric suffix
 		db.CreatePost(dedupedTitle, input.Body.Title, input.Body.Description, "")
 		return resp, nil
 	})

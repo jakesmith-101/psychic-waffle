@@ -60,7 +60,7 @@ func CreatePost(slug string, title string, description string, author string) (s
 		PostTitle:       title,
 		PostDescription: description,
 		AuthorID:        author,
-		Slug:            slug, // FIXME: slug is not necessarily unique
+		Slug:            slug,
 		CreatedAt:       time.Now(),
 		UpdatedAt:       time.Now(),
 		Votes:           0,
