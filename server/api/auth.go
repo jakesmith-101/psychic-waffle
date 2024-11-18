@@ -27,7 +27,13 @@ func AuthEndpoints(api huma.API) error {
 	return err
 }
 
-// SignupOutput represents the signup operation response.
+type AuthInput struct {
+	Body struct {
+		Username string `json:"username" example:"John" doc:"Name of account"`
+		Password string `json:"password" example:"pass123" doc:"Password of account"`
+	}
+}
+
 type AuthOutput struct {
 	Body struct {
 		Token   string `json:"token" example:"jwt" doc:"Jwt token string for auth"`
@@ -42,12 +48,7 @@ func Signup(api huma.API) error {
 		Method:  http.MethodPost,
 		Path:    "/auth/signup",
 		Summary: "Create an account by username and password",
-	}, func(ctx context.Context, input *struct {
-		Body struct {
-			Username string `json:"username" maxLength:"30" example:"John" doc:"Name of account"`
-			Password string `json:"password" maxLength:"30" example:"pass123" doc:"Password of account"`
-		}
-	}) (*AuthOutput, error) {
+	}, func(ctx context.Context, input *AuthInput) (*AuthOutput, error) {
 		fmt.Fprintf(os.Stderr, "Requested account creation: %s\n", input.Body.Username)
 		resp := &AuthOutput{}
 		hash, err := password.GenerateFromPassword(input.Body.Password)
@@ -83,12 +84,7 @@ func Login(api huma.API) error {
 		Method:  http.MethodPost,
 		Path:    "/auth/login",
 		Summary: "Log into account by username and password",
-	}, func(ctx context.Context, input *struct {
-		Body struct {
-			Username string `json:"username" maxLength:"30" example:"John" doc:"Name of account"`
-			Password string `json:"password" maxLength:"30" example:"pass123" doc:"Password of account"`
-		}
-	}) (*AuthOutput, error) {
+	}, func(ctx context.Context, input *AuthInput) (*AuthOutput, error) {
 		fmt.Fprintf(os.Stderr, "Requested account login: %s\n", input.Body.Username)
 		resp := &AuthOutput{}
 		user, err := db.GetUserByUsername(input.Body.Username)
