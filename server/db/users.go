@@ -73,14 +73,14 @@ type UpdateUser struct {
 	UserID       string `json:"userID"`   // pk
 	Nickname     string `json:"nickname"` //
 	PasswordHash string `json:"password"` //
-	RoleID       string `json:"roleid"`   // fk
+	RoleID       string `json:"roleID"`   // fk
 }
 
 func SetUser(user UpdateUser) (bool, error) {
 	// check vars are set
 	nickname := ""
 	password := ""
-	roleid := ""
+	roleID := ""
 	if user.Nickname != "" {
 		nickname = "Nickname=@Nickname,"
 	}
@@ -88,7 +88,7 @@ func SetUser(user UpdateUser) (bool, error) {
 		password = "PasswordHash=@PasswordHash,"
 	}
 	if user.RoleID != "" {
-		roleid = "RoleID=@RoleID,"
+		roleID = "RoleID=@RoleID,"
 	}
 
 	// only update set vars
@@ -96,7 +96,7 @@ func SetUser(user UpdateUser) (bool, error) {
 		`UPDATE users SET %s %s %s UpdatedAt=@UpdatedAt WHERE UserID=@UserID;`,
 		nickname,
 		password,
-		roleid,
+		roleID,
 	)
 	args := pgx.NamedArgs{
 		"UserID":       user.UserID,
