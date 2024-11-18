@@ -41,6 +41,18 @@ func Open() {
 		fmt.Fprintf(os.Stderr, "Database URL: %s\n", dbUrl)
 		os.Exit(1)
 	} else {
-		fmt.Fprintf(os.Stderr, "Connected to database: %s\n", dbType)
+		fmt.Fprintf(os.Stdout, "Connected to database: %s\n", dbType)
 	}
+
+	err = DBTriggersFuncs()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "DB triggers and funcs creation failed: %v\n", err)
+	} else {
+		fmt.Fprintf(os.Stdout, "Created DB triggers and funcs")
+	}
+}
+
+func DBTriggersFuncs() error {
+	err := PostFuncs()
+	return err
 }
