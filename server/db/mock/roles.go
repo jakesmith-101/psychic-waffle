@@ -21,7 +21,15 @@ func CreateRoleTable() error {
 }
 
 func MockRoles() error {
-	_, err := db.GetRoleByName("User")
+	_, err := db.GetRoleByName("Guest")
+	if err != nil {
+		_, err = db.CreateRole("Guest", permissions.Guest)
+		if err != nil {
+			return err
+		}
+	}
+
+	_, err = db.GetRoleByName("User")
 	if err != nil {
 		_, err = db.CreateRole("User", permissions.User)
 		if err != nil {
