@@ -4,15 +4,10 @@ import (
 	"context"
 	"fmt"
 	"regexp"
-	"strings"
 	"time"
-	"unicode"
 
 	"github.com/google/uuid"
 	"github.com/jackc/pgx/v5"
-	"golang.org/x/text/runes"
-	"golang.org/x/text/transform"
-	"golang.org/x/text/unicode/norm"
 )
 
 type Post struct {
@@ -64,18 +59,7 @@ var whitespace = regexp.MustCompile(`[^a-z0-9\-_]+`) // matches all non-alphanum
 var duplicate = regexp.MustCompile(`--+`)            // matches multiple consecutive hyphens
 var reduce = regexp.MustCompile(``)                  // TODO: add regexp to select words to be removed for slug
 
-func CreatePost(title string, description string, author string) (string, error) {
-	// unaccent title
-	t := transform.Chain(norm.NFD, runes.Remove(runes.In(unicode.Mn)), norm.NFC)
-	result, _, _ := transform.String(t, title)
-
-	// hyphenate on every non-alphanumeric
-	hyphenatedTitle := whitespace.ReplaceAllString(strings.ToLower(result), "-")
-	// remove unnecessary hyphens
-	reducedTitle := duplicate.ReplaceAllString(strings.Trim(hyphenatedTitle, "-"), "-")
-	// remove unnecessary words
-	slug := reduce.ReplaceAllString(reducedTitle, "")
-
+func CreatePost(slug string, title string, description string, author string) (string, error) {
 	post := Post{
 		PostID:          uuid.NewString(),
 		PostTitle:       title,
