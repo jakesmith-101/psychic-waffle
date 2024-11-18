@@ -28,7 +28,7 @@ func AuthEndpoints(api huma.API) error {
 }
 
 // SignupOutput represents the signup operation response.
-type SignupOutput struct {
+type AuthOutput struct {
 	Body struct {
 		Token   string `json:"token" example:"jwt" doc:"Jwt token string for auth"`
 		Message string `json:"message" example:"Hello, John!" doc:"Greeting message"`
@@ -47,9 +47,9 @@ func Signup(api huma.API) error {
 			Username string `json:"username" maxLength:"30" example:"John" doc:"Name of account"`
 			Password string `json:"password" maxLength:"30" example:"pass123" doc:"Password of account"`
 		}
-	}) (*SignupOutput, error) {
+	}) (*AuthOutput, error) {
 		fmt.Fprintf(os.Stderr, "Requested account creation: %s\n", input.Body.Username)
-		resp := &SignupOutput{}
+		resp := &AuthOutput{}
 		hash, err := password.GenerateFromPassword(input.Body.Password)
 		if err != nil {
 			fmt.Fprintf(os.Stderr, "%v\n", err)
@@ -77,15 +77,6 @@ func Signup(api huma.API) error {
 	})
 }
 
-// LoginOutput represents the login operation response.
-type LoginOutput struct {
-	Body struct {
-		Token   string `json:"token" example:"jwt" doc:"Jwt token string for auth"`
-		Message string `json:"message" example:"Hello, John!" doc:"Greeting message"`
-		UserID  string `json:"userID" example:"uuid" doc:"ID of user's account"`
-	}
-}
-
 func Login(api huma.API) error {
 	// Register POST /auth/login
 	return CreateEndpoint(api, EndpointArgs{
@@ -97,9 +88,9 @@ func Login(api huma.API) error {
 			Username string `json:"username" maxLength:"30" example:"John" doc:"Name of account"`
 			Password string `json:"password" maxLength:"30" example:"pass123" doc:"Password of account"`
 		}
-	}) (*LoginOutput, error) {
+	}) (*AuthOutput, error) {
 		fmt.Fprintf(os.Stderr, "Requested account login: %s\n", input.Body.Username)
-		resp := &LoginOutput{}
+		resp := &AuthOutput{}
 		user, err := db.GetUserByUsername(input.Body.Username)
 		if err != nil {
 			fmt.Fprintf(os.Stderr, "%v\n", err)
