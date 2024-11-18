@@ -2,6 +2,7 @@ package api
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"os"
 	"path"
@@ -23,25 +24,49 @@ func BuildPath(route string) string {
 	return path.Join(rootPath, route)
 }
 
-func Endpoints(api huma.API) {
-	HealthCheck(api)
+func Endpoints(api huma.API) error {
+	err := HealthCheck(api)
+	if err != nil {
+		return err
+	}
 
 	// Auth
+	err = AuthEndpoints(api)
 	Signup(api)
+	if err != nil {
+		return err
+	}
 	Login(api)
 
 	// User
+	err = UserEndpoints(api)
 	GetUser(api)
+	if err != nil {
+		return err
+	}
 	UpdateUser(api)
 
 	// Role
+	err = RoleEndpoints(api)
 	GetRole(api)
+	if err != nil {
+		return err
+	}
 
 	// Post
-	GetPosts(api)
+	err = PostEndpoints(api)
+	if err != nil {
+		return err
+	}
 
 	// Comment
+	err = CommentEndpoints(api)
 	GetComments(api)
+	if err != nil {
+		return err
+	}
+
+	return err
 }
 
 type EndpointArgs struct {
@@ -53,12 +78,12 @@ type EndpointArgs struct {
 var reg = regexp.MustCompile("[A-Z]")
 var prefixReg = regexp.MustCompile(`.*/api\.`) // selects package part of func name (for removal)
 
-func CreateEndpoint[I, O any](api huma.API, op EndpointArgs, handler func(context.Context, *I) (*O, error)) {
+func CreateEndpoint[I, O any](api huma.API, op EndpointArgs, handler func(context.Context, *I) (*O, error)) error {
 	counter, _, _, success := runtime.Caller(1)
 
 	if !success {
 		fmt.Fprintf(os.Stderr, "functionName: runtime.Caller: failed\n")
-		os.Exit(1)
+		return errors.New("functionName: runtime.Caller: failed")
 	}
 
 	name := prefixReg.ReplaceAllString(runtime.FuncForPC(counter).Name(), "")
@@ -75,4 +100,6 @@ func CreateEndpoint[I, O any](api huma.API, op EndpointArgs, handler func(contex
 		Tags:        []string{name},
 	}, handler)
 	fmt.Fprintf(os.Stderr, "init: %s\n", opID)
+
+	return nil
 }

@@ -3,7 +3,6 @@ package db
 import (
 	"context"
 	"fmt"
-	"regexp"
 	"time"
 
 	"github.com/google/uuid"
@@ -54,10 +53,6 @@ func GetPost(postID string) (*Post, error) {
 	post, err = pgx.CollectExactlyOneRow(row, pgx.RowToStructByName[Post])
 	return &post, err
 }
-
-var whitespace = regexp.MustCompile(`[^a-z0-9\-_]+`) // matches all non-alphanumeric
-var duplicate = regexp.MustCompile(`--+`)            // matches multiple consecutive hyphens
-var reduce = regexp.MustCompile(``)                  // TODO: add regexp to select words to be removed for slug
 
 func CreatePost(slug string, title string, description string, author string) (string, error) {
 	post := Post{

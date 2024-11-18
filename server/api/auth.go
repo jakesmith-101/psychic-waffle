@@ -11,6 +11,22 @@ import (
 	"github.com/jakesmith-101/psychic-waffle/password"
 )
 
+func AuthEndpoints(api huma.API) error {
+	var err error
+
+	err = Signup(api)
+	if err != nil {
+		return err
+	}
+
+	err = Login(api)
+	if err != nil {
+		return err
+	}
+
+	return err
+}
+
 // SignupOutput represents the signup operation response.
 type SignupOutput struct {
 	Body struct {
@@ -20,9 +36,9 @@ type SignupOutput struct {
 	}
 }
 
-func Signup(api huma.API) {
+func Signup(api huma.API) error {
 	// Register POST /auth/signup
-	CreateEndpoint(api, EndpointArgs{
+	return CreateEndpoint(api, EndpointArgs{
 		Method:  http.MethodPost,
 		Path:    "/auth/signup",
 		Summary: "Create an account by username and password",
@@ -70,9 +86,9 @@ type LoginOutput struct {
 	}
 }
 
-func Login(api huma.API) {
+func Login(api huma.API) error {
 	// Register POST /auth/login
-	CreateEndpoint(api, EndpointArgs{
+	return CreateEndpoint(api, EndpointArgs{
 		Method:  http.MethodPost,
 		Path:    "/auth/login",
 		Summary: "Log into account by username and password",

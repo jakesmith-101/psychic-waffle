@@ -8,15 +8,26 @@ import (
 	"github.com/jakesmith-101/psychic-waffle/db"
 )
 
+func CommentEndpoints(api huma.API) error {
+	var err error = nil
+
+	err = GetComments(api)
+	if err != nil {
+		return err
+	}
+
+	return err
+}
+
 type GetCommentsOutput struct {
 	Body struct {
 		Comments []db.Comment `json:"comments"`
 	}
 }
 
-func GetComments(api huma.API) {
+func GetComments(api huma.API) error {
 	// Register GET /comments
-	CreateEndpoint(api, EndpointArgs{
+	return CreateEndpoint(api, EndpointArgs{
 		Method:  http.MethodGet,
 		Path:    "/posts/{postID}/comments/{sortID}",
 		Summary: "Get 20 latest comments",

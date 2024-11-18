@@ -16,9 +16,9 @@ type GreetingOutput struct {
 	}
 }
 
-func HealthCheck(api huma.API) {
+func HealthCheck(api huma.API) error {
 	// Register GET /healthcheck/{name}
-	CreateEndpoint(api, EndpointArgs{
+	return CreateEndpoint(api, EndpointArgs{
 		Method:  http.MethodGet,
 		Path:    "/healthcheck/{name}",
 		Summary: "Get a greeting.",

@@ -8,6 +8,17 @@ import (
 	"github.com/jakesmith-101/psychic-waffle/db"
 )
 
+func RoleEndpoints(api huma.API) error {
+	var err error = nil
+
+	err = GetRole(api)
+	if err != nil {
+		return err
+	}
+
+	return err
+}
+
 type GetRoleOutput struct {
 	Body struct {
 		RoleID      string `json:"roleID"`      // pk
@@ -16,9 +27,9 @@ type GetRoleOutput struct {
 	}
 }
 
-func GetRole(api huma.API) {
+func GetRole(api huma.API) error {
 	// Register GET /role
-	CreateEndpoint(api, EndpointArgs{
+	return CreateEndpoint(api, EndpointArgs{
 		Method:  http.MethodGet,
 		Path:    "/roles/{roleID}",
 		Summary: "Get a role by role ID",
