@@ -3,6 +3,7 @@ module github.com/jakesmith-101/psychic-waffle
 go 1.23.0
 
 require (
+	github.com/ZeFort/chance v0.0.0-20150129172704-bd0104b650ee
 	github.com/bbalet/stopwords v1.0.0
 	github.com/danielgtaylor/huma/v2 v2.22.1
 	github.com/golang-jwt/jwt/v5 v5.2.1

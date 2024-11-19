@@ -2,6 +2,8 @@ package mock
 
 import (
 	"context"
+	"fmt"
+	"strings"
 
 	"github.com/jakesmith-101/psychic-waffle/db"
 )
@@ -26,5 +28,26 @@ func CreatePostTable() error {
 }
 
 func MockPosts(users []string) error {
+	NewChance(0) // ensures C is set with seed
+	length := C.IntN(41)
+	for i := 0; i < length; i++ {
+		var slug string
+		check := C.IntN(3)
+		switch check {
+		case 0:
+			slug = C.Word()
+		case 1:
+			slug = fmt.Sprintf("%s-%s", C.Word(), C.Word())
+		case 2:
+			slug = fmt.Sprintf("%s-%s-%s", C.Word(), C.Word(), C.Word())
+		}
+		_, err := db.GetPostBySlug(slug)
+		if err != nil {
+			_, err = db.CreatePost(slug, strings.ReplaceAll(slug, "-", " "), C.String(), users[C.IntN(len(users))])
+			if err != nil {
+				return err
+			}
+		}
+	}
 	return nil
 }

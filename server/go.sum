@@ -1,3 +1,5 @@
+github.com/ZeFort/chance v0.0.0-20150129172704-bd0104b650ee h1:p/i27VcoSfKDyvDJUuQlCOp3jFptv0muQCYFuMJTxEI=
+github.com/ZeFort/chance v0.0.0-20150129172704-bd0104b650ee/go.mod h1:A1U6EverOJENfnSNTP4WC07V4uOz4TLYXxQyEpSDjRI=
 github.com/bbalet/stopwords v1.0.0 h1:0TnGycCtY0zZi4ltKoOGRFIlZHv0WqpoIGUsObjztfo=
 github.com/bbalet/stopwords v1.0.0/go.mod h1:sAWrQoDMfqARGIn4s6dp7OW7ISrshUD8IP2q3KoqPjc=
 github.com/cpuguy83/go-md2man/v2 v2.0.3/go.mod h1:tgQtvFlXSQOSOSIRvRPT7W67SCa46tRHOmNcaadrF8o=
