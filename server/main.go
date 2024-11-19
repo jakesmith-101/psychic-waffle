@@ -30,7 +30,7 @@ func main() {
 		// Ensure SQL tables and basic data exist
 		err := mock.MockAll(true)
 		if err != nil {
-			fmt.Fprintf(os.Stderr, "%v\n", err)
+			fmt.Fprintf(os.Stderr, "Mock Error: %v\n", err)
 		}
 
 		// Create a new router & API
