@@ -6,7 +6,6 @@
 </script>
 
 <h1>Welcome to the Site</h1>
-<content></content>
 {#each data.posts as post}
     <article>
         <header>
