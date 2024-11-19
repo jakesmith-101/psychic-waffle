@@ -12,7 +12,7 @@ export interface tGetPosts {
     }[]
 }
 
-export async function getPosts(type: "latest" | "popular"): Promise<tGetPosts> {
+export async function getPosts(type: boolean): Promise<tGetPosts> {
     const data = await apiFetch<tGetPosts>(`/posts/${type}`, 'GET'); // possible API error response message
     if (data?.posts !== undefined)
         return data as tGetPosts;

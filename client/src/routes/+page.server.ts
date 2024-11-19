@@ -9,7 +9,7 @@ type tPost = Omit<tGetPosts["posts"][0], "authorID"> & {
 }
 
 export async function load(): Promise<{ posts: tPost[] }> {
-    const data = await getPosts("popular");
+    const data = await getPosts(true);
     const posts = await Promise.all(data.posts.map(async post => {
         const user = await getUser(post.authorID);
         const { roleID, ...newUser } = user;
