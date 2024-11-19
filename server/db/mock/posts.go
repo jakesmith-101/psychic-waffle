@@ -3,6 +3,7 @@ package mock
 import (
 	"context"
 	"fmt"
+	"os"
 	"strings"
 
 	"github.com/jakesmith-101/psychic-waffle/db"
@@ -46,6 +47,8 @@ func MockPosts(users []string) error {
 			_, err = db.CreatePost(slug, strings.ReplaceAll(slug, "-", " "), C.String(), users[C.IntN(len(users))])
 			if err != nil {
 				return err
+			} else {
+				fmt.Fprintf(os.Stdout, "Mocked post: %s", slug)
 			}
 		}
 	}
