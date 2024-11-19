@@ -30,7 +30,7 @@ func CreatePostTable() error {
 
 func MockPosts(users []string) error {
 	NewChance(0) // ensures C is set with seed
-	length := C.IntN(41)
+	length := C.IntBtw(20, 40)
 	for i := 0; i < length; i++ {
 		var slug string
 		check := C.IntN(3)
