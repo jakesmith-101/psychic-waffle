@@ -32,23 +32,18 @@ func Endpoints(api huma.API) error {
 
 	// Auth
 	err = AuthEndpoints(api)
-	Signup(api)
 	if err != nil {
 		return err
 	}
-	Login(api)
 
 	// User
 	err = UserEndpoints(api)
-	GetUser(api)
 	if err != nil {
 		return err
 	}
-	UpdateUser(api)
 
 	// Role
 	err = RoleEndpoints(api)
-	GetRole(api)
 	if err != nil {
 		return err
 	}
@@ -61,7 +56,6 @@ func Endpoints(api huma.API) error {
 
 	// Comment
 	err = CommentEndpoints(api)
-	GetComments(api)
 	if err != nil {
 		return err
 	}
