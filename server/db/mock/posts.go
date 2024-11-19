@@ -48,7 +48,7 @@ func MockPosts(users []string) error {
 			if err != nil {
 				return err
 			} else {
-				fmt.Fprintf(os.Stdout, "Mocked post: %s", slug)
+				fmt.Fprintf(os.Stdout, "Mocked post: %s\n", slug)
 			}
 		}
 	}

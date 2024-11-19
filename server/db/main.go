@@ -48,7 +48,7 @@ func Open() {
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "DB triggers and funcs creation failed: %v\n", err)
 	} else {
-		fmt.Fprintf(os.Stdout, "Created DB triggers and funcs")
+		fmt.Fprintf(os.Stdout, "Created DB triggers and funcs\n")
 	}
 }
 
