@@ -20,7 +20,7 @@ func PostFuncs() error {
 		-- Loop to ensure uniqueness of the slug
 		LOOP
 			-- Check if the slug already exists in the table
-			IF EXISTS (SELECT 1 FROM "posts" WHERE Slug = final_slug AND PostID != COALESCE(NEW.PostID, 0)) THEN
+			IF EXISTS (SELECT 1 FROM "posts" WHERE Slug = final_slug AND PostID != NEW.PostID) THEN
 				-- If it exists, append a numeric suffix and increment the counter
 				final_slug := base_slug || '-' || counter;
 				counter := counter + 1;
@@ -41,7 +41,7 @@ func PostFuncs() error {
 	}
 
 	_, err = PgxPool.Exec(context.Background(), `
-	CREATE TRIGGER set_unique_slug
+	CREATE OR REPLACE TRIGGER set_unique_slug
 	BEFORE INSERT OR UPDATE
 	ON "posts"
 	FOR EACH ROW
