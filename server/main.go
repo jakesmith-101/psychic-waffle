@@ -28,7 +28,7 @@ func main() {
 		// Initilize PgxPool pointer
 		db.Open()
 		// Ensure SQL tables and basic data exist
-		err := mock.MockAll()
+		err := mock.MockAll(true)
 		if err != nil {
 			fmt.Fprintf(os.Stderr, "%v\n", err)
 		}

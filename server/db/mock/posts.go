@@ -25,6 +25,6 @@ func CreatePostTable() error {
 	return err
 }
 
-func MockPosts() error {
+func MockPosts(users []string) error {
 	return nil
 }

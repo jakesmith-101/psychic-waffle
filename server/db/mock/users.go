@@ -26,16 +26,16 @@ func CreateUserTable() error {
 }
 
 // Depends upon mocked roles
-func MockAdmin() error {
-	_, err := db.GetUserByUsername("admin123")
+func MockAdmin() (string, error) {
+	user, err := db.GetUserByUsername("admin123")
+	userID := user.UserID
 	if err != nil {
 		var pass string
 		pass, err = password.GenerateFromPassword("admin123")
 		if err != nil {
-			return err
+			return userID, err // invalid user ID
 		}
-		_, err = db.CreateUser("admin123", pass)
-
+		userID, err = db.CreateUser("admin123", pass)
 	}
-	return err
+	return userID, err
 }
