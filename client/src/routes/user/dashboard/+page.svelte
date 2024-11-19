@@ -6,7 +6,7 @@
 
 <ul>
     <li><a href="/user/dashboard/settings">User Settings</a></li>
-    <li><a href={`/user/${data.UserID}`}>User Details</a></li>
+    <li><a href="/user/{data.UserID}">User Details</a></li>
 </ul>
 
 <style>
