@@ -10,7 +10,7 @@ import (
 
 	"github.com/danielgtaylor/huma/v2"
 	"github.com/jakesmith-101/psychic-waffle/db"
-	"github.com/jakesmith-101/psychic-waffle/password"
+	"github.com/jakesmith-101/psychic-waffle/util"
 )
 
 func UserEndpoints(api huma.API) error {
@@ -86,12 +86,12 @@ func UpdateUser(api huma.API) error {
 	}) (*UpdateUserOutput, error) {
 		resp := &UpdateUserOutput{}
 
-		err := VerifyToken(input.Body.Token)
+		err := util.VerifyToken(input.Body.Token)
 		if err != nil {
 			fmt.Fprintf(os.Stderr, "%v\n", err)
 			return resp, err
 		}
-		claims, err := ExtractClaims(input.Body.Token)
+		claims, err := util.ExtractClaims(input.Body.Token)
 		if err != nil {
 			fmt.Fprintf(os.Stderr, "%v\n", err)
 			return resp, err
@@ -101,7 +101,7 @@ func UpdateUser(api huma.API) error {
 
 		var newPass string
 		if input.Body.Password != "" {
-			newPass, err = password.GenerateFromPassword(input.Body.Password)
+			newPass, err = util.GenerateFromPassword(input.Body.Password)
 			if err != nil {
 				return resp, err
 			}

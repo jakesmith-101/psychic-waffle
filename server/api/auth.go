@@ -8,7 +8,7 @@ import (
 
 	"github.com/danielgtaylor/huma/v2"
 	"github.com/jakesmith-101/psychic-waffle/db"
-	"github.com/jakesmith-101/psychic-waffle/password"
+	"github.com/jakesmith-101/psychic-waffle/util"
 )
 
 func AuthEndpoints(api huma.API) error {
@@ -51,7 +51,7 @@ func Signup(api huma.API) error {
 	}, func(ctx context.Context, input *AuthInput) (*AuthOutput, error) {
 		fmt.Fprintf(os.Stderr, "Requested account creation: %s\n", input.Body.Username)
 		resp := &AuthOutput{}
-		hash, err := password.GenerateFromPassword(input.Body.Password)
+		hash, err := util.GenerateFromPassword(input.Body.Password)
 		if err != nil {
 			fmt.Fprintf(os.Stderr, "%v\n", err)
 			return resp, err
@@ -66,7 +66,7 @@ func Signup(api huma.API) error {
 			fmt.Fprintf(os.Stderr, "%v\n", err)
 			return resp, err
 		}
-		tokenString, err := CreateToken(*user)
+		tokenString, err := util.CreateToken(*user)
 		if err != nil {
 			fmt.Fprintf(os.Stderr, "%v\n", err)
 			return resp, err
@@ -92,13 +92,13 @@ func Login(api huma.API) error {
 			fmt.Fprintf(os.Stderr, "%v\n", err)
 			return resp, err
 		}
-		match, err := password.ComparePasswordAndHash(input.Body.Password, user.PasswordHash)
+		match, err := util.ComparePasswordAndHash(input.Body.Password, user.PasswordHash)
 		if err != nil {
 			fmt.Fprintf(os.Stderr, "%v\n", err)
 			return resp, err
 		}
 		if match {
-			tokenString, err := CreateToken(*user)
+			tokenString, err := util.CreateToken(*user)
 			if err != nil {
 				fmt.Fprintf(os.Stderr, "%v\n", err)
 				return resp, err

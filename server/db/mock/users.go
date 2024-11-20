@@ -4,7 +4,7 @@ import (
 	"context"
 
 	"github.com/jakesmith-101/psychic-waffle/db"
-	"github.com/jakesmith-101/psychic-waffle/password"
+	"github.com/jakesmith-101/psychic-waffle/util"
 )
 
 // Depends upon Roles table
@@ -31,7 +31,7 @@ func MockAdmin() (string, error) {
 	userID := user.UserID
 	if err != nil {
 		var pass string
-		pass, err = password.GenerateFromPassword("admin123")
+		pass, err = util.GenerateFromPassword("admin123")
 		if err != nil {
 			return userID, err // invalid user ID
 		}
