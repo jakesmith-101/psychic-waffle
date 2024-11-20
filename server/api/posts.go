@@ -5,6 +5,7 @@ import (
 	"net/http"
 	"regexp"
 	"strings"
+	"time"
 	"unicode"
 
 	"github.com/bbalet/stopwords"
@@ -31,6 +32,38 @@ func PostEndpoints(api huma.API) error {
 	return err
 }
 
+type GetPostOutput struct {
+	Body struct {
+		PostID          string    `json:"postID"`          // pk
+		Slug            string    `json:"slug"`            // pk
+		PostTitle       string    `json:"postTitle"`       //
+		PostDescription string    `json:"postDescription"` //
+		Votes           int32     `json:"votes"`           //
+		AuthorID        string    `json:"authorID"`        // fk
+		CreatedAt       time.Time `json:"createdAt"`       //
+		UpdatedAt       time.Time `json:"updatedAt"`       //
+	}
+}
+
+func GetPost(api huma.API) error {
+	// Register GET /posts
+	return CreateEndpoint(api, EndpointArgs{
+		Method:  http.MethodGet,
+		Path:    "/posts/{slug}",
+		Summary: "Get post",
+	}, func(ctx context.Context, input *struct {
+		Slug string `path:"slug" required:"true"` //
+	}) (*GetPostOutput, error) {
+		resp := &GetPostOutput{}
+		post, err := db.GetPostBySlug(input.Slug)
+		if err != nil {
+			return resp, err
+		}
+		resp.Body = *post
+		return resp, nil
+	})
+}
+
 type GetPostsOutput struct {
 	Body struct {
 		Posts []db.Post `json:"posts"`
@@ -41,15 +74,13 @@ func GetPosts(api huma.API) error {
 	// Register GET /posts
 	return CreateEndpoint(api, EndpointArgs{
 		Method:  http.MethodGet,
-		Path:    "/posts/{sortID}",
-		Summary: "Get 20 latest posts",
+		Path:    "/posts",
+		Summary: "Get 20 latest or most popular posts",
 	}, func(ctx context.Context, input *struct {
-		SortID bool `path:"sortID" required:"true"` //
+		SortID bool `query:"sort" doc:"Order by votes or by date"`
 	}) (*GetPostsOutput, error) {
 		resp := &GetPostsOutput{}
-		var posts *[]db.Post
-		var err error
-		posts, err = db.GetPosts(input.SortID)
+		posts, err := db.GetPosts(input.SortID)
 		if err != nil {
 			return resp, err
 		}
