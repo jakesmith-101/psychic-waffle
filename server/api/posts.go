@@ -2,7 +2,9 @@ package api
 
 import (
 	"context"
+	"fmt"
 	"net/http"
+	"os"
 	"regexp"
 	"strings"
 	"time"
@@ -62,6 +64,7 @@ func GetPost(api huma.API) error {
 		resp := &GetPostOutput{}
 		post, err := db.GetPostBySlug(input.Slug)
 		if err != nil {
+			fmt.Fprintf(os.Stderr, "%v\n", err)
 			return resp, err
 		}
 		resp.Body = *post
@@ -87,6 +90,7 @@ func GetPosts(api huma.API) error {
 		resp := &GetPostsOutput{}
 		posts, err := db.GetPosts(input.SortID)
 		if err != nil {
+			fmt.Fprintf(os.Stderr, "%v\n", err)
 			return resp, err
 		}
 		resp.Body.Posts = *posts

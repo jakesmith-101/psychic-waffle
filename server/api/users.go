@@ -52,6 +52,7 @@ func GetUser(api huma.API) error {
 		resp := &GetUserOutput{}
 		user, err := db.GetUser(input.UserID)
 		if err != nil {
+			fmt.Fprintf(os.Stderr, "%v\n", err)
 			return resp, err
 		}
 		resp.Body.UserID = user.UserID

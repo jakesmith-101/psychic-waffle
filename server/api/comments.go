@@ -2,7 +2,9 @@ package api
 
 import (
 	"context"
+	"fmt"
 	"net/http"
+	"os"
 
 	"github.com/danielgtaylor/huma/v2"
 	"github.com/jakesmith-101/psychic-waffle/db"
@@ -40,6 +42,7 @@ func GetComments(api huma.API) error {
 		var err error
 		comments, err = db.GetComments(input.PostID, input.SortID)
 		if err != nil {
+			fmt.Fprintf(os.Stderr, "%v\n", err)
 			return resp, err
 		}
 		resp.Body.Comments = *comments

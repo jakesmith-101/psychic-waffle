@@ -92,7 +92,7 @@ func Login(api huma.API) error {
 		Path:    "/auth/login",
 		Summary: "Log into account by username and password",
 	}, func(ctx context.Context, input *AuthInput) (*AuthOutput, error) {
-		fmt.Fprintf(os.Stderr, "Requested account login: %s\n", input.Body.Username)
+		fmt.Fprintf(os.Stdout, "Requested account login: %s\n", input.Body.Username)
 		resp := &AuthOutput{}
 		user, err := db.GetUserByUsername(input.Body.Username)
 		if err != nil {

@@ -2,7 +2,9 @@ package api
 
 import (
 	"context"
+	"fmt"
 	"net/http"
+	"os"
 
 	"github.com/danielgtaylor/huma/v2"
 	"github.com/jakesmith-101/psychic-waffle/db"
@@ -39,6 +41,7 @@ func GetRole(api huma.API) error {
 		resp := &GetRoleOutput{}
 		role, err := db.GetRole(input.RoleID)
 		if err != nil {
+			fmt.Fprintf(os.Stderr, "%v\n", err)
 			return resp, err
 		}
 		resp.Body.RoleID = role.RoleID

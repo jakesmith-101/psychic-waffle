@@ -1,6 +1,11 @@
 package mock
 
-import "github.com/ZeFort/chance"
+import (
+	"fmt"
+	"os"
+
+	"github.com/ZeFort/chance"
+)
 
 func MockAll(mock bool) error {
 	var err error
@@ -14,6 +19,7 @@ func MockAll(mock bool) error {
 	if mock {
 		err = MockRoles()
 		if err != nil {
+			fmt.Fprintf(os.Stderr, "%v\n", err)
 			return err
 		}
 	}
@@ -26,6 +32,7 @@ func MockAll(mock bool) error {
 	if mock {
 		userID, err := MockAdmin()
 		if err != nil {
+			fmt.Fprintf(os.Stderr, "%v\n", err)
 			return err
 		}
 		users = append(users, userID)
@@ -39,6 +46,7 @@ func MockAll(mock bool) error {
 	if mock {
 		err = MockPosts(users)
 		if err != nil {
+			fmt.Fprintf(os.Stderr, "%v\n", err)
 			return err
 		}
 	}
