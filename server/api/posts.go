@@ -17,7 +17,12 @@ import (
 )
 
 func PostEndpoints(api huma.API) error {
-	var err error = nil
+	var err error
+
+	err = GetPost(api)
+	if err != nil {
+		return err
+	}
 
 	err = GetPosts(api)
 	if err != nil {
