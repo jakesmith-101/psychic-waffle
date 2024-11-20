@@ -4,7 +4,7 @@ import (
 	"context"
 
 	"github.com/jakesmith-101/psychic-waffle/db"
-	"github.com/jakesmith-101/psychic-waffle/permissions"
+	"github.com/jakesmith-101/psychic-waffle/util/permissions"
 )
 
 func CreateRoleTable() error {
