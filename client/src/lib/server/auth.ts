@@ -9,8 +9,6 @@ export async function signup(username: string, password: string) {
 }
 
 interface tPostAuth {
-    token: string;
-    userID: string;
     message: string;
 }
 
@@ -24,8 +22,6 @@ async function auth(
 
     const data = await apiFetch<tPostAuth>(`/auth/${path}`, 'POST', { username, password }); // possible API error response message
     if (
-        typeof data?.token === 'string' &&
-        typeof data?.userID === 'string' &&
         typeof data?.message === 'string'
     )
         return data as tPostAuth;

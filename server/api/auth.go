@@ -35,10 +35,9 @@ type AuthInput struct {
 }
 
 type AuthOutput struct {
-	Body struct {
-		Token   string `json:"token" example:"jwt" doc:"Jwt token string for auth"`
+	SetCookie [2]http.Cookie `header:"Set-Cookie"`
+	Body      struct {
 		Message string `json:"message" example:"Hello, John!" doc:"Greeting message"`
-		UserID  string `json:"userID" example:"uuid" doc:"ID of user's account"`
 	}
 }
 
@@ -71,9 +70,17 @@ func Signup(api huma.API) error {
 			fmt.Fprintf(os.Stderr, "%v\n", err)
 			return resp, err
 		}
-		resp.Body.Token = tokenString
-		resp.Body.UserID = userID
 		resp.Body.Message = fmt.Sprintf("Hello, %s!", user.Nickname)
+		resp.SetCookie = [2]http.Cookie{
+			{
+				Name:  "psychic_waffle_userid",
+				Value: userID,
+			},
+			{
+				Name:  "psychic_waffle_authorisation",
+				Value: tokenString,
+			},
+		}
 		return resp, err
 	})
 }
@@ -104,8 +111,16 @@ func Login(api huma.API) error {
 				return resp, err
 			}
 			resp.Body.Message = fmt.Sprintf("Hello, %s!", user.Nickname)
-			resp.Body.UserID = user.UserID
-			resp.Body.Token = tokenString
+			resp.SetCookie = [2]http.Cookie{
+				{
+					Name:  "psychic_waffle_userid",
+					Value: user.UserID,
+				},
+				{
+					Name:  "psychic_waffle_authorisation",
+					Value: tokenString,
+				},
+			}
 		}
 		return resp, err
 	})
