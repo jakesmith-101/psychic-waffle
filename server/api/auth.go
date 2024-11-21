@@ -53,22 +53,22 @@ func Signup(api huma.API) error {
 		hash, err := util.GenerateFromPassword(input.Body.Password)
 		if err != nil {
 			fmt.Fprintf(os.Stderr, "%v\n", err)
-			return resp, err
+			return resp, huma.Error500InternalServerError(err.Error())
 		}
 		userID, err := db.CreateUser(input.Body.Username, hash)
 		if err != nil {
 			fmt.Fprintf(os.Stderr, "%v\n", err)
-			return resp, err
+			return resp, huma.Error500InternalServerError(err.Error())
 		}
 		user, err := db.GetUser(userID)
 		if err != nil {
 			fmt.Fprintf(os.Stderr, "%v\n", err)
-			return resp, err
+			return resp, huma.Error500InternalServerError(err.Error())
 		}
 		tokenString, err := util.CreateToken(*user)
 		if err != nil {
 			fmt.Fprintf(os.Stderr, "%v\n", err)
-			return resp, err
+			return resp, huma.Error500InternalServerError(err.Error())
 		}
 		resp.Body.Message = fmt.Sprintf("Hello, %s!", user.Nickname)
 		resp.SetCookie = [2]http.Cookie{
@@ -81,7 +81,7 @@ func Signup(api huma.API) error {
 				Value: tokenString,
 			},
 		}
-		return resp, err
+		return resp, nil
 	})
 }
 
@@ -97,18 +97,18 @@ func Login(api huma.API) error {
 		user, err := db.GetUserByUsername(input.Body.Username)
 		if err != nil {
 			fmt.Fprintf(os.Stderr, "%v\n", err)
-			return resp, err
+			return resp, huma.Error500InternalServerError(err.Error())
 		}
 		match, err := util.ComparePasswordAndHash(input.Body.Password, user.PasswordHash)
 		if err != nil {
 			fmt.Fprintf(os.Stderr, "%v\n", err)
-			return resp, err
+			return resp, huma.Error500InternalServerError(err.Error())
 		}
 		if match {
 			tokenString, err := util.CreateToken(*user)
 			if err != nil {
 				fmt.Fprintf(os.Stderr, "%v\n", err)
-				return resp, err
+				return resp, huma.Error500InternalServerError(err.Error())
 			}
 			resp.Body.Message = fmt.Sprintf("Hello, %s!", user.Nickname)
 			resp.SetCookie = [2]http.Cookie{
@@ -122,6 +122,6 @@ func Login(api huma.API) error {
 				},
 			}
 		}
-		return resp, err
+		return resp, nil
 	})
 }

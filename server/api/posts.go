@@ -65,7 +65,7 @@ func GetPost(api huma.API) error {
 		post, err := db.GetPostBySlug(input.Slug)
 		if err != nil {
 			fmt.Fprintf(os.Stderr, "%v\n", err)
-			return resp, err
+			return resp, huma.Error500InternalServerError(err.Error())
 		}
 		resp.Body = *post
 		return resp, nil
@@ -91,7 +91,7 @@ func GetPosts(api huma.API) error {
 		posts, err := db.GetPosts(input.SortID)
 		if err != nil {
 			fmt.Fprintf(os.Stderr, "%v\n", err)
-			return resp, err
+			return resp, huma.Error500InternalServerError(err.Error())
 		}
 		resp.Body.Posts = *posts
 		return resp, nil

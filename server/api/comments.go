@@ -43,7 +43,7 @@ func GetComments(api huma.API) error {
 		comments, err = db.GetComments(input.PostID, input.SortID)
 		if err != nil {
 			fmt.Fprintf(os.Stderr, "%v\n", err)
-			return resp, err
+			return resp, huma.Error500InternalServerError(err.Error())
 		}
 		resp.Body.Comments = *comments
 		return resp, nil

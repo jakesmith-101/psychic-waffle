@@ -42,7 +42,7 @@ func GetRole(api huma.API) error {
 		role, err := db.GetRole(input.RoleID)
 		if err != nil {
 			fmt.Fprintf(os.Stderr, "%v\n", err)
-			return resp, err
+			return resp, huma.Error500InternalServerError(err.Error())
 		}
 		resp.Body.RoleID = role.RoleID
 		resp.Body.Permissions = role.Permissions

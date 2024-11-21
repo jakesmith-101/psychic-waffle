@@ -2,7 +2,6 @@ package api
 
 import (
 	"context"
-	"errors"
 	"fmt"
 	"net/http"
 	"os"
@@ -53,7 +52,7 @@ func GetUser(api huma.API) error {
 		user, err := db.GetUser(input.UserID)
 		if err != nil {
 			fmt.Fprintf(os.Stderr, "%v\n", err)
-			return resp, err
+			return resp, huma.Error500InternalServerError(err.Error())
 		}
 		resp.Body.UserID = user.UserID
 		resp.Body.Username = user.Username
@@ -90,12 +89,12 @@ func UpdateUser(api huma.API) error {
 		err := util.VerifyToken(input.Body.Token)
 		if err != nil {
 			fmt.Fprintf(os.Stderr, "%v\n", err)
-			return resp, err
+			return resp, huma.Error500InternalServerError(err.Error())
 		}
 		claims, err := util.ExtractClaims(input.Body.Token)
 		if err != nil {
 			fmt.Fprintf(os.Stderr, "%v\n", err)
-			return resp, err
+			return resp, huma.Error500InternalServerError(err.Error())
 		}
 		userID := fmt.Sprint(claims["UserID"])
 		fmt.Fprintf(os.Stderr, "Requested update user: %s\n", userID)
@@ -104,7 +103,8 @@ func UpdateUser(api huma.API) error {
 		if input.Body.Password != "" {
 			newPass, err = util.GenerateFromPassword(input.Body.Password)
 			if err != nil {
-				return resp, err
+				fmt.Fprintf(os.Stderr, "%v\n", err)
+				return resp, huma.Error500InternalServerError(err.Error())
 			}
 		}
 		success, err := db.SetUser(db.UpdateUser{
@@ -115,6 +115,7 @@ func UpdateUser(api huma.API) error {
 		})
 		if err != nil {
 			fmt.Fprintf(os.Stderr, "%v\n", err)
+			return resp, huma.Error500InternalServerError("failed to update user")
 		}
 
 		var name string
@@ -126,9 +127,9 @@ func UpdateUser(api huma.API) error {
 		if success {
 			resp.Body.Message = fmt.Sprintf("Successfully updated user: %s", name)
 		} else {
-			return resp, errors.New("failed to update user")
+			return resp, huma.Error500InternalServerError("failed to update user")
 		}
 
-		return resp, err
+		return resp, nil
 	})
 }
