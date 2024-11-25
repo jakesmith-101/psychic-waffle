@@ -97,3 +97,5 @@ func CreateEndpoint[I, O any](api huma.API, op EndpointArgs, handler func(contex
 
 	return nil
 }
+
+// TODO: add authorization header in inputs that require user be logged in: struct {Auth    string `header:"Authorization"`}
