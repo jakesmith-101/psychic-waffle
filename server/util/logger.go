@@ -15,5 +15,5 @@ func Log(t string, format string, a ...any) {
 }
 
 func LogError(err error) {
-	Log("error", fmt.Sprintf("%v", err))
+	Log("error", "%v", err)
 }
