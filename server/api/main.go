@@ -93,7 +93,7 @@ func CreateEndpoint[I, O any](api huma.API, op EndpointArgs, handler func(contex
 		Description: op.Summary,
 		Tags:        []string{name},
 	}, handler)
-	fmt.Fprintf(os.Stderr, "init: %s\n", opID)
+	fmt.Fprintf(os.Stdout, "init: %s\n", opID)
 
 	return nil
 }
