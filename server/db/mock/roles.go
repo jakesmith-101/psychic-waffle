@@ -43,7 +43,7 @@ func MockRoles() error {
 
 	_, err = db.GetRoleByName("Moderator")
 	if err != nil {
-		_, err = db.CreateRole("Moderator", 0)
+		_, err = db.CreateRole("Moderator", permissions.Moderator)
 		if err != nil {
 			fmt.Fprintf(os.Stderr, "%v\n", err)
 			return err
@@ -52,7 +52,7 @@ func MockRoles() error {
 
 	_, err = db.GetRoleByName("Administrator")
 	if err != nil {
-		_, err = db.CreateRole("Administrator", 0) // FIXME: no perms "invented" yet
+		_, err = db.CreateRole("Administrator", permissions.Administrator)
 	}
 
 	return err
