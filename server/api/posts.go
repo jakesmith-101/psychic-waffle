@@ -68,6 +68,7 @@ func GetPost(api huma.API) error {
 			return resp, huma.Error500InternalServerError(err.Error())
 		}
 		resp.Body = *post
+		fmt.Fprintf(os.Stdout, "Get Post: %s", input.Slug)
 		return resp, nil
 	})
 }
@@ -94,6 +95,11 @@ func GetPosts(api huma.API) error {
 			return resp, huma.Error500InternalServerError(err.Error())
 		}
 		resp.Body.Posts = *posts
+		if input.SortID {
+			fmt.Fprintf(os.Stdout, "Get Posts: Popular")
+		} else {
+			fmt.Fprintf(os.Stdout, "Get Posts: Latest")
+		}
 		return resp, nil
 	})
 }

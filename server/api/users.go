@@ -60,6 +60,7 @@ func GetUser(api huma.API) error {
 		resp.Body.RoleID = user.RoleID
 		resp.Body.CreatedAt = user.CreatedAt
 		resp.Body.UpdatedAt = user.UpdatedAt
+		fmt.Fprintf(os.Stdout, "Get User: %s", input.UserID)
 		return resp, nil
 	})
 }
@@ -70,6 +71,7 @@ type UpdateUserOutput struct {
 	}
 }
 
+// TODO: change to allow singular changes etc, replace post with patch?
 func UpdateUser(api huma.API) error {
 	// Register POST /user/update
 	return CreateEndpoint(api, EndpointArgs{
@@ -81,7 +83,7 @@ func UpdateUser(api huma.API) error {
 			Nickname string `json:"nickname" required:"false"` //
 			Password string `json:"password" required:"false"` //
 			RoleID   string `json:"roleID" required:"false"`   //
-			Token    string `json:"token" required:"true"`     // jwt token
+			Token    string `json:"token" required:"true"`     // FIXME: jwt token // Authorization Header instead
 		}
 	}) (*UpdateUserOutput, error) {
 		resp := &UpdateUserOutput{}

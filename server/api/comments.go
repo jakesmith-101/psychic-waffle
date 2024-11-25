@@ -46,6 +46,11 @@ func GetComments(api huma.API) error {
 			return resp, huma.Error500InternalServerError(err.Error())
 		}
 		resp.Body.Comments = *comments
+		if input.SortID {
+			fmt.Fprintf(os.Stdout, "Get Comments: Popular")
+		} else {
+			fmt.Fprintf(os.Stdout, "Get Comments: Latest")
+		}
 		return resp, nil
 	})
 }
