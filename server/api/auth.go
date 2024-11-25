@@ -47,7 +47,7 @@ func Signup(api huma.API) error {
 		Path:    "/auth/signup",
 		Summary: "Create an account by username and password",
 	}, func(ctx context.Context, input *AuthInput) (*AuthOutput, error) {
-		util.Log("output", "Requested account creation: %s", input.Body.Username)
+		util.Log(false, "Requested account creation: %s", input.Body.Username)
 		resp := &AuthOutput{}
 		hash, err := util.GenerateFromPassword(input.Body.Password)
 		if err != nil {
@@ -91,7 +91,7 @@ func Login(api huma.API) error {
 		Path:    "/auth/login",
 		Summary: "Log into account by username and password",
 	}, func(ctx context.Context, input *AuthInput) (*AuthOutput, error) {
-		util.Log("ouput", "Requested account login: %s", input.Body.Username)
+		util.Log(false, "Requested account login: %s", input.Body.Username)
 		resp := &AuthOutput{}
 		user, err := db.GetUserByUsername(input.Body.Username)
 		if err != nil {

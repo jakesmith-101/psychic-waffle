@@ -59,7 +59,7 @@ func GetUser(api huma.API) error {
 		resp.Body.RoleID = user.RoleID
 		resp.Body.CreatedAt = user.CreatedAt
 		resp.Body.UpdatedAt = user.UpdatedAt
-		util.Log("ouput", "Get User: %s", input.UserID)
+		util.Log(false, "Get User: %s", input.UserID)
 		return resp, nil
 	})
 }
@@ -98,7 +98,7 @@ func UpdateUser(api huma.API) error {
 			return resp, huma.Error500InternalServerError(err.Error())
 		}
 		userID := fmt.Sprint(claims["UserID"])
-		util.Log("output", "Requested update user: %s", userID)
+		util.Log(false, "Requested update user: %s", userID)
 
 		var newPass string
 		if input.Body.Password != "" {

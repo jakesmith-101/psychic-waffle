@@ -46,7 +46,7 @@ func GetRole(api huma.API) error {
 		resp.Body.RoleID = role.RoleID
 		resp.Body.Permissions = role.Permissions
 		resp.Body.Name = role.Name
-		util.Log("ouput", "Get Role: %s", input.RoleID)
+		util.Log(false, "Get Role: %s", input.RoleID)
 		return resp, nil
 	})
 }

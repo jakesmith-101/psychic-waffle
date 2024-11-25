@@ -38,18 +38,18 @@ func Open() {
 	dbUrl := buildDBUrl(fmt.Sprintf("%s_", dbType)) // apply connecting "_"
 	PgxPool, err = pgxpool.New(context.Background(), dbUrl)
 	if err != nil {
-		util.Log("error", "Unable to connect to database: %v", err)
-		util.Log("error", "Database URL: %s", dbUrl)
+		util.Log(true, "Unable to connect to database: %v", err)
+		util.Log(true, "Database URL: %s", dbUrl)
 		os.Exit(1)
 	} else {
-		util.Log("ouput", "Connected to database: %s", dbType)
+		util.Log(false, "Connected to database: %s", dbType)
 	}
 
 	err = DBTriggersFuncs()
 	if err != nil {
-		util.Log("error", "DB triggers and funcs creation failed: %v", err)
+		util.Log(true, "DB triggers and funcs creation failed: %v", err)
 	} else {
-		util.Log("ouput", "Created DB triggers and funcs")
+		util.Log(false, "Created DB triggers and funcs")
 	}
 }
 

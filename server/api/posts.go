@@ -67,7 +67,7 @@ func GetPost(api huma.API) error {
 			return resp, huma.Error500InternalServerError(err.Error())
 		}
 		resp.Body = *post
-		util.Log("ouput", "Get Post: %s", input.Slug)
+		util.Log(false, "Get Post: %s", input.Slug)
 		return resp, nil
 	})
 }
@@ -95,9 +95,9 @@ func GetPosts(api huma.API) error {
 		}
 		resp.Body.Posts = *posts
 		if input.SortID {
-			util.Log("ouput", "Get Posts: Popular")
+			util.Log(false, "Get Posts: Popular")
 		} else {
-			util.Log("ouput", "Get Posts: Latest")
+			util.Log(false, "Get Posts: Latest")
 		}
 		return resp, nil
 	})

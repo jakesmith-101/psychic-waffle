@@ -46,9 +46,9 @@ func GetComments(api huma.API) error {
 		}
 		resp.Body.Comments = *comments
 		if input.SortID {
-			util.Log("ouput", "Get Comments: Popular")
+			util.Log(false, "Get Comments: Popular")
 		} else {
-			util.Log("ouput", "Get Comments: Latest")
+			util.Log(false, "Get Comments: Latest")
 		}
 		return resp, nil
 	})

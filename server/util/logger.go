@@ -5,15 +5,15 @@ import (
 	"os"
 )
 
-func Log(t string, format string, a ...any) {
-	output := fmt.Sprintf(format, a)
-	if t == "error" {
+func Log(isError bool, format string, a ...any) {
+	output := fmt.Sprintf(format, a...)
+	if isError {
 		fmt.Fprintf(os.Stderr, "%s\n", output)
-	} else if t == "output" {
+	} else {
 		fmt.Fprintf(os.Stdout, "%s\n", output)
 	}
 }
 
 func LogError(err error) {
-	Log("error", "%v", err)
+	Log(true, "%v", err)
 }

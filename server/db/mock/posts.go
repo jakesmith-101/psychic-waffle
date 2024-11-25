@@ -48,7 +48,7 @@ func MockPosts(users []string) error {
 			if err != nil {
 				return err
 			} else {
-				util.Log("ouput", "Mocked post: %s", slug)
+				util.Log(false, "Mocked post: %s", slug)
 			}
 		}
 	}

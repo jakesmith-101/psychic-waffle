@@ -76,7 +76,7 @@ func CreateEndpoint[I, O any](api huma.API, op EndpointArgs, handler func(contex
 	counter, _, _, success := runtime.Caller(1)
 
 	if !success {
-		util.Log("error", "functionName: runtime.Caller: failed")
+		util.Log(true, "functionName: runtime.Caller: failed")
 		return errors.New("functionName: runtime.Caller: failed")
 	}
 
@@ -93,7 +93,7 @@ func CreateEndpoint[I, O any](api huma.API, op EndpointArgs, handler func(contex
 		Description: op.Summary,
 		Tags:        []string{name},
 	}, handler)
-	util.Log("ouput", "init: %s", opID)
+	util.Log(false, "init: %s", opID)
 
 	return nil
 }
