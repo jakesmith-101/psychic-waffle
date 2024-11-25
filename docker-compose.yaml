@@ -1,5 +1,6 @@
 services:
   web:
+    container_name: nginx
     image: nginx:1.27-alpine
     volumes:
       - ./nginx/:/etc/nginx/conf.d
@@ -11,6 +12,7 @@ services:
       - psychic-waffle
 
   frontend:
+    container_name: svelte_kit
     build:
       context: ./client
       dockerfile: Dockerfile
@@ -25,6 +27,7 @@ services:
       - psychic-waffle
 
   api:
+    container_name: go_api
     build:
       context: ./server
       dockerfile: Dockerfile
