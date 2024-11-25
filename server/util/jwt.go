@@ -5,12 +5,21 @@ import (
 	"time"
 
 	"github.com/golang-jwt/jwt/v5"
-	"github.com/jakesmith-101/psychic-waffle/db"
 )
 
 var secretKey = []byte("secret-key")
 
-func CreateToken(user db.User) (string, error) {
+type User struct {
+	UserID       string    `json:"userID"`    // pk
+	Nickname     string    `json:"nickname"`  //
+	PasswordHash string    `json:"password"`  //
+	RoleID       string    `json:"roleID"`    // fk
+	Username     string    `json:"username"`  // unique
+	CreatedAt    time.Time `json:"createdAt"` //
+	UpdatedAt    time.Time `json:"updatedAt"` //
+}
+
+func CreateToken(user User) (string, error) {
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256,
 		jwt.MapClaims{
 			"UserID":   user.UserID,

@@ -4,7 +4,6 @@ import (
 	"context"
 	"fmt"
 	"net/http"
-	"os"
 
 	"github.com/danielgtaylor/huma/v2"
 	"github.com/jakesmith-101/psychic-waffle/db"
@@ -48,26 +47,26 @@ func Signup(api huma.API) error {
 		Path:    "/auth/signup",
 		Summary: "Create an account by username and password",
 	}, func(ctx context.Context, input *AuthInput) (*AuthOutput, error) {
-		fmt.Fprintf(os.Stderr, "Requested account creation: %s\n", input.Body.Username)
+		util.Log("output", "Requested account creation: %s", input.Body.Username)
 		resp := &AuthOutput{}
 		hash, err := util.GenerateFromPassword(input.Body.Password)
 		if err != nil {
-			fmt.Fprintf(os.Stderr, "%v\n", err)
+			util.LogError(err)
 			return resp, huma.Error500InternalServerError(err.Error())
 		}
 		userID, err := db.CreateUser(input.Body.Username, hash)
 		if err != nil {
-			fmt.Fprintf(os.Stderr, "%v\n", err)
+			util.LogError(err)
 			return resp, huma.Error500InternalServerError(err.Error())
 		}
 		user, err := db.GetUser(userID)
 		if err != nil {
-			fmt.Fprintf(os.Stderr, "%v\n", err)
+			util.LogError(err)
 			return resp, huma.Error500InternalServerError(err.Error())
 		}
 		tokenString, err := util.CreateToken(*user)
 		if err != nil {
-			fmt.Fprintf(os.Stderr, "%v\n", err)
+			util.LogError(err)
 			return resp, huma.Error500InternalServerError(err.Error())
 		}
 		resp.Body.Message = fmt.Sprintf("Hello, %s!", user.Nickname)
@@ -92,22 +91,22 @@ func Login(api huma.API) error {
 		Path:    "/auth/login",
 		Summary: "Log into account by username and password",
 	}, func(ctx context.Context, input *AuthInput) (*AuthOutput, error) {
-		fmt.Fprintf(os.Stdout, "Requested account login: %s\n", input.Body.Username)
+		util.Log("ouput", "Requested account login: %s", input.Body.Username)
 		resp := &AuthOutput{}
 		user, err := db.GetUserByUsername(input.Body.Username)
 		if err != nil {
-			fmt.Fprintf(os.Stderr, "%v\n", err)
+			util.LogError(err)
 			return resp, huma.Error500InternalServerError(err.Error())
 		}
 		match, err := util.ComparePasswordAndHash(input.Body.Password, user.PasswordHash)
 		if err != nil {
-			fmt.Fprintf(os.Stderr, "%v\n", err)
+			util.LogError(err)
 			return resp, huma.Error500InternalServerError(err.Error())
 		}
 		if match {
 			tokenString, err := util.CreateToken(*user)
 			if err != nil {
-				fmt.Fprintf(os.Stderr, "%v\n", err)
+				util.LogError(err)
 				return resp, huma.Error500InternalServerError(err.Error())
 			}
 			resp.Body.Message = fmt.Sprintf("Hello, %s!", user.Nickname)

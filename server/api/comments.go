@@ -2,12 +2,11 @@ package api
 
 import (
 	"context"
-	"fmt"
 	"net/http"
-	"os"
 
 	"github.com/danielgtaylor/huma/v2"
 	"github.com/jakesmith-101/psychic-waffle/db"
+	"github.com/jakesmith-101/psychic-waffle/util"
 )
 
 func CommentEndpoints(api huma.API) error {
@@ -42,14 +41,14 @@ func GetComments(api huma.API) error {
 		var err error
 		comments, err = db.GetComments(input.PostID, input.SortID)
 		if err != nil {
-			fmt.Fprintf(os.Stderr, "%v\n", err)
+			util.LogError(err)
 			return resp, huma.Error500InternalServerError(err.Error())
 		}
 		resp.Body.Comments = *comments
 		if input.SortID {
-			fmt.Fprintf(os.Stdout, "Get Comments: Popular")
+			util.Log("ouput", "Get Comments: Popular")
 		} else {
-			fmt.Fprintf(os.Stdout, "Get Comments: Latest")
+			util.Log("ouput", "Get Comments: Latest")
 		}
 		return resp, nil
 	})

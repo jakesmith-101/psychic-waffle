@@ -2,12 +2,11 @@ package api
 
 import (
 	"context"
-	"fmt"
 	"net/http"
-	"os"
 
 	"github.com/danielgtaylor/huma/v2"
 	"github.com/jakesmith-101/psychic-waffle/db"
+	"github.com/jakesmith-101/psychic-waffle/util"
 )
 
 func RoleEndpoints(api huma.API) error {
@@ -41,13 +40,13 @@ func GetRole(api huma.API) error {
 		resp := &GetRoleOutput{}
 		role, err := db.GetRole(input.RoleID)
 		if err != nil {
-			fmt.Fprintf(os.Stderr, "%v\n", err)
+			util.LogError(err)
 			return resp, huma.Error500InternalServerError(err.Error())
 		}
 		resp.Body.RoleID = role.RoleID
 		resp.Body.Permissions = role.Permissions
 		resp.Body.Name = role.Name
-		fmt.Fprintf(os.Stdout, "Get Role: %s", input.RoleID)
+		util.Log("ouput", "Get Role: %s", input.RoleID)
 		return resp, nil
 	})
 }

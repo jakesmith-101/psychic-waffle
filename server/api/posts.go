@@ -2,9 +2,7 @@ package api
 
 import (
 	"context"
-	"fmt"
 	"net/http"
-	"os"
 	"regexp"
 	"strings"
 	"time"
@@ -13,6 +11,7 @@ import (
 	"github.com/bbalet/stopwords"
 	"github.com/danielgtaylor/huma/v2"
 	"github.com/jakesmith-101/psychic-waffle/db"
+	"github.com/jakesmith-101/psychic-waffle/util"
 	"golang.org/x/text/runes"
 	"golang.org/x/text/transform"
 	"golang.org/x/text/unicode/norm"
@@ -64,11 +63,11 @@ func GetPost(api huma.API) error {
 		resp := &GetPostOutput{}
 		post, err := db.GetPostBySlug(input.Slug)
 		if err != nil {
-			fmt.Fprintf(os.Stderr, "%v\n", err)
+			util.LogError(err)
 			return resp, huma.Error500InternalServerError(err.Error())
 		}
 		resp.Body = *post
-		fmt.Fprintf(os.Stdout, "Get Post: %s", input.Slug)
+		util.Log("ouput", "Get Post: %s", input.Slug)
 		return resp, nil
 	})
 }
@@ -91,14 +90,14 @@ func GetPosts(api huma.API) error {
 		resp := &GetPostsOutput{}
 		posts, err := db.GetPosts(input.SortID)
 		if err != nil {
-			fmt.Fprintf(os.Stderr, "%v\n", err)
+			util.LogError(err)
 			return resp, huma.Error500InternalServerError(err.Error())
 		}
 		resp.Body.Posts = *posts
 		if input.SortID {
-			fmt.Fprintf(os.Stdout, "Get Posts: Popular")
+			util.Log("ouput", "Get Posts: Popular")
 		} else {
-			fmt.Fprintf(os.Stdout, "Get Posts: Latest")
+			util.Log("ouput", "Get Posts: Latest")
 		}
 		return resp, nil
 	})

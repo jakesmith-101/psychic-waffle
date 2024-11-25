@@ -4,7 +4,6 @@ import (
 	"context"
 	"fmt"
 	"net/http"
-	"os"
 	"time"
 
 	"github.com/danielgtaylor/huma/v2"
@@ -51,7 +50,7 @@ func GetUser(api huma.API) error {
 		resp := &GetUserOutput{}
 		user, err := db.GetUser(input.UserID)
 		if err != nil {
-			fmt.Fprintf(os.Stderr, "%v\n", err)
+			util.LogError(err)
 			return resp, huma.Error500InternalServerError(err.Error())
 		}
 		resp.Body.UserID = user.UserID
@@ -60,7 +59,7 @@ func GetUser(api huma.API) error {
 		resp.Body.RoleID = user.RoleID
 		resp.Body.CreatedAt = user.CreatedAt
 		resp.Body.UpdatedAt = user.UpdatedAt
-		fmt.Fprintf(os.Stdout, "Get User: %s", input.UserID)
+		util.Log("ouput", "Get User: %s", input.UserID)
 		return resp, nil
 	})
 }
@@ -90,22 +89,22 @@ func UpdateUser(api huma.API) error {
 
 		err := util.VerifyToken(input.Body.Token)
 		if err != nil {
-			fmt.Fprintf(os.Stderr, "%v\n", err)
+			util.LogError(err)
 			return resp, huma.Error500InternalServerError(err.Error())
 		}
 		claims, err := util.ExtractClaims(input.Body.Token)
 		if err != nil {
-			fmt.Fprintf(os.Stderr, "%v\n", err)
+			util.LogError(err)
 			return resp, huma.Error500InternalServerError(err.Error())
 		}
 		userID := fmt.Sprint(claims["UserID"])
-		fmt.Fprintf(os.Stderr, "Requested update user: %s\n", userID)
+		util.Log("output", "Requested update user: %s", userID)
 
 		var newPass string
 		if input.Body.Password != "" {
 			newPass, err = util.GenerateFromPassword(input.Body.Password)
 			if err != nil {
-				fmt.Fprintf(os.Stderr, "%v\n", err)
+				util.LogError(err)
 				return resp, huma.Error500InternalServerError(err.Error())
 			}
 		}
@@ -116,7 +115,7 @@ func UpdateUser(api huma.API) error {
 			RoleID:       input.Body.RoleID,
 		})
 		if err != nil {
-			fmt.Fprintf(os.Stderr, "%v\n", err)
+			util.LogError(err)
 			return resp, huma.Error500InternalServerError("failed to update user")
 		}
 

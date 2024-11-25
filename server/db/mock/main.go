@@ -1,10 +1,8 @@
 package mock
 
 import (
-	"fmt"
-	"os"
-
 	"github.com/ZeFort/chance"
+	"github.com/jakesmith-101/psychic-waffle/util"
 )
 
 func MockAll(mock bool) error {
@@ -19,7 +17,7 @@ func MockAll(mock bool) error {
 	if mock {
 		err = MockRoles()
 		if err != nil {
-			fmt.Fprintf(os.Stderr, "%v\n", err)
+			util.LogError(err)
 			return err
 		}
 	}
@@ -32,7 +30,7 @@ func MockAll(mock bool) error {
 	if mock {
 		userID, err := MockAdmin()
 		if err != nil {
-			fmt.Fprintf(os.Stderr, "%v\n", err)
+			util.LogError(err)
 			return err
 		}
 		users = append(users, userID)
@@ -46,7 +44,7 @@ func MockAll(mock bool) error {
 	if mock {
 		err = MockPosts(users)
 		if err != nil {
-			fmt.Fprintf(os.Stderr, "%v\n", err)
+			util.LogError(err)
 			return err
 		}
 	}

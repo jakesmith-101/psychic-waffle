@@ -3,7 +3,6 @@ package main
 import (
 	"fmt"
 	"net/http"
-	"os"
 
 	"github.com/danielgtaylor/huma/v2"
 	"github.com/danielgtaylor/huma/v2/adapters/humago"
@@ -14,6 +13,7 @@ import (
 	"github.com/jakesmith-101/psychic-waffle/api"
 	"github.com/jakesmith-101/psychic-waffle/db"
 	"github.com/jakesmith-101/psychic-waffle/db/mock"
+	"github.com/jakesmith-101/psychic-waffle/util"
 )
 
 // Options for the CLI. Pass `--port` or set the `SERVICE_PORT` env var.
@@ -30,7 +30,7 @@ func main() {
 		// Ensure SQL tables and basic data exist
 		err := mock.MockAll(true)
 		if err != nil {
-			fmt.Fprintf(os.Stderr, "Mock Error: %v\n", err)
+			util.Log("error", "Mock Error: %v", err)
 		}
 
 		// Create a new router & API
@@ -41,7 +41,7 @@ func main() {
 		// Bind all endpoints to api (login, signup)
 		err = api.Endpoints(API)
 		if err != nil {
-			fmt.Fprintf(os.Stderr, "%v\n", err)
+			util.LogError(err)
 		}
 
 		// Tell the CLI how to start your router.

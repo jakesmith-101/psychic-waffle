@@ -3,10 +3,10 @@ package mock
 import (
 	"context"
 	"fmt"
-	"os"
 	"strings"
 
 	"github.com/jakesmith-101/psychic-waffle/db"
+	"github.com/jakesmith-101/psychic-waffle/util"
 )
 
 // Depends upon Users table
@@ -48,7 +48,7 @@ func MockPosts(users []string) error {
 			if err != nil {
 				return err
 			} else {
-				fmt.Fprintf(os.Stdout, "Mocked post: %s\n", slug)
+				util.Log("ouput", "Mocked post: %s", slug)
 			}
 		}
 	}

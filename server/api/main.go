@@ -4,13 +4,13 @@ import (
 	"context"
 	"errors"
 	"fmt"
-	"os"
 	"path"
 	"regexp"
 	"runtime"
 	"strings"
 
 	"github.com/danielgtaylor/huma/v2"
+	"github.com/jakesmith-101/psychic-waffle/util"
 )
 
 var apiVer = "v1"
@@ -76,7 +76,7 @@ func CreateEndpoint[I, O any](api huma.API, op EndpointArgs, handler func(contex
 	counter, _, _, success := runtime.Caller(1)
 
 	if !success {
-		fmt.Fprintf(os.Stderr, "functionName: runtime.Caller: failed\n")
+		util.Log("error", "functionName: runtime.Caller: failed")
 		return errors.New("functionName: runtime.Caller: failed")
 	}
 
@@ -93,7 +93,7 @@ func CreateEndpoint[I, O any](api huma.API, op EndpointArgs, handler func(contex
 		Description: op.Summary,
 		Tags:        []string{name},
 	}, handler)
-	fmt.Fprintf(os.Stdout, "init: %s\n", opID)
+	util.Log("ouput", "init: %s", opID)
 
 	return nil
 }

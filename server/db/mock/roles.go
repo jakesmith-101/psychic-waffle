@@ -2,10 +2,9 @@ package mock
 
 import (
 	"context"
-	"fmt"
-	"os"
 
 	"github.com/jakesmith-101/psychic-waffle/db"
+	"github.com/jakesmith-101/psychic-waffle/util"
 	"github.com/jakesmith-101/psychic-waffle/util/permissions"
 )
 
@@ -27,7 +26,7 @@ func MockRoles() error {
 	if err != nil {
 		_, err = db.CreateRole("Guest", permissions.Guest)
 		if err != nil {
-			fmt.Fprintf(os.Stderr, "%v\n", err)
+			util.LogError(err)
 			return err
 		}
 	}
@@ -36,7 +35,7 @@ func MockRoles() error {
 	if err != nil {
 		_, err = db.CreateRole("User", permissions.User)
 		if err != nil {
-			fmt.Fprintf(os.Stderr, "%v\n", err)
+			util.LogError(err)
 			return err
 		}
 	}
@@ -45,7 +44,7 @@ func MockRoles() error {
 	if err != nil {
 		_, err = db.CreateRole("Moderator", permissions.Moderator)
 		if err != nil {
-			fmt.Fprintf(os.Stderr, "%v\n", err)
+			util.LogError(err)
 			return err
 		}
 	}
@@ -53,7 +52,11 @@ func MockRoles() error {
 	_, err = db.GetRoleByName("Administrator")
 	if err != nil {
 		_, err = db.CreateRole("Administrator", permissions.Administrator)
+		if err != nil {
+			util.LogError(err)
+			return err
+		}
 	}
 
-	return err
+	return nil
 }

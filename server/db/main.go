@@ -6,6 +6,7 @@ import (
 	"os"
 
 	"github.com/jackc/pgx/v5/pgxpool"
+	"github.com/jakesmith-101/psychic-waffle/util"
 )
 
 var PgxPool *pgxpool.Pool
@@ -37,18 +38,18 @@ func Open() {
 	dbUrl := buildDBUrl(fmt.Sprintf("%s_", dbType)) // apply connecting "_"
 	PgxPool, err = pgxpool.New(context.Background(), dbUrl)
 	if err != nil {
-		fmt.Fprintf(os.Stderr, "Unable to connect to database: %v\n", err)
-		fmt.Fprintf(os.Stderr, "Database URL: %s\n", dbUrl)
+		util.Log("error", "Unable to connect to database: %v", err)
+		util.Log("error", "Database URL: %s", dbUrl)
 		os.Exit(1)
 	} else {
-		fmt.Fprintf(os.Stdout, "Connected to database: %s\n", dbType)
+		util.Log("ouput", "Connected to database: %s", dbType)
 	}
 
 	err = DBTriggersFuncs()
 	if err != nil {
-		fmt.Fprintf(os.Stderr, "DB triggers and funcs creation failed: %v\n", err)
+		util.Log("error", "DB triggers and funcs creation failed: %v", err)
 	} else {
-		fmt.Fprintf(os.Stdout, "Created DB triggers and funcs\n")
+		util.Log("ouput", "Created DB triggers and funcs")
 	}
 }
 

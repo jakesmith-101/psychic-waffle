@@ -4,9 +4,9 @@ import (
 	"context"
 	"fmt"
 	"net/http"
-	"os"
 
 	"github.com/danielgtaylor/huma/v2"
+	"github.com/jakesmith-101/psychic-waffle/util"
 )
 
 // GreetingOutput represents the greeting operation response.
@@ -31,7 +31,7 @@ func HealthCheck(api huma.API) error {
 			name = "world"
 		}
 		resp.Body.Message = fmt.Sprintf("Hello, %s!", name)
-		fmt.Fprintf(os.Stderr, "Healthy: %s\n", name)
+		util.Log("error", "Healthy: %s", name)
 		return resp, nil
 	})
 }

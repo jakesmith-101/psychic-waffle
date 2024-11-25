@@ -8,35 +8,26 @@ import (
 
 	"github.com/google/uuid"
 	"github.com/jackc/pgx/v5"
+	"github.com/jakesmith-101/psychic-waffle/util"
 )
 
-type User struct {
-	UserID       string    `json:"userID"`    // pk
-	Nickname     string    `json:"nickname"`  //
-	PasswordHash string    `json:"password"`  //
-	RoleID       string    `json:"roleID"`    // fk
-	Username     string    `json:"username"`  // unique
-	CreatedAt    time.Time `json:"createdAt"` //
-	UpdatedAt    time.Time `json:"updatedAt"` //
-}
-
-func GetUser(ID string) (*User, error) {
-	var user User
+func GetUser(ID string) (*util.User, error) {
+	var user util.User
 	row, err := PgxPool.Query(context.Background(), "SELECT * FROM users WHERE UserID=$1;", ID)
 	if err != nil {
 		return &user, err
 	}
-	user, err = pgx.CollectExactlyOneRow(row, pgx.RowToStructByName[User])
+	user, err = pgx.CollectExactlyOneRow(row, pgx.RowToStructByName[util.User])
 	return &user, err
 }
 
-func GetUserByUsername(username string) (*User, error) {
-	var user User
+func GetUserByUsername(username string) (*util.User, error) {
+	var user util.User
 	row, err := PgxPool.Query(context.Background(), "SELECT * FROM users WHERE Username=$1;", username)
 	if err != nil {
 		return &user, err
 	}
-	user, err = pgx.CollectExactlyOneRow(row, pgx.RowToStructByName[User])
+	user, err = pgx.CollectExactlyOneRow(row, pgx.RowToStructByName[util.User])
 	return &user, err
 }
 
@@ -45,7 +36,7 @@ func CreateUser(username string, passwordHash string) (string, error) {
 	if err != nil {
 		return "", err
 	}
-	user := User{
+	user := util.User{
 		UserID:       uuid.NewString(),
 		Username:     username,
 		PasswordHash: passwordHash,
