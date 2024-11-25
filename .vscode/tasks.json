@@ -43,20 +43,6 @@
             }
         },
         {
-            "label": "Build: tsc - watch",
-            "type": "typescript",
-            "tsconfig": "client/tsconfig.json",
-            "problemMatcher": [
-                "$tsc-watch"
-            ],
-            "group": "build",
-            "presentation": {
-                "reveal": "silent",
-                "revealProblems": "onProblem",
-                "close": true
-            }
-        },
-        {
             "label": "Build: node_modules",
             "type": "shell",
             "command": "npm i",
