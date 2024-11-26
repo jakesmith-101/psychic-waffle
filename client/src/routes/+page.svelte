@@ -8,7 +8,7 @@
 {#each data.posts as post}
     <article>
         <header>
-            <p>{post.postTitle}</p>
+            <p><a href="/posts/{post.slug}">{post.postTitle}</a></p>
         </header>
         <p>{post.postDescription}</p>
         <footer>

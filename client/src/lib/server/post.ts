@@ -3,6 +3,7 @@ import { apiFetch } from './api';
 export interface tGetPosts {
     posts: {
         postID: string;
+        slug: string;
         postTitle: string;
         postDescription: string;
         votes: number;
