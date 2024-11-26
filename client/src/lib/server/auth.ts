@@ -32,5 +32,6 @@ async function auth(
             ...data as tPostAuth,
             cookies: authCookies
         };
+    console.log(data);
     throw new Error(`Auth failed: ${data?.message}`);
 }

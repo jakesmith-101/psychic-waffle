@@ -13,7 +13,9 @@ export async function updateUser(
     if (token === '') throw new Error('Missing Token');
 
     const [, data] = await apiFetch<tUpdateUser>(`/users/update`, 'POST', { token, nickname, password, roleID });
-    if (typeof data?.message === 'string') return data as tUpdateUser;
+    if (typeof data?.message === 'string')
+        return data as tUpdateUser;
+    console.log(data);
     throw new Error(`Update user failed: ${data?.message}`);
 }
 
@@ -39,5 +41,6 @@ export async function getUser(userID: string): Promise<tGetUser> {
         typeof data?.createdAt === 'string'
     )
         return data as tGetUser;
+    console.log(data);
     throw new Error(`Get user failed: ${data?.message}`);
 }
