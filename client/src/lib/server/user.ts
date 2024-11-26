@@ -41,6 +41,5 @@ export async function getUser(userID: string): Promise<tGetUser> {
         typeof data?.createdAt === 'string'
     )
         return data as tGetUser;
-    console.log(data);
     throw new Error(`Get user failed: ${data?.message}`);
 }

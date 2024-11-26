@@ -22,6 +22,7 @@ async function auth(
 
     const [headers, data] = await apiFetch<tPostAuth>(`/auth/${path}`, 'POST', { username, password }); // possible API error response message
     const cookies = headers.getSetCookie(); // ["name1=value1", "name2=value2"]
+    console.log(cookies);
     let authCookies: [string, string][] | undefined = undefined;
     if (cookies.length === 2)
         authCookies = cookies.map(c => c.split("=") as [string, string]);
@@ -32,6 +33,5 @@ async function auth(
             ...data as tPostAuth,
             cookies: authCookies
         };
-    console.log(data);
     throw new Error(`Auth failed: ${data?.message}`);
 }

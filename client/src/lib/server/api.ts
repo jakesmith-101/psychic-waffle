@@ -19,6 +19,7 @@ export async function apiFetch<T = any>(path: `/${string}`, method: tMethod, raw
 
     const res = await response.json();
     if (response.ok) {
+        console.log(res?.message);
         return response.headers, res;
     } else {
         throw Error(JSON.stringify(res));

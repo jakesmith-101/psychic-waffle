@@ -16,6 +16,5 @@ export async function getRole(roleID: string): Promise<tGetRole> {
         typeof data?.permissions === 'number'
     )
         return data as tGetRole;
-    console.log(data);
     throw new Error(`Get role failed: ${data?.message}`);
 }
