@@ -20,18 +20,13 @@ async function auth(
     if (username === '') throw new Error('Missing Username');
     if (password === '') throw new Error('Missing Password');
 
-    const [headers, data] = await apiFetch<tPostAuth>(`/auth/${path}`, 'POST', { username, password }); // possible API error response message
-    const cookies = headers.getSetCookie(); // ["name1=value1", "name2=value2"]
-    console.log(cookies);
-    let authCookies: [string, string][] | undefined = undefined;
-    if (cookies.length === 2)
-        authCookies = cookies.map(c => c.split("=") as [string, string]);
+    const [cookies, data] = await apiFetch<tPostAuth>(`/auth/${path}`, 'POST', { username, password }); // possible API error response message
     if (
         typeof data?.message === 'string'
     )
         return {
             ...data as tPostAuth,
-            cookies: authCookies
+            cookies
         };
     throw new Error(`Auth failed: ${data?.message}`);
 }
