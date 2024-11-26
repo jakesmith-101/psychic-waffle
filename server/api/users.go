@@ -51,7 +51,7 @@ func GetUser(api huma.API) error {
 		user, err := db.GetUser(input.UserID)
 		if err != nil {
 			util.LogError(err)
-			return resp, huma.Error500InternalServerError(err.Error())
+			return resp, huma.Error500InternalServerError(err.Error(), err)
 		}
 		resp.Body.UserID = user.UserID
 		resp.Body.Username = user.Username
@@ -90,12 +90,12 @@ func UpdateUser(api huma.API) error {
 		err := util.VerifyToken(input.Body.Token)
 		if err != nil {
 			util.LogError(err)
-			return resp, huma.Error500InternalServerError(err.Error())
+			return resp, huma.Error500InternalServerError(err.Error(), err)
 		}
 		claims, err := util.ExtractClaims(input.Body.Token)
 		if err != nil {
 			util.LogError(err)
-			return resp, huma.Error500InternalServerError(err.Error())
+			return resp, huma.Error500InternalServerError(err.Error(), err)
 		}
 		userID := fmt.Sprint(claims["UserID"])
 		util.Log(false, "Requested update user: %s", userID)
@@ -105,7 +105,7 @@ func UpdateUser(api huma.API) error {
 			newPass, err = util.GenerateFromPassword(input.Body.Password)
 			if err != nil {
 				util.LogError(err)
-				return resp, huma.Error500InternalServerError(err.Error())
+				return resp, huma.Error500InternalServerError(err.Error(), err)
 			}
 		}
 		success, err := db.SetUser(db.UpdateUser{
