@@ -15,7 +15,6 @@ export async function updateUser(
     const [, data] = await apiFetch<tUpdateUser>(`/users/update`, 'POST', { token, nickname, password, roleID });
     if (typeof data?.message === 'string')
         return data as tUpdateUser;
-    console.log(data);
     throw new Error(`Update user failed: ${data?.message}`);
 }
 

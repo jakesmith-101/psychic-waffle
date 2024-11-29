@@ -34,6 +34,5 @@ export const actions: Actions = {
         }
 
         const body = await api.updateUser(token, nickname, password);
-        console.log(body.message);
     }
 };

@@ -21,7 +21,6 @@ export async function apiFetch<T = any>(path: `/${string}`, method: tMethod, raw
     const res = await response.json();
     if (response.ok) {
         const cookies = response.headers.getSetCookie(); // ["name1=value1", "name2=value2"]
-        console.log(cookies);
         let authCookies: tAuth | undefined = undefined;
         if (cookies.length === 2)
             authCookies = cookies.map(c => c.split("=") as tAuth[0]);
