@@ -23,11 +23,9 @@ export async function apiFetch<T = any>(path: `/${string}`, method: tMethod, raw
             .getSetCookie()
             .map(c => {
                 const matches: [string, string][] = [];
-                console.log("regexp throws error", c);
                 for (const match of c.matchAll(/{(?<name>\S+)\s+(?<value>\S+)\s+(true|false)\s+[0-9-]+\s+[0-9:]+\s+[+0-9]+\s+[A-Z]+\s+[0-9]+\s+(true|false)\s+(true|false)\s+[0-9]+\s+(true|false)\s+\[.*?\]}/g)) {
                     const name = match?.groups?.["name"];
                     const value = match?.groups?.["value"];
-                    console.log("cookie", name, value)
                     if (name !== undefined && value !== undefined)
                         matches.push([name, value]);
                 }
