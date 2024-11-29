@@ -1,4 +1,4 @@
-import { apiFetch } from './api';
+import { apiFetch, type tAuth } from './api';
 
 export async function login(username: string, password: string) {
     return auth('login', username, password);
@@ -16,7 +16,7 @@ async function auth(
     path: 'signup' | 'login',
     username: string,
     password: string
-): Promise<tPostAuth & { cookies: [string, string][] | undefined }> {
+): Promise<tPostAuth & { cookies: tAuth[] }> {
     if (username === '') throw new Error('Missing Username');
     if (password === '') throw new Error('Missing Password');
 

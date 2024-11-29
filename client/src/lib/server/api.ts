@@ -3,7 +3,11 @@ export const apiUrl = `http://api:8080`;
 export const rootPath = `${apiUrl}/api/${apiVer}`;
 
 export type tMethod = 'GET' | 'HEAD' | 'POST' | 'PUT' | 'DELETE' | 'CONNECT' | 'OPTIONS' | 'TRACE' | 'PATCH';
-export async function apiFetch<T = any>(path: `/${string}`, method: tMethod, rawBody?: any): Promise<[[string, string][], (T & { message?: string }) | undefined]> {
+export interface tAuth {
+    name: string;
+    value: string;
+}
+export async function apiFetch<T = any>(path: `/${string}`, method: tMethod, rawBody?: any): Promise<[tAuth[], (T & { message?: string }) | undefined]> {
     console.log(`${rootPath}${path}`);
     const rInit: RequestInit = {
         method
@@ -22,16 +26,15 @@ export async function apiFetch<T = any>(path: `/${string}`, method: tMethod, raw
         const cookies = response.headers
             .getSetCookie()
             .map(c => {
-                const matches: [string, string][] = [];
+                const matches: tAuth[] = [];
                 for (const match of c.matchAll(/{(?<name>\S+)\s+(?<value>\S+)\s+(true|false)\s+[0-9-]+\s+[0-9:]+\s+[+0-9]+\s+[A-Z]+\s+[0-9]+\s+(true|false)\s+(true|false)\s+[0-9]+\s+(true|false)\s+\[.*?\]}/g)) {
                     const name = match?.groups?.["name"];
                     const value = match?.groups?.["value"];
                     if (name !== undefined && value !== undefined)
-                        matches.push([name, value]);
+                        matches.push({ name, value });
                 }
                 return matches
             }).flat();
-        console.log(cookies);
         return [cookies, res];
     } else {
         throw Error(JSON.stringify(res));

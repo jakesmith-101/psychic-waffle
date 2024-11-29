@@ -26,7 +26,7 @@ export const actions: Actions = {
 
         if (username !== undefined && password !== undefined) {
             const loginInfo = await api.login(username, password);
-            loginInfo.cookies?.forEach(([name, value]) => cookies.set(name, value, { path: '/' }));
+            loginInfo.cookies.forEach(({ name, value }) => cookies.set(name, value, { path: '/' }));
             redirect(302, `/user/dashboard`);
         }
     }
