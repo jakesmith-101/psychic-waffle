@@ -16,7 +16,7 @@ export async function load(): Promise<{ posts: tPost[] }> {
     const posts = await Promise.all(data.posts.map(async post => {
         // attempting to cache each user to prevent repeated api calls for the same info
         let user: tGetUser | undefined = undefined;
-        if (post.authorID in Object.keys(users))
+        if (Object.keys(users).includes(post.authorID))
             user = users?.[post.authorID];
         else {
             user = await getUser(post.authorID);
@@ -26,7 +26,7 @@ export async function load(): Promise<{ posts: tPost[] }> {
 
         // attempting to cache each role to prevent repeated api calls for the same info
         let role: tGetRole | undefined = undefined;
-        if (roleID in Object.keys(roles))
+        if (Object.keys(roles).includes(roleID))
             role = roles?.[roleID];
         else {
             role = await getRole(roleID);
